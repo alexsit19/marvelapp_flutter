@@ -10,7 +10,7 @@ class RouteGenerator {
       case AppRoutes.homeScreen:
         return MaterialPageRoute(builder: (context) => HomeScreen());
       case AppRoutes.detailScreen:
-        return MaterialPageRoute(builder: (context) => const DetailsScreen());
+        return MaterialPageRoute(settings: settings, builder: (context) => DetailsScreen());
       default:
         return _errorRoute();
     }

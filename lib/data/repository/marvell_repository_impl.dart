@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:marvelapp_flutter/data/model/character.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
+
+import '../model/series.dart';
 
 class MarvellRepositoryImpl extends MarvellRepository {
   final Dio dio = Dio(
@@ -17,7 +18,7 @@ class MarvellRepositoryImpl extends MarvellRepository {
   Future<List<Character>?> getListCharacters() async {
     try {
       Response response = await dio.get(
-        'https://gateway.marvel.com:443/v1/public/characters?ts=$ts&apikey=b2bd25766ee84a0881b157960b3d3590&hash=$hash',
+        'https://gateway.marvel.com:443/v1/public/characters?ts=$ts&apikey=$publicKey&hash=$hash',
       );
       if (response.statusCode == 200) {
         Map jsonObject = jsonDecode(response.data.toString());
@@ -28,6 +29,31 @@ class MarvellRepositoryImpl extends MarvellRepository {
     } catch (error) {
       return Future.error("$error");
     }
+    return null;
+  }
+
+  @override
+  Future<Character?> getCharacterDetail(String characterId) async {
+    try {
+      Response response = await dio.get(
+          'https://gateway.marvel.com:443/v1/public/characters/$characterId?ts=$ts&apikey=$publicKey&hash=$hash');
+      https://gateway.marvel.com/v1/public/stories/36908?apiKey=b2bd25766ee84a0881b157960b3d3590&hash=f43ba4d3c12135105017b1f45993942e
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonObject = jsonDecode(response.data.toString());
+        var listOfResults = jsonObject['data']['results'];
+        List<Map<String, dynamic>> data =
+            List<Map<String, dynamic>>.from(listOfResults);
+        Character character = Character.fromJson(data[0]);
+        return character;
+      }
+    } catch (error) {
+      return Future.error("$error");
+    }
+    return null;
+  }
+
+  @override
+  Future<Series?> getSeries(String characterId) async {
     return null;
   }
 }

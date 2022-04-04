@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../data/model/character.dart';
+import '../navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {
   final AsyncSnapshot<List<Character>?> list;
@@ -21,8 +22,9 @@ class ListCharacters extends StatelessWidget {
               ),
             ),
             child: InkWell(
-              onTap: (){
-                print("tap on element");
+              onTap: () {
+                Navigator.pushNamed(context, AppRoutes.detailScreen,
+                    arguments: item.id);
               },
               child: Row(
                 children: [
@@ -33,7 +35,6 @@ class ListCharacters extends StatelessWidget {
                     ),
                     child: Image.network(
                       "${item.thumbnailPath}/standard_medium.${item.thumbnailExtension}",
-                      colorBlendMode: BlendMode.difference,
                     ),
                   ),
                   Padding(
