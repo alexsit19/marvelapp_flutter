@@ -14,18 +14,19 @@ class DetailsScreen extends StatelessWidget {
         title: const Text("MarvellApp - Detail"),
       ),
       body: FutureBuilder<Character?>(
-          future: repository.getCharacterDetail(characterId),
-          builder: (context, snapshot) {
-            var character = snapshot.data;
-            return Column(
-              children: <Widget>[
-                Image.network(
-                    "${character?.thumbnailPath}/portrait_fantastic.${character?.thumbnailExtension}"),
-                Text("${character?.name}"),
-                Text("${character?.description}")
-              ],
-            );
-          }),
+        future: repository.getCharacterDetail(characterId),
+        builder: (context, snapshot) {
+          var character = snapshot.data;
+          return Column(
+            children: <Widget>[
+              Image.network(
+                  "${character?.thumbnailPath}/portrait_fantastic.${character?.thumbnailExtension}"),
+              Text("${character?.name}"),
+              Text("${character?.description}")
+            ],
+          );
+        },
+      ),
     );
   }
 }

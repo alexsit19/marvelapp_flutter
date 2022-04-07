@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:marvelapp_flutter/data/model/character.dart';
+import 'package:marvelapp_flutter/data/model/response_models/api_response.dart';
+import 'package:marvelapp_flutter/data/model/response_models/results.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
+import 'package:marvelapp_flutter/data/model/response_models/data.dart';
 
 import '../model/series.dart';
 
@@ -21,12 +24,29 @@ class MarvellRepositoryImpl extends MarvellRepository {
         'https://gateway.marvel.com:443/v1/public/characters?ts=$ts&apikey=$publicKey&hash=$hash',
       );
       if (response.statusCode == 200) {
-        Map jsonObject = jsonDecode(response.data.toString());
-        var listOfCharacter = jsonObject['data']['results'] as List;
-        var listCh = listOfCharacter.map((e) => Character.fromJson(e)).toList();
-        return listCh;
+        var jsonObject = jsonDecode(response.data.toString());
+        var apiResponse = ApiResponse.fromJson(jsonObject);
+        var data = apiResponse.data;
+        List<Character>? listCharacters = data?.results
+            ?.map((v) => Character(
+                id: v.id,
+                name: v.name,
+                description: v.description,
+                thumbnailPath: v.thumbnail?.path,
+                thumbnailExtension: v.thumbnail?.extension))
+            .toList();
+        //var results = data?.results;
+        return listCharacters;
+        //return data.results;
       }
+      //   if (response.statusCode == 200) {
+      //     Map jsonObject = jsonDecode(response.data.toString());
+      //     var listOfCharacter = jsonObject['data']['results'] as List;
+      //     var listCh = listOfCharacter.map((e) => Character.fromJson(e)).toList();
+      //     return listCh;
+      //   }
     } catch (error) {
+      print(error);
       return Future.error("$error");
     }
     return null;
@@ -37,13 +57,15 @@ class MarvellRepositoryImpl extends MarvellRepository {
     try {
       Response response = await dio.get(
           'https://gateway.marvel.com:443/v1/public/characters/$characterId?ts=$ts&apikey=$publicKey&hash=$hash');
-      https://gateway.marvel.com/v1/public/stories/36908?apiKey=b2bd25766ee84a0881b157960b3d3590&hash=f43ba4d3c12135105017b1f45993942e
+      https: //gateway.marvel.com/v1/public/stories/36908?apiKey=b2bd25766ee84a0881b157960b3d3590&hash=f43ba4d3c12135105017b1f45993942e
+
       if (response.statusCode == 200) {
         Map<String, dynamic> jsonObject = jsonDecode(response.data.toString());
         var listOfResults = jsonObject['data']['results'];
         List<Map<String, dynamic>> data =
             List<Map<String, dynamic>>.from(listOfResults);
         Character character = Character.fromJson(data[0]);
+
         return character;
       }
     } catch (error) {

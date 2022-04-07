@@ -9,12 +9,4 @@ class Series {
       required this.title,
       required this.description,
       required this.thumbnail});
-
-  factory Series.fromJson(Map<String, dynamic> json) {
-    return Series(
-        id: json['id'],
-        title: json['title'],
-        description: json['description'],
-        thumbnail: json['thumbnail']);
-  }
 }

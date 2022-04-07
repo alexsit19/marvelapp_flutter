@@ -40,7 +40,7 @@ class ListCharacters extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
-                      item.name,
+                      item.name ?? "",
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
