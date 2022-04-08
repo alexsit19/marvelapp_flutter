@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
-import '../data/model/character.dart';
+import '../data/model/response_models/character.dart';
 import '../navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {
-  final AsyncSnapshot<List<Character>?> list;
+  final List<Character>? list;
 
   const ListCharacters({Key? key, required this.list}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(5.0),
+      padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
-        itemCount: list.data?.length,
+        itemCount: list?.length,
         itemBuilder: (context, index) {
-          final item = list.data?[index] as Character;
+          final item = list?[index] as Character;
           return Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -33,8 +33,13 @@ class ListCharacters extends StatelessWidget {
                       topLeft: Radius.circular(5.0),
                       bottomLeft: Radius.circular(5.0),
                     ),
-                    child: Image.network(
-                      "${item.thumbnailPath}/standard_medium.${item.thumbnailExtension}",
+                    child: FadeInImage.assetNetwork(
+                      placeholder: 'assets/graphics/placeholder-150x150.png',
+                      image:
+                          "${item.thumbnailPath}/standard_medium.${item.thumbnailExtension}",
+                      height: 100.0,
+                      width: 100.0,
+                      fit: BoxFit.fill,
                     ),
                   ),
                   Padding(

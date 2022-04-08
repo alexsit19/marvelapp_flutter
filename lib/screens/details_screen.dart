@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/data/repository/marvell_repository_impl.dart';
-import '../data/model/character.dart';
+import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
+import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
+import 'package:marvelapp_flutter/widgets/details_content.dart';
+import '../data/model/response_models/character.dart';
+import '../data/model/response_models/series.dart';
+import '../widgets/custom_error_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({Key? key}) : super(key: key);
-  final repository = MarvellRepositoryImpl();
+  final MarvellRepository repository = DioMarvellRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +20,24 @@ class DetailsScreen extends StatelessWidget {
       body: FutureBuilder<Character?>(
         future: repository.getCharacterDetail(characterId),
         builder: (context, snapshot) {
-          var character = snapshot.data;
-          return Column(
-            children: <Widget>[
-              Image.network(
-                  "${character?.thumbnailPath}/portrait_fantastic.${character?.thumbnailExtension}"),
-              Text("${character?.name}"),
-              Text("${character?.description}")
-            ],
+          Widget child = const Center(
+            child: CircularProgressIndicator(),
           );
+          if (snapshot.hasData) {
+            var character = snapshot.data;
+            return FutureBuilder<List<Series>?>(
+                future: repository.getSerieses(characterId),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return DetailsContent(
+                        character: character, series: snapshot.data);
+                  }
+                  return const Center(child: CircularProgressIndicator());
+                });
+          } else if (snapshot.hasError) {
+            child = const CustomErrorWidget();
+          }
+          return child;
         },
       ),
     );
