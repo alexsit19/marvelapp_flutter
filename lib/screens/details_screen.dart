@@ -29,8 +29,10 @@ class DetailsScreen extends StatelessWidget {
                 future: repository.getSerieses(characterId),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return DetailsContent(
-                        character: character, series: snapshot.data);
+                    return SingleChildScrollView(
+                      child: DetailsContent(
+                          character: character, series: snapshot.data),
+                    );
                   }
                   return const Center(child: CircularProgressIndicator());
                 });

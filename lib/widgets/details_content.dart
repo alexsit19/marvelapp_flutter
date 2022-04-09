@@ -75,12 +75,11 @@ class DetailsContent extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: Padding(
-              padding:
-                  const EdgeInsets.only(right: 8.0, left: 8.0, bottom: 8.0),
+          Padding(
+            padding: const EdgeInsets.only(right: 8.0, left: 8.0, bottom: 8.0),
+            child: SizedBox(
+              height: 250,
               child: ListView.builder(
-                primary: false,
                 shrinkWrap: true,
                 itemCount: series?.length,
                 scrollDirection: Axis.horizontal,

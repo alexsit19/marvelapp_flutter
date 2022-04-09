@@ -21,13 +21,11 @@ class SeriesElement extends StatelessWidget {
                     "${series?.thumbnailPath}/portrait_medium.${series?.thumbnailExtension}",
                 width: 120.0,
                 height: 170.0,
-                fit: BoxFit.fitWidth
-              ),
-            Text(series?.title ?? "title missing"),
+                fit: BoxFit.fitWidth),
+            Text(series?.title ?? "title missing",
+                maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
         ),
-
-
       ),
     );
   }
