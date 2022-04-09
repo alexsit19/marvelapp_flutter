@@ -35,6 +35,8 @@ class DioMarvellRepository extends MarvellRepository {
                 thumbnailExtension: item.thumbnail?.extension))
             .toList();
         return listCharacters;
+      } else {
+        return Future.error("network error");
       }
     } catch (error) {
       if (kDebugMode) {
@@ -42,7 +44,6 @@ class DioMarvellRepository extends MarvellRepository {
       }
       return Future.error("$error");
     }
-    return null;
   }
 
   @override
@@ -63,6 +64,8 @@ class DioMarvellRepository extends MarvellRepository {
                 thumbnailExtension: item.thumbnail?.extension))
             .single;
         return character;
+      } else {
+        return Future.error("network error");
       }
     } catch (error) {
       if (kDebugMode) {
@@ -70,7 +73,6 @@ class DioMarvellRepository extends MarvellRepository {
       }
       return Future.error("$error");
     }
-    return null;
   }
 
   @override
@@ -91,6 +93,8 @@ class DioMarvellRepository extends MarvellRepository {
                 thumbnailExtension: item.thumbnail?.extension))
             .toList();
         return serieses;
+      } else {
+        return Future.error("network error");
       }
     } catch (error) {
       if (kDebugMode) {

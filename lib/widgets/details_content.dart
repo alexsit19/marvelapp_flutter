@@ -14,6 +14,10 @@ class DetailsContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String description = "";
+    if (character?.description != null) {
+      description = character?.description as String;
+    }
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: Column(
@@ -33,7 +37,7 @@ class DetailsContent extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  character?.name ?? "name missing",
+                  character?.name ?? "missing name",
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0,
@@ -59,13 +63,12 @@ class DetailsContent extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),
             child: Text(
-              character?.description ?? "description missing",
+              description != "" ? description : "description missing",
               textAlign: TextAlign.justify,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-                top: 8.0, left: 8.0, right: 8.0),
+            padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
             child: Row(
               children: const [
                 Text(
