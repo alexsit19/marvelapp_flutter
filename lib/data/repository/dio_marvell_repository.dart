@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ui';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:marvelapp_flutter/data/model/response_models/character.dart';
@@ -17,7 +16,7 @@ class DioMarvellRepository extends MarvellRepository {
   final String hash = "f43ba4d3c12135105017b1f45993942e";
 
   @override
-  Future<List<Character>?> getCharacters() async {
+  Future<List<Character>> getCharacters() async {
     try {
       Response response = await dio.get(
         'https://gateway.marvel.com:443/v1/public/characters?ts=$fakeTimeStamp&apikey=$publicKey&hash=$hash',
@@ -26,28 +25,30 @@ class DioMarvellRepository extends MarvellRepository {
         var jsonObject = jsonDecode(response.data.toString());
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
-        List<Character>? listCharacters = data?.results
-            ?.map((item) => Character(
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                thumbnailPath: item.thumbnail?.path,
-                thumbnailExtension: item.thumbnail?.extension))
-            .toList();
-        return listCharacters;
+        if (data != null) {
+          List<Character>? tempCharacterList = data.results
+              ?.map((item) => Character(
+                  id: item.id,
+                  name: item.name,
+                  description: item.description,
+                  thumbnailPath: item.thumbnail?.path,
+                  thumbnailExtension: item.thumbnail?.extension))
+              .toList();
+          List<Character> listCharacters = tempCharacterList ?? List.empty();
+          return listCharacters;
+        } else {
+          return Future.error("No data error");
+        }
       } else {
         return Future.error("network error");
       }
     } catch (error) {
-      if (kDebugMode) {
-        print(error);
-      }
       return Future.error("$error");
     }
   }
 
   @override
-  Future<Character?> getCharacterDetail(String characterId) async {
+  Future<Character> getCharacterDetail(String characterId) async {
     try {
       Response response = await dio.get(
           'https://gateway.marvel.com:443/v1/public/characters/$characterId?ts=$fakeTimeStamp&apikey=$publicKey&hash=$hash');
@@ -55,28 +56,30 @@ class DioMarvellRepository extends MarvellRepository {
         var jsonObject = jsonDecode(response.data.toString());
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
-        Character? character = data?.results
-            ?.map((item) => Character(
-                id: item.id,
-                name: item.name,
-                description: item.description,
-                thumbnailPath: item.thumbnail?.path,
-                thumbnailExtension: item.thumbnail?.extension))
-            .single;
-        return character;
+        if (data != null) {
+          Character? tempCharacter = data.results
+              ?.map((item) => Character(
+                  id: item.id,
+                  name: item.name,
+                  description: item.description,
+                  thumbnailPath: item.thumbnail?.path,
+                  thumbnailExtension: item.thumbnail?.extension))
+              .single;
+          Character character = tempCharacter ?? Character.empty();
+          return character;
+        } else {
+          return Future.error("No data error");
+        }
       } else {
         return Future.error("network error");
       }
     } catch (error) {
-      if (kDebugMode) {
-        print(error);
-      }
       return Future.error("$error");
     }
   }
 
   @override
-  Future<List<Series>?> getSerieses(String characterId) async {
+  Future<List<Series>> getSerieses(String characterId) async {
     try {
       Response response = await dio.get(
           'https://gateway.marvel.com:443/v1/public/characters/$characterId/series?ts=$fakeTimeStamp&apikey=$publicKey&hash=$hash');
@@ -84,24 +87,25 @@ class DioMarvellRepository extends MarvellRepository {
         var jsonObject = jsonDecode(response.data.toString());
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
-        List<Series>? serieses = data?.results
-            ?.map((item) => Series(
-                id: item.id,
-                title: item.title,
-                description: item.description,
-                thumbnailPath: item.thumbnail?.path,
-                thumbnailExtension: item.thumbnail?.extension))
-            .toList();
-        return serieses;
+        if (data != null) {
+          List<Series>? tempSerieses = data.results
+              ?.map((item) => Series(
+                  id: item.id,
+                  title: item.title,
+                  description: item.description,
+                  thumbnailPath: item.thumbnail?.path,
+                  thumbnailExtension: item.thumbnail?.extension))
+              .toList();
+          List<Series> serieses = tempSerieses ?? List.empty();
+          return serieses;
+        } else {
+          return Future.error("No data error");
+        }
       } else {
         return Future.error("network error");
       }
     } catch (error) {
-      if (kDebugMode) {
-        print(error);
-      }
       return Future.error("$error");
     }
-    return null;
   }
 }

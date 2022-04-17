@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
-import 'package:marvelapp_flutter/widgets/custom_error_widget.dart';
-import 'package:marvelapp_flutter/widgets/list_characters.dart';
+import 'package:marvelapp_flutter/presentation/widgets/custom_error_widget.dart';
+import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({Key? key}) : super(key: key);

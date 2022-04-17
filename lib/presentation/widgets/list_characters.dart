@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../data/model/response_models/character.dart';
+import '../../data/model/response_models/character.dart';
 import '../navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {

@@ -11,4 +11,13 @@ class Character {
       required this.thumbnailPath,
       required this.thumbnailExtension,
       required this.description});
+
+  static Character empty() {
+    return const Character(
+        id: null,
+        name: null,
+        thumbnailPath: null,
+        thumbnailExtension: null,
+        description: null);
+  }
 }
