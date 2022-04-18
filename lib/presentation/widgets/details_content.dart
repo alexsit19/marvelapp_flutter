@@ -30,13 +30,14 @@ class DetailsContent extends StatelessWidget {
   }
 
   Widget _getName() {
+    String name = character.name ?? "";
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            character.name ?? "missing name",
+            name,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16.0,

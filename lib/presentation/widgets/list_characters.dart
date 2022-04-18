@@ -15,6 +15,7 @@ class ListCharacters extends StatelessWidget {
         itemCount: list?.length,
         itemBuilder: (context, index) {
           final item = list?[index] as Character;
+          String name = item.name ?? "";
           return Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
@@ -38,7 +39,7 @@ class ListCharacters extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
-                      item.name ?? "",
+                      name,
                       style: const TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),

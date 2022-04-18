@@ -8,6 +8,7 @@ class SeriesElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String title = series.title ?? "";
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
@@ -16,7 +17,7 @@ class SeriesElement extends StatelessWidget {
         child: Column(
           children: [
             getSeriesImage(),
-            Text(series.title ?? "title missing",
+            Text(title,
                 maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
         ),
