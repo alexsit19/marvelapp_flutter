@@ -23,15 +23,16 @@ class DetailsScreen extends StatelessWidget {
           Widget child = const Center(
             child: CircularProgressIndicator(),
           );
-          if (snapshot.hasData) {
-            var character = snapshot.data;
+          if (snapshot.hasData && snapshot.data != null) {
+            Character character = snapshot.data as Character;
             return FutureBuilder<List<Series>?>(
                 future: repository.getSerieses(characterId),
                 builder: (context, snapshot) {
-                  if (snapshot.hasData) {
+                  if (snapshot.hasData && snapshot.data != null) {
+                    List<Series> serieses = snapshot.data as List<Series>;
                     return SingleChildScrollView(
                       child: DetailsContent(
-                          character: character, series: snapshot.data),
+                          character: character, series: serieses),
                     );
                   }
                   return const Center(child: CircularProgressIndicator());

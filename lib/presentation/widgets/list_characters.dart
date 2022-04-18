@@ -33,14 +33,7 @@ class ListCharacters extends StatelessWidget {
                       topLeft: Radius.circular(5.0),
                       bottomLeft: Radius.circular(5.0),
                     ),
-                    child: FadeInImage.assetNetwork(
-                      placeholder: 'assets/graphics/placeholder-150x150.png',
-                      image:
-                          "${item.thumbnailPath}/standard_medium.${item.thumbnailExtension}",
-                      height: 100.0,
-                      width: 100.0,
-                      fit: BoxFit.fill,
-                    ),
+                    child: _getHeroImage(item),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0),
@@ -55,6 +48,16 @@ class ListCharacters extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  Widget _getHeroImage(Character item) {
+    return FadeInImage.assetNetwork(
+      placeholder: 'assets/graphics/placeholder-150x150.png',
+      image: item.getThumbnailUrl("standard_medium"),
+      height: 100.0,
+      width: 100.0,
+      fit: BoxFit.fill,
     );
   }
 }

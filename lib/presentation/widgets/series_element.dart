@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 
 class SeriesElement extends StatelessWidget {
-  final Series? series;
+  final Series series;
 
-  const SeriesElement({Key? key, this.series}) : super(key: key);
+  const SeriesElement({Key? key, required this.series}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,18 +15,21 @@ class SeriesElement extends StatelessWidget {
         height: 170,
         child: Column(
           children: [
-            FadeInImage.assetNetwork(
-                placeholder: "assets/graphics/placeholder-150x150.png",
-                image:
-                    "${series?.thumbnailPath}/portrait_medium.${series?.thumbnailExtension}",
-                width: 120.0,
-                height: 170.0,
-                fit: BoxFit.fitWidth),
-            Text(series?.title ?? "title missing",
+            getSeriesImage(),
+            Text(series.title ?? "title missing",
                 maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
         ),
       ),
     );
+  }
+
+  Widget getSeriesImage() {
+    return FadeInImage.assetNetwork(
+        placeholder: "assets/graphics/placeholder-150x150.png",
+        image: series.getThumbnailUrl("portrait_medium"),
+        width: 120.0,
+        height: 170.0,
+        fit: BoxFit.fitWidth);
   }
 }

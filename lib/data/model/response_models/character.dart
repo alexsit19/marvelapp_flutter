@@ -20,4 +20,12 @@ class Character {
         thumbnailExtension: null,
         description: null);
   }
+
+  String getThumbnailUrl(String size) {
+    String thumbnailUrl = "";
+    if (thumbnailPath != null && thumbnailExtension != null) {
+      thumbnailUrl = "$thumbnailPath/$size.$thumbnailExtension";
+    }
+    return thumbnailUrl;
+  }
 }

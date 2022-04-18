@@ -11,4 +11,12 @@ class Series {
       required this.description,
       required this.thumbnailPath,
       required this.thumbnailExtension});
+
+  String getThumbnailUrl(String size) {
+    String thumbnailUrl = "";
+    if (thumbnailPath != null && thumbnailExtension != null) {
+      thumbnailUrl = "$thumbnailPath/$size.$thumbnailExtension";
+    }
+    return thumbnailUrl;
+  }
 }
