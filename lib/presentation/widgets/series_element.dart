@@ -16,7 +16,7 @@ class SeriesElement extends StatelessWidget {
         height: 170,
         child: Column(
           children: [
-            getSeriesImage(),
+            _getSeriesImage(series),
             Text(title,
                 maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
@@ -25,7 +25,7 @@ class SeriesElement extends StatelessWidget {
     );
   }
 
-  Widget getSeriesImage() {
+  Widget _getSeriesImage(Series series) {
     return FadeInImage.assetNetwork(
         placeholder: "assets/graphics/placeholder-150x150.png",
         image: series.getThumbnailUrl("portrait_medium"),

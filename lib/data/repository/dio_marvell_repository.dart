@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 import 'package:marvelapp_flutter/data/model/response_models/api_response.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
+import '../model/response_models/results.dart';
 import '../model/response_models/series.dart';
 
 class DioMarvellRepository extends MarvellRepository {
@@ -26,14 +27,8 @@ class DioMarvellRepository extends MarvellRepository {
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
         if (data != null) {
-          List<Character>? tempCharacterList = data.results
-              ?.map((item) => Character(
-                  id: item.id,
-                  name: item.name,
-                  description: item.description,
-                  thumbnailPath: item.thumbnail?.path,
-                  thumbnailExtension: item.thumbnail?.extension))
-              .toList();
+          List<Character>? tempCharacterList =
+              data.results?.map((item) => toCharacter(item)).toList();
           List<Character> listCharacters = tempCharacterList ?? List.empty();
           return listCharacters;
         } else {
@@ -47,6 +42,15 @@ class DioMarvellRepository extends MarvellRepository {
     }
   }
 
+  Character toCharacter(Results item) {
+    return Character(
+        id: item.id,
+        name: item.name,
+        description: item.description,
+        thumbnailPath: item.thumbnail?.path,
+        thumbnailExtension: item.thumbnail?.extension);
+  }
+
   @override
   Future<Character> getCharacterDetail(String characterId) async {
     try {
@@ -57,14 +61,8 @@ class DioMarvellRepository extends MarvellRepository {
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
         if (data != null) {
-          Character? tempCharacter = data.results
-              ?.map((item) => Character(
-                  id: item.id,
-                  name: item.name,
-                  description: item.description,
-                  thumbnailPath: item.thumbnail?.path,
-                  thumbnailExtension: item.thumbnail?.extension))
-              .single;
+          Character? tempCharacter =
+              data.results?.map((item) => toCharacter(item)).single;
           Character character = tempCharacter ?? Character.empty();
           return character;
         } else {
@@ -78,6 +76,15 @@ class DioMarvellRepository extends MarvellRepository {
     }
   }
 
+  Series toSeries(Results item) {
+    return Series(
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        thumbnailPath: item.thumbnail?.path,
+        thumbnailExtension: item.thumbnail?.extension);
+  }
+
   @override
   Future<List<Series>> getSerieses(String characterId) async {
     try {
@@ -88,14 +95,8 @@ class DioMarvellRepository extends MarvellRepository {
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
         if (data != null) {
-          List<Series>? tempSerieses = data.results
-              ?.map((item) => Series(
-                  id: item.id,
-                  title: item.title,
-                  description: item.description,
-                  thumbnailPath: item.thumbnail?.path,
-                  thumbnailExtension: item.thumbnail?.extension))
-              .toList();
+          List<Series>? tempSerieses =
+              data.results?.map((item) => toSeries(item)).toList();
           List<Series> serieses = tempSerieses ?? List.empty();
           return serieses;
         } else {
