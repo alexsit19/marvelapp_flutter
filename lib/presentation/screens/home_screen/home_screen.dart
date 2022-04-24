@@ -41,24 +41,7 @@ class HomeScreen extends StatelessWidget {
             return child;
           },
         ),
-      )
-    );
-  }
-
-  Widget getBody() {
-    return FutureBuilder<List<Character>?>(
-      future: repository.getCharacters(),
-      builder: (context, snapshot) {
-        Widget child = const Center(
-          child: CircularProgressIndicator(),
-        );
-        if (snapshot.hasData) {
-          child = ListCharacters(list: snapshot.data);
-        } else if (snapshot.hasError) {
-          child = const CustomErrorWidget();
-        }
-        return child;
-      },
+      ),
     );
   }
 }

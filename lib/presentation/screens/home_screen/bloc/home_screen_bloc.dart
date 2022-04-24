@@ -13,10 +13,8 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   Future<void> _mapGetHeroesEventToState(
       GetHeroes event, Emitter<HomeScreenState> emit) async {
     emit(state.copyWith(status: HomeScreenStatus.loading));
-    print("here");
     try {
       final characters = await repository.getCharacters();
-      print(characters);
       emit(
         state.copyWith(
           status: HomeScreenStatus.success,

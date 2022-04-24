@@ -17,7 +17,8 @@ class HomeScreenState extends Equatable {
     List<Character>? characters,
   }) {
     return HomeScreenState(
-        status: status ?? this.status, characters: characters ?? this.characters);
+        status: status ?? this.status,
+        characters: characters ?? this.characters);
   }
 
   @override
