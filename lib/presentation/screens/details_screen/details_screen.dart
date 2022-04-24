@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
-import '../../data/model/response_models/character.dart';
-import '../../data/model/response_models/series.dart';
-import '../widgets/custom_error_widget.dart';
+import '../../../data/model/response_models/character.dart';
+import '../../../data/model/response_models/series.dart';
+import '../../widgets/custom_error_widget.dart';
 
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({Key? key}) : super(key: key);
