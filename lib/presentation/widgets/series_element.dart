@@ -17,8 +17,7 @@ class SeriesElement extends StatelessWidget {
         child: Column(
           children: [
             _getSeriesImage(series),
-            Text(title,
-                maxLines: 2, overflow: TextOverflow.ellipsis),
+            Text(title, maxLines: 2, overflow: TextOverflow.ellipsis),
           ],
         ),
       ),
@@ -26,11 +25,17 @@ class SeriesElement extends StatelessWidget {
   }
 
   Widget _getSeriesImage(Series series) {
-    return FadeInImage.assetNetwork(
+    Widget seriesImage = const SizedBox(width: 120.0, height: 170.0);
+    String? thumbnailUrl = series.getThumbnailUrl("portrait_medium");
+    if (thumbnailUrl != null) {
+      seriesImage = FadeInImage.assetNetwork(
         placeholder: "assets/graphics/placeholder-150x150.png",
-        image: series.getThumbnailUrl("portrait_medium"),
+        image: thumbnailUrl,
         width: 120.0,
         height: 170.0,
-        fit: BoxFit.fitWidth);
+        fit: BoxFit.fitWidth,
+      );
+    }
+    return seriesImage;
   }
 }
