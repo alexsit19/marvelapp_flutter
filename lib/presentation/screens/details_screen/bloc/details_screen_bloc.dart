@@ -17,7 +17,7 @@ class DetailsScreenBloc extends Bloc<DetailsScreenEvent, DetailsScreenState> {
     emit(state.copyWith(status: DetailsScreenStatus.loading));
     try {
       final character = await repository.getCharacterDetail(characterId);
-      final series = await repository.getSerieses(characterId);
+      final series = await repository.getSeries(characterId);
       emit(state.copyWith(
           status: DetailsScreenStatus.success,
           character: character,
