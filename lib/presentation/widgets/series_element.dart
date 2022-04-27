@@ -25,7 +25,10 @@ class SeriesElement extends StatelessWidget {
   }
 
   Widget _getSeriesImage(Series series) {
-    Widget seriesImage = const SizedBox(width: 120.0, height: 170.0);
+    Widget seriesImage = SizedBox(
+        child: Image.asset("assets/graphics/placeholder-150x150.png"),
+        width: 120.0,
+        height: 170.0);
     String? thumbnailUrl = series.getThumbnailUrl("portrait_medium");
     if (thumbnailUrl != null) {
       seriesImage = FadeInImage.assetNetwork(
