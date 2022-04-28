@@ -12,8 +12,8 @@ class Series {
       required this.thumbnailPath,
       required this.thumbnailExtension});
 
-  String getThumbnailUrl(String size) {
-    String thumbnailUrl = "";
+  String? getThumbnailUrl(String size) {
+    String? thumbnailUrl;
     if (thumbnailPath != null && thumbnailExtension != null) {
       thumbnailUrl = "$thumbnailPath/$size.$thumbnailExtension";
     }
