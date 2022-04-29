@@ -8,22 +8,24 @@ class DetailsScreenBloc extends Bloc<DetailsScreenEvent, DetailsScreenState> {
   final String characterId;
 
   DetailsScreenBloc({required this.repository, required this.characterId})
-      : super(const DetailsScreenState()) {
+      : super(const DetailsScreenState(loading: true)) {
     on<GetCharacterDetail>(_mapGetCharacterEventToState);
   }
 
-  Future<void> _mapGetCharacterEventToState(
-      GetCharacterDetail event, Emitter<DetailsScreenState> emit) async {
-    emit(state.copyWith(status: DetailsScreenStatus.loading));
+  Future<void> _mapGetCharacterEventToState(GetCharacterDetail event, Emitter<DetailsScreenState> emit) async {
+    emit(state.copyWith(loading: true, error: null));
     try {
       final character = await repository.getCharacterDetail(characterId);
       final series = await repository.getSeries(characterId);
       emit(state.copyWith(
-          status: DetailsScreenStatus.success,
-          character: character,
-          series: series));
+        loading: false,
+        character: character,
+        series: series,
+        error: null,
+      ));
     } catch (error, stacktrace) {
-      emit(state.copyWith(status: DetailsScreenStatus.error));
+      print("error");
+      emit(state.copyWith(loading: false, error: error.toString()));
     }
   }
 }

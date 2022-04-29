@@ -1,34 +1,36 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 import '../../../../data/model/response_models/character.dart';
 
-enum DetailsScreenStatus { initial, loading, success, error }
-
+@immutable
 class DetailsScreenState extends Equatable {
-  final DetailsScreenStatus status;
-  final Character character;
-  final List<Series> series;
+  final bool loading;
+  final Character? character;
+  final String? error;
+  final List<Series>? series;
 
-  const DetailsScreenState(
-      {this.status = DetailsScreenStatus.initial,
-      this.character = const Character(
-          id: null,
-          name: null,
-          thumbnailPath: null,
-          thumbnailExtension: null,
-          description: null),
-      this.series = const <Series>[]});
+  const DetailsScreenState({
+    required this.loading,
+    this.character,
+    this.error,
+    this.series,
+  });
 
-  DetailsScreenState copyWith(
-      {DetailsScreenStatus? status,
-      Character? character,
-      List<Series>? series}) {
+  DetailsScreenState copyWith({
+    required bool loading,
+    Character? character,
+    String? error,
+    List<Series>? series,
+  }) {
     return DetailsScreenState(
-        status: status ?? this.status,
-        character: character ?? this.character,
-        series: series ?? this.series);
+      loading: loading,
+      character: character ?? this.character,
+      series: series ?? this.series,
+      error: error,
+    );
   }
 
   @override
-  List<Object?> get props => [status, character, series];
+  List<Object?> get props => [loading, character, series, error];
 }

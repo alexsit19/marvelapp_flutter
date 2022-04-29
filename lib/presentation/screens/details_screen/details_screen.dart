@@ -22,29 +22,22 @@ class DetailsScreen extends StatelessWidget {
         title: const Text("MarvellApp - Detail"),
       ),
       body: BlocProvider(
-        create: (_) =>
-            DetailsScreenBloc(repository: repository, characterId: characterId)
-              ..add(GetCharacterDetail()),
+        create: (_) => DetailsScreenBloc(repository: repository, characterId: characterId)..add(GetCharacterDetail()),
         child: BlocBuilder<DetailsScreenBloc, DetailsScreenState>(
           builder: (context, state) {
             Widget child = const Center(
               child: CircularProgressIndicator(),
             );
-            switch (state.status) {
-              case DetailsScreenStatus.initial:
-                break;
-              case DetailsScreenStatus.loading:
-                break;
-              case DetailsScreenStatus.success:
+            if (!state.loading) {
+              if (state.error == null) {
                 child = SingleChildScrollView(
-                  child: DetailsContent(
-                      character: state.character, series: state.series),
+                  child: DetailsContent(character: state.character as Character, series: state.series as List<Series>),
                 );
-                break;
-              case DetailsScreenStatus.error:
+              } else {
                 child = const CustomErrorWidget();
-                break;
+              }
             }
+
             return child;
           },
         ),

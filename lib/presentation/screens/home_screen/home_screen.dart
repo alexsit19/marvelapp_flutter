@@ -26,18 +26,14 @@ class HomeScreen extends StatelessWidget {
             Widget child = const Center(
               child: CircularProgressIndicator(),
             );
-            switch (state.status) {
-              case HomeScreenStatus.initial:
-                break;
-              case HomeScreenStatus.loading:
-                break;
-              case HomeScreenStatus.success:
+            if (!state.loading) {
+              if (state.error == null) {
                 child = ListCharacters(list: state.characters);
-                break;
-              case HomeScreenStatus.error:
+              } else {
                 child = const CustomErrorWidget();
-                break;
+              }
             }
+
             return child;
           },
         ),

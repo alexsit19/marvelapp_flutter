@@ -6,23 +6,23 @@ import 'package:marvelapp_flutter/presentation/screens/home_screen/bloc/home_scr
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final MarvellRepository repository;
 
-  HomeScreenBloc({required this.repository}) : super(const HomeScreenState()) {
+  HomeScreenBloc({required this.repository}) : super(const HomeScreenState(loading: true)) {
     on<GetHeroes>(_mapGetHeroesEventToState);
   }
 
-  Future<void> _mapGetHeroesEventToState(
-      GetHeroes event, Emitter<HomeScreenState> emit) async {
-    emit(state.copyWith(status: HomeScreenStatus.loading));
+  Future<void> _mapGetHeroesEventToState(GetHeroes event, Emitter<HomeScreenState> emit) async {
+    emit(state.copyWith(loading: true, error: null));
     try {
       final characters = await repository.getCharacters();
       emit(
         state.copyWith(
-          status: HomeScreenStatus.success,
+          loading: false,
           characters: characters,
+          error: null,
         ),
       );
     } catch (error, stacktrace) {
-      emit(state.copyWith(status: HomeScreenStatus.error));
+      emit(state.copyWith(loading: false, error: error.toString()));
     }
   }
 }
