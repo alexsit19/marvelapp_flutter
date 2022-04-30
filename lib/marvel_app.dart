@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:marvelapp_flutter/presentation/navigation/route_generator.dart';
 
 class MarvelApp extends StatelessWidget {

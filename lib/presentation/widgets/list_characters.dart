@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../data/model/response_models/character.dart';
-import '../navigation/app_routes.dart';
+import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {
   final List<Character>? list;

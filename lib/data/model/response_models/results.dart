@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 import 'package:marvelapp_flutter/data/model/response_models/thumbnail.dart';

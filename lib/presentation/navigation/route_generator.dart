@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/features/details/details_screen.dart';
