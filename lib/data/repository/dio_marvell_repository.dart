@@ -53,7 +53,7 @@ class DioMarvellRepository extends MarvellRepository {
         if (data != null) {
           Character? tempCharacter =
               data.results?.map((item) => item.toCharacter()).single;
-          Character character = tempCharacter as Character; //as Character;
+          Character character = tempCharacter as Character;
           return character;
         } else {
           return Future.error("No data error");

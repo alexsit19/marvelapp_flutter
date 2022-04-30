@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
-import 'package:marvelapp_flutter/presentation/screens/home_screen/bloc/home_screen_event.dart';
-import 'package:marvelapp_flutter/presentation/screens/home_screen/bloc/home_screen_state.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_event.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_state.dart';
 
 class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   final MarvellRepository repository;

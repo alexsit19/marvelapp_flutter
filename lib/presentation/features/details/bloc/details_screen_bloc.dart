@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
-import 'package:marvelapp_flutter/presentation/screens/details_screen/bloc/details_screen_event.dart';
-import 'package:marvelapp_flutter/presentation/screens/details_screen/bloc/details_screen_state.dart';
+import 'package:marvelapp_flutter/presentation/features/details/bloc/details_screen_event.dart';
+import 'package:marvelapp_flutter/presentation/features/details/bloc/details_screen_state.dart';
 
 class DetailsScreenBloc extends Bloc<DetailsScreenEvent, DetailsScreenState> {
   final MarvellRepository repository;

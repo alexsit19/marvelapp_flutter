@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
-import 'package:marvelapp_flutter/presentation/screens/home_screen/bloc/home_screen_bloc.dart';
-import 'package:marvelapp_flutter/presentation/screens/home_screen/bloc/home_screen_event.dart';
-import 'package:marvelapp_flutter/presentation/screens/home_screen/bloc/home_screen_state.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_bloc.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_event.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_state.dart';
 import 'package:marvelapp_flutter/presentation/widgets/custom_error_widget.dart';
 import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
 
