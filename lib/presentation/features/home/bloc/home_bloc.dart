@@ -1,16 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
-import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_event.dart';
-import 'package:marvelapp_flutter/presentation/features/home/bloc/home_screen_state.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 
-class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
+class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final MarvellRepository repository;
 
-  HomeScreenBloc({required this.repository}) : super(const HomeScreenState(loading: true)) {
+  HomeBloc({required this.repository}) : super(const HomeState(loading: true)) {
     on<GetHeroes>(_mapGetHeroesEventToState);
   }
 
-  Future<void> _mapGetHeroesEventToState(GetHeroes event, Emitter<HomeScreenState> emit) async {
+  Future<void> _mapGetHeroesEventToState(GetHeroes event, Emitter<HomeState> emit) async {
     emit(state.copyWith(loading: true, error: null));
     try {
       final characters = await repository.getCharacters();

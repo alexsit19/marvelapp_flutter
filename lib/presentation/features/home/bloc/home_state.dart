@@ -1,23 +1,27 @@
 import 'package:equatable/equatable.dart';
 import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 
-class HomeScreenState extends Equatable {
+class HomeState extends Equatable {
   final bool loading;
   final String? error;
   final List<Character>? characters;
 
-  const HomeScreenState({
+  const HomeState({
     required this.loading,
     this.error,
     this.characters,
   });
 
-  HomeScreenState copyWith({
+  HomeState copyWith({
     required bool loading,
     String? error,
     List<Character>? characters,
   }) {
-    return HomeScreenState(loading: loading, characters: characters ?? this.characters, error: error);
+    return HomeState(
+      loading: loading,
+      characters: characters ?? this.characters,
+      error: error,
+    );
   }
 
   @override

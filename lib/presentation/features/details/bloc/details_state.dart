@@ -4,26 +4,27 @@ import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 import '../../../../data/model/response_models/character.dart';
 
 @immutable
-class DetailsScreenState extends Equatable {
+class DetailsState extends Equatable {
   final bool loading;
   final Character? character;
   final String? error;
   final List<Series>? series;
 
-  const DetailsScreenState({
+  const DetailsState({
     required this.loading,
     this.character,
     this.error,
     this.series,
   });
 
-  DetailsScreenState copyWith({
+  DetailsState copyWith({
     required bool loading,
     Character? character,
     String? error,
     List<Series>? series,
   }) {
-    return DetailsScreenState(
+
+    return DetailsState(
       loading: loading,
       character: character ?? this.character,
       series: series ?? this.series,
