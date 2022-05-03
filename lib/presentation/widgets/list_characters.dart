@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../data/model/response_models/character.dart';
-import '../navigation/app_routes.dart';
+import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {
   final List<Character>? list;
@@ -24,8 +24,7 @@ class ListCharacters extends StatelessWidget {
             ),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(context, AppRoutes.detailScreen,
-                    arguments: item.id);
+                Navigator.pushNamed(context, AppRoutes.detailScreen, arguments: item.id);
               },
               child: Row(
                 children: [
@@ -56,6 +55,17 @@ class ListCharacters extends StatelessWidget {
     return FadeInImage.assetNetwork(
       placeholder: 'assets/graphics/placeholder-150x150.png',
       image: item.getThumbnailUrl("standard_medium"),
+      imageErrorBuilder: (_, __, ___) {
+        return const SizedBox(
+          child: Icon(
+            Icons.broken_image,
+            size: 80,
+            color: Colors.grey,
+          ),
+          height: 100.0,
+          width: 100.0,
+        );
+      },
       height: 100.0,
       width: 100.0,
       fit: BoxFit.fill,

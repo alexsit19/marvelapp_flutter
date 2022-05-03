@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 import 'package:marvelapp_flutter/data/model/response_models/api_response.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
-import '../model/response_models/results.dart';
-import '../model/response_models/series.dart';
+import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 
 class DioMarvellRepository extends MarvellRepository {
   final Dio dio = Dio(
@@ -28,7 +26,7 @@ class DioMarvellRepository extends MarvellRepository {
         var data = apiResponse.data;
         if (data != null) {
           List<Character>? tempCharacterList =
-              data.results?.map((item) => toCharacter(item)).toList();
+              data.results?.map((item) => item.toCharacter()).toList();
           List<Character> listCharacters = tempCharacterList ?? List.empty();
           return listCharacters;
         } else {
@@ -42,15 +40,6 @@ class DioMarvellRepository extends MarvellRepository {
     }
   }
 
-  Character toCharacter(Results item) {
-    return Character(
-        id: item.id,
-        name: item.name,
-        description: item.description,
-        thumbnailPath: item.thumbnail?.path,
-        thumbnailExtension: item.thumbnail?.extension);
-  }
-
   @override
   Future<Character> getCharacterDetail(String characterId) async {
     try {
@@ -62,8 +51,8 @@ class DioMarvellRepository extends MarvellRepository {
         var data = apiResponse.data;
         if (data != null) {
           Character? tempCharacter =
-              data.results?.map((item) => toCharacter(item)).single;
-          Character character = tempCharacter ?? Character.empty();
+              data.results?.map((item) => item.toCharacter()).single;
+          Character character = tempCharacter as Character;
           return character;
         } else {
           return Future.error("No data error");
@@ -76,17 +65,8 @@ class DioMarvellRepository extends MarvellRepository {
     }
   }
 
-  Series toSeries(Results item) {
-    return Series(
-        id: item.id,
-        title: item.title,
-        description: item.description,
-        thumbnailPath: item.thumbnail?.path,
-        thumbnailExtension: item.thumbnail?.extension);
-  }
-
   @override
-  Future<List<Series>> getSerieses(String characterId) async {
+  Future<List<Series>> getSeries(String characterId) async {
     try {
       Response response = await dio.get(
           'https://gateway.marvel.com:443/v1/public/characters/$characterId/series?ts=$fakeTimeStamp&apikey=$publicKey&hash=$hash');
@@ -95,10 +75,10 @@ class DioMarvellRepository extends MarvellRepository {
         var apiResponse = ApiResponse.fromJson(jsonObject);
         var data = apiResponse.data;
         if (data != null) {
-          List<Series>? tempSerieses =
-              data.results?.map((item) => toSeries(item)).toList();
-          List<Series> serieses = tempSerieses ?? List.empty();
-          return serieses;
+          List<Series>? tempSeries =
+              data.results?.map((item) => item.toSeries()).toList();
+          List<Series> series = tempSeries ?? List.empty();
+          return series;
         } else {
           return Future.error("No data error");
         }

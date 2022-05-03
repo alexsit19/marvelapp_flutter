@@ -1,4 +1,5 @@
-import 'dart:convert';
+import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 import 'package:marvelapp_flutter/data/model/response_models/thumbnail.dart';
 
 class Results {
@@ -29,5 +30,24 @@ class Results {
       data['thumbnail'] = thumbnail!.toJson();
     }
     return data;
+  }
+
+  Series toSeries() {
+    return Series(
+      id: id,
+      title: title,
+      thumbnailPath: thumbnail?.path,
+      thumbnailExtension: thumbnail?.extension,
+      description: description,
+    );
+  }
+
+  Character toCharacter() {
+    return Character(
+        id: id,
+        name: name,
+        thumbnailPath: thumbnail?.path,
+        thumbnailExtension: thumbnail?.extension,
+        description: description);
   }
 }

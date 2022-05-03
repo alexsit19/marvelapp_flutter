@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 
 class DescriptionBlock extends StatelessWidget {
   final Character character;
