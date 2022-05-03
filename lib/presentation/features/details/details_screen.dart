@@ -22,7 +22,7 @@ class DetailsScreen extends StatelessWidget {
         title: const Text("MarvellApp - Detail"),
       ),
       body: BlocProvider(
-        create: (_) => DetailsBloc(repository: repository, characterId: characterId)..add(GetCharacterDetail()),
+        create: (_) => DetailsBloc(repository: repository)..add(GetCharacterDetail(characterId: characterId)),
         child: BlocBuilder<DetailsBloc, DetailsState>(
           builder: (context, state) {
             Widget child = const Center(
