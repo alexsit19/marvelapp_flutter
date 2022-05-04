@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+import 'package:marvelapp_flutter/data/model/response_models/thumbnail.dart';
+import 'package:retrofit/http.dart';
+
+@JsonSerializable()
 class Character {
   final int? id;
   final String? name;
@@ -18,5 +23,17 @@ class Character {
       thumbnailUrl = "$thumbnailPath/$size.$thumbnailExtension";
     }
     return thumbnailUrl;
+  }
+
+  factory Character.fromJson(Map<String, dynamic> json) {
+    Thumbnail? thumbnail = Thumbnail.fromJson(json['thumbnail']);
+    String? path = thumbnail.path;
+    String? extension = thumbnail.extension;
+    return Character(
+        id: json['id'],
+        name: json['name'],
+        description: json['description'],
+        thumbnailPath: null,
+        thumbnailExtension: null);
   }
 }

@@ -4,18 +4,29 @@ import 'package:marvelapp_flutter/data/model/response_models/character.dart';
 import 'package:marvelapp_flutter/data/model/response_models/api_response.dart';
 import 'package:marvelapp_flutter/data/repository/marvell_repository.dart';
 import 'package:marvelapp_flutter/data/model/response_models/series.dart';
+import 'package:marvelapp_flutter/data/sources/marvell_api_client.dart';
 
 class DioMarvellRepository extends MarvellRepository {
   final Dio dio = Dio(
     BaseOptions(
         contentType: 'application/json', responseType: ResponseType.plain),
   );
+  final MarvellClient marvellClient = MarvellClient(Dio(
+    BaseOptions(
+        contentType: 'application/json', responseType: ResponseType.plain),
+  ));
   final String fakeTimeStamp = "12345";
   final String publicKey = "b2bd25766ee84a0881b157960b3d3590";
   final String hash = "f43ba4d3c12135105017b1f45993942e";
 
   @override
   Future<List<Character>> getCharacters() async {
+    try {
+      var characters = marvellClient.getCharacters(fakeTimeStamp, publicKey, hash);
+      print("Characters: ${characters.toString()}");
+    } catch (error) {
+      print(error);
+    }
     try {
       Response response = await dio.get(
         'https://gateway.marvel.com:443/v1/public/characters?ts=$fakeTimeStamp&apikey=$publicKey&hash=$hash',

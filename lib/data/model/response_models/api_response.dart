@@ -1,5 +1,7 @@
 import 'package:marvelapp_flutter/data/model/response_models/data.dart';
+import 'package:retrofit/http.dart';
 
+@Parser.JsonSerializable
 class ApiResponse {
   Data? data;
 
