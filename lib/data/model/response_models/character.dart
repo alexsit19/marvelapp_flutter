@@ -1,8 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:marvelapp_flutter/data/model/response_models/thumbnail.dart';
-import 'package:retrofit/http.dart';
 
-@JsonSerializable()
 class Character {
   final int? id;
   final String? name;

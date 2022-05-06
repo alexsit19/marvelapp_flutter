@@ -18,7 +18,8 @@ class _MarvellClient implements MarvellClient {
   String? baseUrl;
 
   @override
-  Future<List<Character>> getCharacters(fakeTimeStamp, publicKey, hash) async {
+  Future<HttpResponse<ApiResponse>> getCharacters(
+      fakeTimeStamp, publicKey, hash) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'ts': fakeTimeStamp,
@@ -27,50 +28,59 @@ class _MarvellClient implements MarvellClient {
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Character>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<ApiResponse>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/characters',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => Character.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
+    final value = ApiResponse.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   @override
-  Future<Character> getCharacterDetail(characterId) async {
+  Future<HttpResponse<ApiResponse>> getCharacterDetail(
+      characterId, fakeTimeStamp, publicKey, hash) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'ts': fakeTimeStamp,
+      r'apikey': publicKey,
+      r'hash': hash
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<Character>(
+        _setStreamType<HttpResponse<ApiResponse>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/characters/${characterId}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = Character.fromJson(_result.data!);
-    return value;
+    final value = ApiResponse.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   @override
-  Future<List<Series>> getSeries(characterId) async {
+  Future<HttpResponse<ApiResponse>> getSeries(
+      characterId, fakeTimeStamp, publicKey, hash) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'ts': fakeTimeStamp,
+      r'apikey': publicKey,
+      r'hash': hash
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Series>>(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<ApiResponse>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/characters/${characterId}/series',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    var value = _result.data!
-        .map((dynamic i) => Series.fromJson(i as Map<String, dynamic>))
-        .toList();
-    return value;
+    final value = ApiResponse.fromJson(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
