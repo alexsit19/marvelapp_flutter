@@ -4,9 +4,11 @@ class Thumbnail {
 
   Thumbnail({this.path, this.extension});
 
-  Thumbnail.fromJson(Map<String, dynamic> json) {
-    path = json['path'];
-    extension = json['extension'];
+  factory Thumbnail.fromJson(Map<String, dynamic> json) {
+    return Thumbnail(
+      path: json['path'],
+      extension: json['extension'],
+    );
   }
 
   Map<String, dynamic> toJson() {

@@ -1,4 +1,5 @@
 import 'package:marvelapp_flutter/data/model/response_models/data.dart';
+import 'package:retrofit/http.dart';
 
 class ApiResponse {
   Data? data;

@@ -7,7 +7,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      results = <Results>[];
+      results = [];
       json['results'].forEach((v) {
         results!.add(Results.fromJson(v));
       });
