@@ -1,5 +1,5 @@
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
+import 'package:marvelapp_flutter/domain/entities/series.dart';
 
 abstract class MarvellRepository {
   Future<List<Character>> getCharacters();

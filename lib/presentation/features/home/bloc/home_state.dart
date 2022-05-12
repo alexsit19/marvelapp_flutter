@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
 
 class HomeState extends Equatable {
   final bool loading;

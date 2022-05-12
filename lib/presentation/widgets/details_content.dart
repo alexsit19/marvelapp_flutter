@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_block.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
+import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'description_block.dart';
 
 class DetailsContent extends StatelessWidget {

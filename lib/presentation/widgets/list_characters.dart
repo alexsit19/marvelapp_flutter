@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {

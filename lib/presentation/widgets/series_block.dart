@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_element.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
+import 'package:marvelapp_flutter/domain/entities/series.dart';
 
 class SeriesBlock extends StatelessWidget {
   final List<Series> series;

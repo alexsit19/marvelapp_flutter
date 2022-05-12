@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/domain/entities/series.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
 
 @immutable
 class DetailsState extends Equatable {
