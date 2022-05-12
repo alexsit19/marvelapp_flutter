@@ -2,9 +2,9 @@ import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 
 class GetCharacterByIdUseCase {
-  final MarvellRepository _repository;
+  final MarvellRepository repository;
 
-  GetCharacterByIdUseCase(this._repository);
+  GetCharacterByIdUseCase({required this.repository});
 
-  Future<Character> call(String characterId) => _repository.getCharacterDetail(characterId);
+  Future<Character> call(String characterId) => repository.getCharacterDetail(characterId);
 }

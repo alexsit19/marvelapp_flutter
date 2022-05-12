@@ -2,9 +2,9 @@ import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 
 class GetCharactersUseCase {
-  final MarvellRepository _repository;
+  final MarvellRepository repository;
 
-  GetCharactersUseCase(this._repository);
+  GetCharactersUseCase({required this.repository});
 
-  Future<List<Character>> call() => _repository.getCharacters();
+  Future<List<Character>> call() => repository.getCharacters();
 }
