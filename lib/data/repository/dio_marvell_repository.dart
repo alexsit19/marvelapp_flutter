@@ -5,12 +5,19 @@ import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'package:marvelapp_flutter/data/sources/marvell_api_client.dart';
 
 class DioMarvellRepository extends MarvellRepository {
+  static final DioMarvellRepository _repository = DioMarvellRepository._internal();
   final String fakeTimeStamp = "12345";
   final String publicKey = "b2bd25766ee84a0881b157960b3d3590";
   final String hash = "f43ba4d3c12135105017b1f45993942e";
   final MarvellClient marvellClient = MarvellClient(
       Dio(BaseOptions(contentType: 'application/json', responseType: ResponseType.plain)),
       baseUrl: "https://gateway.marvel.com:443/v1/public/");
+
+  factory DioMarvellRepository() {
+    return _repository;
+  }
+
+  DioMarvellRepository._internal();
 
   @override
   Future<List<Character>> getCharacters() async {
