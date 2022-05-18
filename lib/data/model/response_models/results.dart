@@ -37,7 +37,6 @@ class Results {
       id: id,
       title: title,
       thumbnailUrl: collectThumbnailUrl(size),
-      description: description,
     );
   }
 
