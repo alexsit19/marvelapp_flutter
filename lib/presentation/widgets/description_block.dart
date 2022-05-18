@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/domain/entities/character.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
 class DescriptionBlock extends StatelessWidget {
-  final Character character;
+  final CharacterViewData character;
 
   const DescriptionBlock({Key? key, required this.character}) : super(key: key);
 

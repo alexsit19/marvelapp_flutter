@@ -1,8 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
+import 'package:marvelapp_flutter/presentation/mappers/character_mapper.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetCharactersUseCase getCharactersUseCase;
@@ -15,10 +15,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(loading: true, error: null));
     try {
       final characters = await getCharactersUseCase();
+      final charactersViewData = characters.map((item) => CharacterMapper.toCharacterViewData(item)).toList();
       emit(
         state.copyWith(
           loading: false,
-          characters: characters,
+          characters: charactersViewData,
           error: null,
         ),
       );

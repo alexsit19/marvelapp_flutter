@@ -1,14 +1,16 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_character_by_id_use_case.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_series_by_id_use_case.dart';
+import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
+import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_state.dart';
+import 'package:marvelapp_flutter/presentation/mappers/character_mapper.dart';
+import 'package:marvelapp_flutter/presentation/mappers/series_mapper.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
-  final GetCharacterByIdUseCase getCharacterByIdUseCase;
-  final GetSeriesByIdUseCase getSeriesByIdUseCase;
+  final GetCharacterUseCase getCharacterUseCase;
+  final GetSeriesWithCharacterUseCase getSeriesUseCase;
 
-  DetailsBloc({required this.getCharacterByIdUseCase, required this.getSeriesByIdUseCase})
+  DetailsBloc({required this.getCharacterUseCase, required this.getSeriesUseCase})
       : super(const DetailsState(loading: true)) {
     on<GetCharacterDetail>(_mapGetCharacterEventToState);
   }
@@ -16,12 +18,14 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   Future<void> _mapGetCharacterEventToState(GetCharacterDetail event, Emitter<DetailsState> emit) async {
     emit(state.copyWith(loading: true, error: null));
     try {
-      final character = await getCharacterByIdUseCase(event.characterId);
-      final series = await getSeriesByIdUseCase(event.characterId);
+      final character = await getCharacterUseCase(event.characterId);
+      final characterViewData = CharacterMapper.toCharacterViewData(character);
+      final series = await getSeriesUseCase(event.characterId);
+      final seriesViewData = series.map((item) => SeriesMapper.toSeriesViewData(item)).toList();
       emit(state.copyWith(
         loading: false,
-        character: character,
-        series: series,
+        character: characterViewData,
+        series: seriesViewData,
         error: null,
       ));
     } catch (error, stacktrace) {

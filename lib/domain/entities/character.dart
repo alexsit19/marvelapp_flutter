@@ -11,12 +11,4 @@ class Character {
       required this.thumbnailPath,
       required this.thumbnailExtension,
       required this.description});
-
-  String getThumbnailUrl(String size) {
-    String thumbnailUrl = "";
-    if (thumbnailPath != null && thumbnailExtension != null) {
-      thumbnailUrl = "$thumbnailPath/$size.$thumbnailExtension";
-    }
-    return thumbnailUrl;
-  }
 }
