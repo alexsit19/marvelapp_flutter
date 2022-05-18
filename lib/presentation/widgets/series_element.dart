@@ -29,7 +29,7 @@ class SeriesElement extends StatelessWidget {
         child: Image.asset("assets/graphics/placeholder-150x150.png"),
         width: 120.0,
         height: 170.0);
-    String? thumbnailUrl = series.getThumbnailUrl("portrait_medium");
+    String? thumbnailUrl = series.thumbnailUrl;
     if (thumbnailUrl != null) {
       seriesImage = FadeInImage.assetNetwork(
         placeholder: "assets/graphics/placeholder-150x150.png",

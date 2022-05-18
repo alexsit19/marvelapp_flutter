@@ -54,7 +54,7 @@ class ListCharacters extends StatelessWidget {
   Widget _getHeroImage(CharacterViewData item) {
     return FadeInImage.assetNetwork(
       placeholder: 'assets/graphics/placeholder-150x150.png',
-      image: item.getThumbnailUrl("standard_medium"),
+      image: item.thumbnailUrl ?? "",
       imageErrorBuilder: (_, __, ___) {
         return const SizedBox(
           child: Icon(

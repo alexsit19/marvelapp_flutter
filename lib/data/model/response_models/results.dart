@@ -32,22 +32,26 @@ class Results {
     return data;
   }
 
-  Series toSeries() {
+  Series toSeries(String size) {
     return Series(
       id: id,
       title: title,
-      thumbnailPath: thumbnail?.path,
-      thumbnailExtension: thumbnail?.extension,
+      thumbnailUrl: collectThumbnailUrl(size),
       description: description,
     );
   }
 
-  Character toCharacter() {
+  Character toCharacter(String size) {
     return Character(
-        id: id,
-        name: name,
-        thumbnailPath: thumbnail?.path,
-        thumbnailExtension: thumbnail?.extension,
-        description: description);
+      id: id,
+      name: name,
+      thumbnailUrl: collectThumbnailUrl(size),
+      description: description,
+    );
+  }
+
+  String? collectThumbnailUrl(String size) {
+    String? thumbnailUrl = "${thumbnail?.path}/$size.${thumbnail?.extension}";
+    return thumbnailUrl;
   }
 }

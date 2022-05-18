@@ -6,8 +6,7 @@ class CharacterMapper {
     return CharacterViewData(
         id: character.id,
         name: character.name,
-        thumbnailPath: character.thumbnailPath,
-        thumbnailExtension: character.thumbnailExtension,
+        thumbnailUrl: character.thumbnailUrl,
         description: character.description);
   }
 }

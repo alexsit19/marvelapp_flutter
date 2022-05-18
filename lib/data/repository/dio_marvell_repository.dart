@@ -26,7 +26,7 @@ class DioMarvellRepository extends MarvellRepository {
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
         if (data != null) {
-          List<Character>? tempCharacters = data.results?.map((e) => e.toCharacter()).toList();
+          List<Character>? tempCharacters = data.results?.map((item) => item.toCharacter("standard_medium")).toList();
           List<Character> characters = tempCharacters ?? List.empty();
           return characters;
         } else {
@@ -47,7 +47,7 @@ class DioMarvellRepository extends MarvellRepository {
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
         if (data != null) {
-          Character? tempCharacter = data.results?.map((item) => item.toCharacter()).single;
+          Character? tempCharacter = data.results?.map((item) => item.toCharacter("standard_xlarge")).single;
           Character character = tempCharacter as Character;
           return character;
         } else {
@@ -68,7 +68,7 @@ class DioMarvellRepository extends MarvellRepository {
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
         if (data != null) {
-          List<Series>? tempSeries = data.results?.map((item) => item.toSeries()).toList();
+          List<Series>? tempSeries = data.results?.map((item) => item.toSeries("portrait_medium")).toList();
           List<Series> series = tempSeries ?? List.empty();
           return series;
         } else {

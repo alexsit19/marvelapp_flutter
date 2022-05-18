@@ -52,7 +52,7 @@ class DetailsContent extends StatelessWidget {
   Widget _getHeroImage(CharacterViewData character) {
     return FadeInImage.assetNetwork(
       placeholder: "assets/graphics/placeholder-150x150.png",
-      image: character.getThumbnailUrl("standard_xlarge"),
+      image: character.thumbnailUrl ?? "",
       height: 300,
       width: 300,
       fit: BoxFit.fitHeight,
