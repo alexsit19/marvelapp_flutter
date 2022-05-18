@@ -28,7 +28,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         series: seriesViewData,
         error: null,
       ));
-    } catch (error, stacktrace) {
+    } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));
     }
   }

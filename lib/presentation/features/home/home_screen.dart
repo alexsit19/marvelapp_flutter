@@ -10,11 +10,11 @@ import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
 import 'bloc/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({Key? key}) : super(key: key);
-  GetCharactersUseCase getCharactersUseCase = GetCharactersUseCase(repository: DioMarvellRepository());
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    GetCharactersUseCase getCharactersUseCase = GetCharactersUseCase(repository: DioMarvellRepository());
     return Scaffold(
       appBar: AppBar(
         title: const Text("MarvellApp"),

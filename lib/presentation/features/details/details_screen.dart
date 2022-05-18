@@ -15,13 +15,11 @@ import 'bloc/details_state.dart';
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({Key? key}) : super(key: key);
   final MarvellRepository repository = DioMarvellRepository();
-  late GetCharacterUseCase getCharacterUseCase;
-  late GetSeriesWithCharacterUseCase getSeriesUseCase;
 
   @override
   Widget build(BuildContext context) {
-    getCharacterUseCase = GetCharacterUseCase(repository: repository);
-    getSeriesUseCase = GetSeriesWithCharacterUseCase(repository: repository);
+    GetCharacterUseCase getCharacterUseCase = GetCharacterUseCase(repository: repository);
+    GetSeriesWithCharacterUseCase getSeriesUseCase = GetSeriesWithCharacterUseCase(repository: repository);
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(

@@ -23,7 +23,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
           error: null,
         ),
       );
-    } catch (error, stacktrace) {
+    } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));
     }
   }
