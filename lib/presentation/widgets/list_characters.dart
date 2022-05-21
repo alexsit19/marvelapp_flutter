@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 
 class ListCharacters extends StatelessWidget {
-  final List<Character>? list;
+  final List<CharacterViewData>? list;
 
   const ListCharacters({Key? key, required this.list}) : super(key: key);
 
@@ -14,7 +14,7 @@ class ListCharacters extends StatelessWidget {
       child: ListView.builder(
         itemCount: list?.length,
         itemBuilder: (context, index) {
-          final item = list?[index] as Character;
+          final item = list?[index] as CharacterViewData;
           String name = item.name ?? "";
           return Card(
             shape: const RoundedRectangleBorder(
@@ -51,10 +51,10 @@ class ListCharacters extends StatelessWidget {
     );
   }
 
-  Widget _getHeroImage(Character item) {
+  Widget _getHeroImage(CharacterViewData item) {
     return FadeInImage.assetNetwork(
       placeholder: 'assets/graphics/placeholder-150x150.png',
-      image: item.getThumbnailUrl("standard_medium"),
+      image: item.thumbnailUrl ?? "",
       imageErrorBuilder: (_, __, ___) {
         return const SizedBox(
           child: Icon(

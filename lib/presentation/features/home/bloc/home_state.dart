@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
 class HomeState extends Equatable {
   final bool loading;
   final String? error;
-  final List<Character>? characters;
+  final List<CharacterViewData>? characters;
 
   const HomeState({
     required this.loading,
@@ -15,7 +15,7 @@ class HomeState extends Equatable {
   HomeState copyWith({
     required bool loading,
     String? error,
-    List<Character>? characters,
+    List<CharacterViewData>? characters,
   }) {
     return HomeState(
       loading: loading,

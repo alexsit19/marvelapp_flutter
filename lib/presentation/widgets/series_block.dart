@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_element.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 
 class SeriesBlock extends StatelessWidget {
-  final List<Series> series;
+  final List<SeriesViewData> series;
 
   const SeriesBlock({Key? key, required this.series}) : super(key: key);
 

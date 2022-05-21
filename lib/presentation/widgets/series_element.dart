@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
+import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 
 class SeriesElement extends StatelessWidget {
-  final Series series;
+  final SeriesViewData series;
 
   const SeriesElement({Key? key, required this.series}) : super(key: key);
 
@@ -24,12 +24,12 @@ class SeriesElement extends StatelessWidget {
     );
   }
 
-  Widget _getSeriesImage(Series series) {
+  Widget _getSeriesImage(SeriesViewData series) {
     Widget seriesImage = SizedBox(
         child: Image.asset("assets/graphics/placeholder-150x150.png"),
         width: 120.0,
         height: 170.0);
-    String? thumbnailUrl = series.getThumbnailUrl("portrait_medium");
+    String? thumbnailUrl = series.thumbnailUrl;
     if (thumbnailUrl != null) {
       seriesImage = FadeInImage.assetNetwork(
         placeholder: "assets/graphics/placeholder-150x150.png",

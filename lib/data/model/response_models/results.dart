@@ -1,5 +1,5 @@
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
+import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'package:marvelapp_flutter/data/model/response_models/thumbnail.dart';
 
 class Results {
@@ -32,22 +32,25 @@ class Results {
     return data;
   }
 
-  Series toSeries() {
+  Series toSeries(String size) {
     return Series(
       id: id,
       title: title,
-      thumbnailPath: thumbnail?.path,
-      thumbnailExtension: thumbnail?.extension,
+      thumbnailUrl: collectThumbnailUrl(size),
+    );
+  }
+
+  Character toCharacter(String size) {
+    return Character(
+      id: id,
+      name: name,
+      thumbnailUrl: collectThumbnailUrl(size),
       description: description,
     );
   }
 
-  Character toCharacter() {
-    return Character(
-        id: id,
-        name: name,
-        thumbnailPath: thumbnail?.path,
-        thumbnailExtension: thumbnail?.extension,
-        description: description);
+  String? collectThumbnailUrl(String size) {
+    String? thumbnailUrl = "${thumbnail?.path}/$size.${thumbnail?.extension}";
+    return thumbnailUrl;
   }
 }

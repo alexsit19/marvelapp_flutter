@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_block.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
 import 'description_block.dart';
 
 class DetailsContent extends StatelessWidget {
-  final Character character;
-  final List<Series> series;
+  final CharacterViewData character;
+  final List<SeriesViewData> series;
 
   const DetailsContent(
       {Key? key, required this.character, required this.series})
@@ -30,7 +30,7 @@ class DetailsContent extends StatelessWidget {
     );
   }
 
-  Widget _getName(Character character) {
+  Widget _getName(CharacterViewData character) {
     String name = character.name ?? "";
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -49,10 +49,10 @@ class DetailsContent extends StatelessWidget {
     );
   }
 
-  Widget _getHeroImage(Character character) {
+  Widget _getHeroImage(CharacterViewData character) {
     return FadeInImage.assetNetwork(
       placeholder: "assets/graphics/placeholder-150x150.png",
-      image: character.getThumbnailUrl("standard_xlarge"),
+      image: character.thumbnailUrl ?? "",
       height: 300,
       width: 300,
       fit: BoxFit.fitHeight,

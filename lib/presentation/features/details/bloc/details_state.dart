@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:marvelapp_flutter/data/model/response_models/series.dart';
-import 'package:marvelapp_flutter/data/model/response_models/character.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 
 @immutable
 class DetailsState extends Equatable {
   final bool loading;
-  final Character? character;
+  final CharacterViewData? character;
   final String? error;
-  final List<Series>? series;
+  final List<SeriesViewData>? series;
 
   const DetailsState({
     required this.loading,
@@ -19,9 +19,9 @@ class DetailsState extends Equatable {
 
   DetailsState copyWith({
     required bool loading,
-    Character? character,
+    CharacterViewData? character,
     String? error,
-    List<Series>? series,
+    List<SeriesViewData>? series,
   }) {
 
     return DetailsState(
