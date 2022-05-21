@@ -3,8 +3,8 @@ import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_state.dart';
-import 'package:marvelapp_flutter/presentation/mappers/character_mapper.dart';
-import 'package:marvelapp_flutter/presentation/mappers/series_mapper.dart';
+import 'package:marvelapp_flutter/presentation/extensions/to_character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/extensions/to_series_view_data.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetCharacterUseCase getCharacterUseCase;
@@ -19,9 +19,9 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     emit(state.copyWith(loading: true, error: null));
     try {
       final character = await getCharacterUseCase(event.characterId);
-      final characterViewData = CharacterMapper.toCharacterViewData(character);
+      final characterViewData = character.toCharacterViewData();
       final series = await getSeriesUseCase(event.characterId);
-      final seriesViewData = series.map((item) => SeriesMapper.toSeriesViewData(item)).toList();
+      final seriesViewData = series.map((item) => item.toSeriesViewData()).toList();
       emit(state.copyWith(
         loading: false,
         character: characterViewData,

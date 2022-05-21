@@ -14,13 +14,13 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetCharactersUseCase getCharactersUseCase = GetCharactersUseCase(repository: DioMarvellRepository());
     return Scaffold(
       appBar: AppBar(
         title: const Text("MarvellApp"),
       ),
       body: BlocProvider(
-        create: (_) => HomeBloc(getCharactersUseCase: getCharactersUseCase)..add(GetHeroes()),
+        create: (_) =>
+            HomeBloc(getCharactersUseCase: GetCharactersUseCase(repository: DioMarvellRepository()))..add(GetHeroes()),
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             Widget child = const Center(

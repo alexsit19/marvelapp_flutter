@@ -18,15 +18,15 @@ class DetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GetCharacterUseCase getCharacterUseCase = GetCharacterUseCase(repository: repository);
-    GetSeriesWithCharacterUseCase getSeriesUseCase = GetSeriesWithCharacterUseCase(repository: repository);
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(
         title: const Text("MarvellApp - Detail"),
       ),
       body: BlocProvider(
-        create: (_) => DetailsBloc(getCharacterUseCase: getCharacterUseCase, getSeriesUseCase: getSeriesUseCase)
+        create: (_) => DetailsBloc(
+            getCharacterUseCase: GetCharacterUseCase(repository: repository),
+            getSeriesUseCase: GetSeriesWithCharacterUseCase(repository: repository))
           ..add(GetCharacterDetail(characterId: characterId)),
         child: BlocBuilder<DetailsBloc, DetailsState>(
           builder: (context, state) {
