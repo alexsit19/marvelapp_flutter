@@ -6,7 +6,6 @@ import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dar
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/widgets/custom_error_widget.dart';
 import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
-
 import 'bloc/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
