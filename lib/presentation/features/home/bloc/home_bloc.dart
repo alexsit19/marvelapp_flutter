@@ -3,6 +3,7 @@ import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart'
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/extensions/to_character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetCharactersUseCase getCharactersUseCase;
@@ -14,15 +15,23 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _mapGetHeroesEventToState(GetHeroes event, Emitter<HomeState> emit) async {
     emit(state.copyWith(loading: true, error: null));
     try {
-      final characters = await getCharactersUseCase();
+      print("Length: ${state.characters?.length}");
+      final characters = await getCharactersUseCase(state.characters?.length ?? 0);
       final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
-      emit(
-        state.copyWith(
-          loading: false,
-          characters: charactersViewData,
-          error: null,
-        ),
-      );
+      if (state.characters != null) {
+        List<CharacterViewData> list = List.of(state.characters!)..addAll(charactersViewData);
+        emit(
+          state.copyWith(loading: false, characters: list, error: null),
+        );
+      } else {
+        emit(
+          state.copyWith(
+            loading: false,
+            characters: charactersViewData,
+            error: null,
+          ),
+        );
+      }
     } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));
     }

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
+import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData>? list;
 
-  const ListCharacters({Key? key, this.list}) : super(key: key);
+  const ListCharacters({Key? key, required this.list}) : super(key: key);
 
   @override
   State<ListCharacters> createState() => _ListCharactersState();
@@ -22,16 +26,18 @@ class _ListCharactersState extends State<ListCharacters> {
 
   @override
   Widget build(BuildContext context) {
-    List<CharacterViewData>? list = widget.list;
+    List<CharacterViewData> list = widget.list ?? List.empty();
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
-        itemCount: list?.length,
+        itemCount: list.length,
         controller: _scrollController,
         itemBuilder: (context, index) {
-          final item = list?[index] as CharacterViewData;
+          final item = list[index];
           String name = item.name ?? "";
-          return Card(
+          return index >= list.length ?
+          const BottomLoader()
+          : Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
                 Radius.circular(5.0),
@@ -75,7 +81,14 @@ class _ListCharactersState extends State<ListCharacters> {
   }
 
   void _onScroll() {
+    if (_isBottom) context.read<HomeBloc>().add(GetHeroes());
+  }
 
+  bool get _isBottom {
+    if (!_scrollController.hasClients) return false;
+    final maxScroll = _scrollController.position.maxScrollExtent;
+    final currentScroll = _scrollController.offset;
+    return currentScroll >= (maxScroll * 0.9);
   }
 
   Widget _getHeroImage(CharacterViewData item) {
