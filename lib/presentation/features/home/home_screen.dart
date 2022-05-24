@@ -25,13 +25,31 @@ class HomeScreen extends StatelessWidget {
             Widget child = const Center(
               child: CircularProgressIndicator(),
             );
-            if (state.loading) return child;
-            if (state.error == null && !state.loading) {
+            if (state.firstLoading) {
+
+            }
+            if (state.loading && !state.firstLoading) {
               child = ListCharacters(list: state.characters);
-            } else {
+            }
+            if (!state.loading && !state.firstLoading) {
+              child = ListCharacters(list: state.characters);
+            }
+            if (state.error != null) {
               child = const CustomErrorWidget();
             }
             return child;
+            // Widget child = const Center(
+            //   child: CircularProgressIndicator(),
+            // );
+            //
+            // if (state.loading && state.characters == null) return child;
+            // if (state.error == null && !state.loading) {
+            //   child = ListCharacters(list: state.characters);
+            // }
+            // if (state.error != null){
+            //   child = const CustomErrorWidget();
+            // }
+            // return child;
           },
         ),
       ),

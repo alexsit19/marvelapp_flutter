@@ -32,10 +32,11 @@ class _ListCharactersState extends State<ListCharacters> {
       child: ListView.builder(
         itemCount: list.length,
         controller: _scrollController,
-        itemBuilder: (context, index) {
+        itemBuilder: (BuildContext context, int index) {
           final item = list[index];
           String name = item.name ?? "";
-          return index >= list.length ?
+          print("List ${list.length}");
+          return index >= list.length - 1 ?
           const BottomLoader()
           : Card(
             shape: const RoundedRectangleBorder(

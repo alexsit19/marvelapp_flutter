@@ -7,7 +7,7 @@ class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case AppRoutes.homeScreen:
-        return MaterialPageRoute(builder: (context) => HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       case AppRoutes.detailScreen:
         return MaterialPageRoute(settings: settings, builder: (context) => DetailsScreen());
       default:
