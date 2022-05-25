@@ -35,7 +35,7 @@ class HomeScreen extends StatelessWidget {
               child = ListCharacters(list: state.characters);
             }
             if (state.error != null) {
-              child = const CustomErrorWidget();
+              child = ListCharacters(list: state.characters, error: state.error);
             }
             return child;
             // Widget child = const Center(

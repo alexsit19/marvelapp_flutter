@@ -4,12 +4,13 @@ import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
+import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData>? list;
-
-  const ListCharacters({Key? key, required this.list}) : super(key: key);
+  final String? error;
+  const ListCharacters({Key? key, required this.list, this.error}) : super(key: key);
 
   @override
   State<ListCharacters> createState() => _ListCharactersState();
@@ -36,8 +37,14 @@ class _ListCharactersState extends State<ListCharacters> {
           final item = list[index];
           String name = item.name ?? "";
           print("List ${list.length}");
+          Widget errorOrLoader;
+          if (widget.error == null) {
+            errorOrLoader = const BottomLoader();
+          } else {
+            errorOrLoader = const BottomError();
+          }
           return index >= list.length - 1 ?
-          const BottomLoader()
+          errorOrLoader
           : Card(
             shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(
