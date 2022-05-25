@@ -6,11 +6,14 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
+import 'package:marvelapp_flutter/presentation/widgets/end_of_list.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData>? list;
   final String? error;
-  const ListCharacters({Key? key, required this.list, this.error}) : super(key: key);
+  final bool hasReachedMax;
+
+  const ListCharacters({Key? key, required this.list, this.error, this.hasReachedMax = false}) : super(key: key);
 
   @override
   State<ListCharacters> createState() => _ListCharactersState();
@@ -36,45 +39,46 @@ class _ListCharactersState extends State<ListCharacters> {
         itemBuilder: (BuildContext context, int index) {
           final item = list[index];
           String name = item.name ?? "";
-          print("List ${list.length}");
           Widget errorOrLoader;
-          if (widget.error == null) {
+          if (widget.error == null && !widget.hasReachedMax) {
             errorOrLoader = const BottomLoader();
+          } else if (widget.error == null && widget.hasReachedMax) {
+            errorOrLoader = const EndOfList();
           } else {
             errorOrLoader = const BottomError();
           }
-          return index >= list.length - 1 ?
-          errorOrLoader
-          : Card(
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5.0),
-              ),
-            ),
-            child: InkWell(
-              onTap: () {
-                Navigator.pushNamed(context, AppRoutes.detailScreen, arguments: item.id);
-              },
-              child: Row(
-                children: [
-                  ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(5.0),
-                      bottomLeft: Radius.circular(5.0),
-                    ),
-                    child: _getHeroImage(item),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0),
-                    child: Text(
-                      name,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+          return index >= list.length - 1
+              ? errorOrLoader
+              : Card(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(5.0),
                     ),
                   ),
-                ],
-              ),
-            ),
-          );
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoutes.detailScreen, arguments: item.id);
+                    },
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(5.0),
+                            bottomLeft: Radius.circular(5.0),
+                          ),
+                          child: _getHeroImage(item),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16.0),
+                          child: Text(
+                            name,
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
         },
       ),
     );

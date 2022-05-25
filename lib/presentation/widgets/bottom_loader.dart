@@ -8,8 +8,14 @@ class BottomLoader extends StatelessWidget {
     return const Center(
       child: SizedBox(
         height: 50,
-        width: 50,
-        child: CircularProgressIndicator(strokeWidth: 1.5),
+        child: Padding(
+          padding: EdgeInsets.only(top: 13, bottom: 13),
+          child: SizedBox(
+            height: 24,
+            width: 24,
+            child: CircularProgressIndicator(strokeWidth: 1.5),
+          ),
+        ),
       ),
     );
   }

@@ -3,31 +3,31 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
 class HomeState extends Equatable {
   final bool loading;
-  final bool firstLoading;
+  final bool hasReachedMax;
   final String? error;
   final List<CharacterViewData>? characters;
 
   const HomeState({
     required this.loading,
-    required this.firstLoading,
+    this.hasReachedMax = false,
     this.error,
     this.characters,
   });
 
   HomeState copyWith({
     required bool loading,
-    required bool firstLoading,
+    bool? hasReachedMax,
     String? error,
     List<CharacterViewData>? characters,
   }) {
     return HomeState(
       loading: loading,
-      firstLoading: firstLoading,
+      hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       characters: characters ?? this.characters,
       error: error,
     );
   }
 
   @override
-  List<Object?> get props => [loading, firstLoading, characters, error];
+  List<Object?> get props => [loading, hasReachedMax, characters, error];
 }
