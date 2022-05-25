@@ -4,7 +4,7 @@ import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
-import 'package:marvelapp_flutter/presentation/widgets/custom_error_widget.dart';
+import 'package:marvelapp_flutter/presentation/widgets/first_page_error_widget.dart';
 import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
 import 'bloc/home_bloc.dart';
 
@@ -25,9 +25,7 @@ class HomeScreen extends StatelessWidget {
             Widget child = const Center(
               child: CircularProgressIndicator(),
             );
-            if (state.firstLoading) {
-
-            }
+            if (state.firstLoading) {}
             if (state.loading && !state.firstLoading) {
               child = ListCharacters(list: state.characters);
             }
@@ -37,19 +35,10 @@ class HomeScreen extends StatelessWidget {
             if (state.error != null) {
               child = ListCharacters(list: state.characters, error: state.error);
             }
+            if (state.error != null && state.characters == null) {
+              child = const FirstPageError();
+            }
             return child;
-            // Widget child = const Center(
-            //   child: CircularProgressIndicator(),
-            // );
-            //
-            // if (state.loading && state.characters == null) return child;
-            // if (state.error == null && !state.loading) {
-            //   child = ListCharacters(list: state.characters);
-            // }
-            // if (state.error != null){
-            //   child = const CustomErrorWidget();
-            // }
-            // return child;
           },
         ),
       ),
