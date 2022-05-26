@@ -9,10 +9,25 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
+import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'bloc/details_state.dart';
 
-class DetailsScreen extends StatelessWidget {
-  DetailsScreen({Key? key}) : super(key: key);
+class DetailsScreen extends StatefulWidget {
+  const DetailsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<DetailsScreen> createState() => _DetailsScreenState();
+}
+
+// class  {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container();
+//   }
+// }
+
+class _DetailsScreenState extends State<DetailsScreen> {
+  //_DetailsScreen({Key? key}) : super(key: key);
   final MarvellRepository repository = DioMarvellRepository();
 
   @override
@@ -39,9 +54,7 @@ class DetailsScreen extends StatelessWidget {
                     character: state.character as CharacterViewData, series: state.series as List<SeriesViewData>),
               );
             } else {
-              child = const Center(
-                child: Text("error"),
-              );
+              child = PageError(screen: "detailsScreen", id: characterId);
             }
             return child;
           },

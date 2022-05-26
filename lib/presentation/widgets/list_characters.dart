@@ -68,11 +68,16 @@ class _ListCharactersState extends State<ListCharacters> {
                           ),
                           child: _getHeroImage(item),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0),
-                          child: Text(
-                            name,
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                        SizedBox(
+                          width: 220,
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 16.0),
+                            child: Text(
+                              name,
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
+                            ),
                           ),
                         ),
                       ],
