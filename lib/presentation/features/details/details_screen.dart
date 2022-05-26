@@ -9,25 +9,11 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
-import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
+import '../../widgets/page_error.dart';
 import 'bloc/details_state.dart';
 
-class DetailsScreen extends StatefulWidget {
-  const DetailsScreen({Key? key}) : super(key: key);
-
-  @override
-  State<DetailsScreen> createState() => _DetailsScreenState();
-}
-
-// class  {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container();
-//   }
-// }
-
-class _DetailsScreenState extends State<DetailsScreen> {
-  //_DetailsScreen({Key? key}) : super(key: key);
+class DetailsScreen extends StatelessWidget {
+  DetailsScreen({Key? key}) : super(key: key);
   final MarvellRepository repository = DioMarvellRepository();
 
   @override
