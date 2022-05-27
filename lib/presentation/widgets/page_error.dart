@@ -1,18 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/presentation/features/details/bloc/details_bloc.dart';
-import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
-import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
-import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
-
-const String homeScreen = "homeScreen";
-const String detailsScreen = "detailsScreen";
 
 class PageError extends StatelessWidget {
-  final String screen;
-  final String? id;
+  final Function() onRetry;
 
-  const PageError({Key? key, required this.screen, this.id}) : super(key: key);
+  const PageError({Key? key, required this.onRetry}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +25,7 @@ class PageError extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: const <Widget>[
-                Text("try again"),
+                Text("Tap to try again"),
                 Icon(
                   Icons.refresh,
                   size: 24.0,
@@ -42,15 +33,7 @@ class PageError extends StatelessWidget {
               ],
             ),
             onPressed: () {
-              switch (screen) {
-                case homeScreen:
-                  context.read<HomeBloc>().add(GetHeroes());
-                  break;
-                case detailsScreen:
-                  if (id != null) {
-                    context.read<DetailsBloc>().add(GetCharacterDetail(characterId: id as String));
-                  }
-              }
+              onRetry();
             },
           ),
         ],

@@ -30,7 +30,11 @@ class HomeScreen extends StatelessWidget {
             } else if (state.characters == null && state.error == null) {
               return child;
             } else if (state.characters == null && state.error != null) {
-              child =  const PageError(screen: "homeScreen");
+              child = PageError(
+                onRetry: () {
+                  context.read<HomeBloc>().add(GetHeroes());
+                },
+              );
             } else {
               child = ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
             }

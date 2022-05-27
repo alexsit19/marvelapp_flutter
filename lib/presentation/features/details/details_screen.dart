@@ -9,7 +9,7 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
-import '../../widgets/page_error.dart';
+import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'bloc/details_state.dart';
 
 class DetailsScreen extends StatelessWidget {
@@ -40,7 +40,11 @@ class DetailsScreen extends StatelessWidget {
                     character: state.character as CharacterViewData, series: state.series as List<SeriesViewData>),
               );
             } else {
-              child = PageError(screen: "detailsScreen", id: characterId);
+              child = PageError(
+                onRetry: () {
+                  context.read<DetailsBloc>().add(GetCharacterDetail(characterId: characterId));
+                },
+              );
             }
             return child;
           },

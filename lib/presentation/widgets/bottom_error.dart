@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../features/home/bloc/home_bloc.dart';
-import '../features/home/bloc/home_event.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 
 class BottomError extends StatelessWidget {
   const BottomError({Key? key}) : super(key: key);
