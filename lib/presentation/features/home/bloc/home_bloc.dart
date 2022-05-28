@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
@@ -14,13 +13,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _mapGetHeroesEventToState(GetHeroes event, Emitter<HomeState> emit) async {
-    if (state.hasReachedMax) return;
-    if (state.loading) return;
-    if (state.characters == null) {
-      emit(state.copyWith(loading: true));
-    } else {
-      emit(state.copyWith(loading: true, error: null));
-    }
+    if (state.hasReachedMax || state.loading) return;
+    emit(state.copyWith(loading: true, error: null));
     try {
       final characters = await getCharactersUseCase(state.characters?.length ?? 0);
       if (characters.isEmpty) {

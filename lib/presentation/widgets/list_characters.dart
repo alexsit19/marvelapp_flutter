@@ -6,7 +6,7 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
-import 'package:marvelapp_flutter/presentation/widgets/end_of_list.dart';
+import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData>? list;
@@ -30,60 +30,23 @@ class _ListCharactersState extends State<ListCharacters> {
 
   @override
   Widget build(BuildContext context) {
-    List<CharacterViewData> list = widget.list ?? List.empty();
+    List<CharacterViewData> characters = widget.list ?? List.empty();
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
-        itemCount: list.length,
+        itemCount: widget.hasReachedMax ? characters.length : characters.length + 1,
         controller: _scrollController,
         itemBuilder: (BuildContext context, int index) {
-          final item = list[index];
-          String name = item.name ?? "";
           Widget errorOrLoader;
           if (widget.error == null && !widget.hasReachedMax) {
             errorOrLoader = const BottomLoader();
           } else if (widget.error == null && widget.hasReachedMax) {
-            errorOrLoader = const EndOfList();
+            errorOrLoader = const EmptyWidget();
           } else {
             errorOrLoader = const BottomError();
           }
-          return index >= list.length - 1
-              ? errorOrLoader
-              : Card(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5.0),
-                    ),
-                  ),
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, AppRoutes.detailScreen, arguments: item.id);
-                    },
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(5.0),
-                            bottomLeft: Radius.circular(5.0),
-                          ),
-                          child: _getHeroImage(item),
-                        ),
-                        SizedBox(
-                          width: 220,
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 16.0),
-                            child: Text(
-                              name,
-                              style: const TextStyle(fontWeight: FontWeight.bold),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
+          final isLastItem = index == characters.length;
+          return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
         },
       ),
     );
@@ -99,6 +62,44 @@ class _ListCharactersState extends State<ListCharacters> {
 
   void _onScroll() {
     if (_isBottom) context.read<HomeBloc>().add(GetHeroes());
+  }
+
+  Widget getHeroCard(CharacterViewData character) {
+    return Card(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+      ),
+      child: InkWell(
+        onTap: () {
+          Navigator.pushNamed(context, AppRoutes.detailScreen, arguments: character.id);
+        },
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(5.0),
+                bottomLeft: Radius.circular(5.0),
+              ),
+              child: _getHeroImage(character),
+            ),
+            SizedBox(
+              width: 220,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(
+                  character.name ?? "",
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   bool get _isBottom {

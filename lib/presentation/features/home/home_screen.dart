@@ -26,19 +26,19 @@ class HomeScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
             if (state.characters != null && state.error == null) {
-              child = ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
-            } else if (state.characters == null && state.error == null) {
+              return ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
+            }
+            if (state.characters == null && state.error == null) {
               return child;
-            } else if (state.characters == null && state.error != null) {
-              child = PageError(
+            }
+            if (state.characters == null && state.error != null) {
+              return PageError(
                 onRetry: () {
                   context.read<HomeBloc>().add(GetHeroes());
                 },
               );
-            } else {
-              child = ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
             }
-            return child;
+            return ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
           },
         ),
       ),
