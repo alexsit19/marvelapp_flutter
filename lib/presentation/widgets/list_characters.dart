@@ -61,7 +61,7 @@ class _ListCharactersState extends State<ListCharacters> {
   }
 
   void _onScroll() {
-    if (_isBottom) context.read<HomeBloc>().add(GetHeroes());
+    if (_isBottom) context.read<HomeBloc>().add(ScrolledToEnd());
   }
 
   Widget getHeroCard(CharacterViewData character) {

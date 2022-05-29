@@ -17,7 +17,7 @@ class BottomError extends StatelessWidget {
             textStyle: const TextStyle(fontSize: 14),
           ),
           onPressed: () {
-            context.read<HomeBloc>().add(GetHeroes());
+            context.read<HomeBloc>().add(ScrolledToEnd());
           },
           child: const Text('Something went wrong. Tap to try again'),
         ),

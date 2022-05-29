@@ -9,33 +9,37 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetCharactersUseCase getCharactersUseCase;
 
   HomeBloc({required this.getCharactersUseCase}) : super(const HomeState(loading: false)) {
-    on<GetHeroes>(_mapGetHeroesEventToState);
+    on<ReadyForData>(_mapReadyForDataEventToState);
+    on<ScrolledToEnd>(_mapScrolledToEndEventToState);
   }
 
-  Future<void> _mapGetHeroesEventToState(GetHeroes event, Emitter<HomeState> emit) async {
+  Future<void> _mapReadyForDataEventToState(ReadyForData event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(loading: true));
+    try {
+      final characters = await getCharactersUseCase(0);
+      final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
+      emit(
+        state.copyWith(loading: false, characters: charactersViewData, error: null),
+      );
+    } catch (error) {
+      emit(state.copyWith(loading: false, error: error.toString()));
+    }
+  }
+
+  Future<void> _mapScrolledToEndEventToState(ScrolledToEnd event, Emitter<HomeState> emit) async {
     if (state.hasReachedMax || state.loading) return;
     emit(state.copyWith(loading: true, error: null));
     try {
-      final characters = await getCharactersUseCase(state.characters?.length ?? 0);
+      final characters = await getCharactersUseCase(state.characters?.length as int);
       if (characters.isEmpty) {
         emit(state.copyWith(loading: false, hasReachedMax: true));
         return;
       }
       final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
-      if (state.characters != null) {
-        List<CharacterViewData> list = List.of(state.characters!)..addAll(charactersViewData);
-        emit(
-          state.copyWith(loading: false, characters: list, error: null),
-        );
-      } else {
-        emit(
-          state.copyWith(
-            loading: false,
-            characters: charactersViewData,
-            error: null,
-          ),
-        );
-      }
+      List<CharacterViewData> list = List.of(state.characters!)..addAll(charactersViewData);
+      emit(
+        state.copyWith(loading: false, characters: list, error: null),
+      );
     } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));
     }

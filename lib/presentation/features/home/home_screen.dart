@@ -18,8 +18,8 @@ class HomeScreen extends StatelessWidget {
         title: const Text("MarvellApp"),
       ),
       body: BlocProvider(
-        create: (_) =>
-            HomeBloc(getCharactersUseCase: GetCharactersUseCase(repository: DioMarvellRepository()))..add(GetHeroes()),
+        create: (_) => HomeBloc(getCharactersUseCase: GetCharactersUseCase(repository: DioMarvellRepository()))
+          ..add(ReadyForData()),
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             Widget child = const Center(
@@ -34,7 +34,7 @@ class HomeScreen extends StatelessWidget {
             if (state.characters == null && state.error != null) {
               return PageError(
                 onRetry: () {
-                  context.read<HomeBloc>().add(GetHeroes());
+                  context.read<HomeBloc>().add(ReadyForData());
                 },
               );
             }

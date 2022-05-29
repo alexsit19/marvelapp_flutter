@@ -22,7 +22,7 @@ class DioMarvellRepository extends MarvellRepository {
   @override
   Future<List<Character>> getCharacters([offset = 0]) async {
     try {
-      var httpResponse = await marvellClient.getCharacters(fakeTimeStamp, publicKey, hash, offset +1500);
+      var httpResponse = await marvellClient.getCharacters(fakeTimeStamp, publicKey, hash, offset);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
         if (data != null) {
