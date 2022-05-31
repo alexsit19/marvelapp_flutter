@@ -84,19 +84,23 @@ class _ListCharactersState extends State<ListCharacters> {
               ),
               child: _getHeroImage(character),
             ),
-            SizedBox(
-              width: 220,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: Text(
-                  character.name ?? "",
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-              ),
-            ),
+            _getNameBlock(character),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _getNameBlock(CharacterViewData character) {
+    return SizedBox(
+      width: 180,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Text(
+          character.name ?? "",
+          style: const TextStyle(fontWeight: FontWeight.bold),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
         ),
       ),
     );

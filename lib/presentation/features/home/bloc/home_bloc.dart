@@ -30,13 +30,13 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state.hasReachedMax || state.loading) return;
     emit(state.copyWith(loading: true, error: null));
     try {
-      final characters = await getCharactersUseCase(state.characters?.length as int);
+      final characters = await getCharactersUseCase(state.characters.length);
       if (characters.isEmpty) {
         emit(state.copyWith(loading: false, hasReachedMax: true));
         return;
       }
       final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
-      List<CharacterViewData> list = List.of(state.characters!)..addAll(charactersViewData);
+      List<CharacterViewData> list = List.of(state.characters)..addAll(charactersViewData);
       emit(
         state.copyWith(loading: false, characters: list, error: null),
       );

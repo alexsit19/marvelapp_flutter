@@ -22,16 +22,15 @@ class HomeScreen extends StatelessWidget {
           ..add(ReadyForData()),
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
-            Widget child = const Center(
-              child: CircularProgressIndicator(),
-            );
-            if (state.characters != null && state.error == null) {
+            if (state.loading && state.characters.isNotEmpty && state.error == null) {
               return ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
             }
-            if (state.characters == null && state.error == null) {
-              return child;
+            if (state.loading && state.characters.isEmpty) {//characters == null && state.error == null) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
-            if (state.characters == null && state.error != null) {
+            if (state.characters.isEmpty && state.error != null) {
               return PageError(
                 onRetry: () {
                   context.read<HomeBloc>().add(ReadyForData());
