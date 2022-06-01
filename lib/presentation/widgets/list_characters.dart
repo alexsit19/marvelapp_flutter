@@ -58,23 +58,26 @@ class _ListCharactersState extends State<ListCharacters> {
   }
 
   Widget _getListViewBuilder(List<CharacterViewData> characters, bool hasReachedMax, bool loading, String? error) {
-    return ListView.builder(
-      itemCount: hasReachedMax ? characters.length : characters.length + 1,
-      controller: _scrollController,
-      itemBuilder: (BuildContext context, int index) {
-        Widget errorOrLoader = const EmptyWidget();
-        if (loading) {
-          errorOrLoader = const BottomLoader();
-        }
-        if (hasReachedMax) {
-          errorOrLoader = const EmptyWidget();
-        }
-        if (error != null) {
-          errorOrLoader = const BottomError();
-        }
-        final isLastItem = index == characters.length;
-        return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
-      },
+    return Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: ListView.builder(
+        itemCount: hasReachedMax ? characters.length : characters.length + 1,
+        controller: _scrollController,
+        itemBuilder: (BuildContext context, int index) {
+          Widget errorOrLoader = const EmptyWidget();
+          if (loading) {
+            errorOrLoader = const BottomLoader();
+          }
+          if (hasReachedMax) {
+            errorOrLoader = const EmptyWidget();
+          }
+          if (error != null) {
+            errorOrLoader = const BottomError();
+          }
+          final isLastItem = index == characters.length;
+          return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
+        },
+      ),
     );
   }
 
