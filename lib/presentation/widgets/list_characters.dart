@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
+import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
+import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
+
+import 'center_loader.dart';
 
 class ListCharacters extends StatefulWidget {
-  final List<CharacterViewData>? list;
-  final String? error;
-  final bool hasReachedMax;
-
-  const ListCharacters({Key? key, required this.list, this.error, this.hasReachedMax = false}) : super(key: key);
+  const ListCharacters({Key? key}) : super(key: key);
 
   @override
   State<ListCharacters> createState() => _ListCharactersState();
@@ -30,25 +30,22 @@ class _ListCharactersState extends State<ListCharacters> {
 
   @override
   Widget build(BuildContext context) {
-    List<CharacterViewData> characters = widget.list ?? List.empty();
-    return Padding(
-      padding: const EdgeInsets.all(6.0),
-      child: ListView.builder(
-        itemCount: widget.hasReachedMax ? characters.length : characters.length + 1,
-        controller: _scrollController,
-        itemBuilder: (BuildContext context, int index) {
-          Widget errorOrLoader;
-          if (widget.error == null && !widget.hasReachedMax) {
-            errorOrLoader = const BottomLoader();
-          } else if (widget.error == null && widget.hasReachedMax) {
-            errorOrLoader = const EmptyWidget();
-          } else {
-            errorOrLoader = const BottomError();
-          }
-          final isLastItem = index == characters.length;
-          return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
-        },
-      ),
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        Widget listViewBuilder = _getListViewBuilder(state.characters, state.hasReachedMax, state.loading, state.error);
+        if (state.loading) {
+          return state.characters.isEmpty ? const CenterLoader() : listViewBuilder;
+        }
+        if (state.error != null) {
+          Widget errorWidget = PageError(
+            onRetry: () {
+              context.read<HomeBloc>().add(ReadyForData());
+            },
+          );
+          return state.characters.isEmpty ? errorWidget : listViewBuilder;
+        }
+        return listViewBuilder;
+      },
     );
   }
 
@@ -58,6 +55,27 @@ class _ListCharactersState extends State<ListCharacters> {
       ..removeListener(_onScroll)
       ..dispose();
     super.dispose();
+  }
+
+  Widget _getListViewBuilder(List<CharacterViewData> characters, bool hasReachedMax, bool loading, String? error) {
+    return ListView.builder(
+      itemCount: hasReachedMax ? characters.length : characters.length + 1,
+      controller: _scrollController,
+      itemBuilder: (BuildContext context, int index) {
+        Widget errorOrLoader = const EmptyWidget();
+        if (loading) {
+          errorOrLoader = const BottomLoader();
+        }
+        if (hasReachedMax) {
+          errorOrLoader = const EmptyWidget();
+        }
+        if (error != null) {
+          errorOrLoader = const BottomError();
+        }
+        final isLastItem = index == characters.length;
+        return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
+      },
+    );
   }
 
   void _onScroll() {

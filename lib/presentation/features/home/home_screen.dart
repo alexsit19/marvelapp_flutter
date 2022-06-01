@@ -20,26 +20,7 @@ class HomeScreen extends StatelessWidget {
       body: BlocProvider(
         create: (_) => HomeBloc(getCharactersUseCase: GetCharactersUseCase(repository: DioMarvellRepository()))
           ..add(ReadyForData()),
-        child: BlocBuilder<HomeBloc, HomeState>(
-          builder: (context, state) {
-            if (!state.loading && state.characters.isNotEmpty) {
-              return ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
-            }
-            if (state.loading && state.characters.isEmpty) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (state.characters.isEmpty && state.error != null) {
-              return PageError(
-                onRetry: () {
-                  context.read<HomeBloc>().add(ReadyForData());
-                },
-              );
-            }
-            return ListCharacters(list: state.characters, error: state.error, hasReachedMax: state.hasReachedMax);
-          },
-        ),
+        child: const ListCharacters(),
       ),
     );
   }
