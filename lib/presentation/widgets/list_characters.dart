@@ -57,6 +57,8 @@ class _ListCharactersState extends State<ListCharacters> {
     super.dispose();
   }
 
+  //TODO Кандидат в отдельный виджет вместо того чтобы быть методом
+  //TODO в этом виджете методе не должно быть параметра loading
   Widget _getListViewBuilder(List<CharacterViewData> characters, bool hasReachedMax, bool loading, String? error) {
     return Padding(
       padding: const EdgeInsets.all(6.0),

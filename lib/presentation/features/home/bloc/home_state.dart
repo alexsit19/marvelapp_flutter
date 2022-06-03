@@ -13,7 +13,8 @@ class HomeState extends Equatable {
     this.error,
     this.characters = const <CharacterViewData>[],
   });
-
+//TODO возможно нужно добавить две переменные nextPageLoading и screenLoading для того чтобы разделить индикаторы загрузки
+  //TODO нижний маленький и большой по центру
   HomeState copyWith({
     required bool loading,
     bool? hasReachedMax,
