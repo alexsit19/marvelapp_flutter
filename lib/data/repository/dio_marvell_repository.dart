@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/entities/series.dart';
-import 'package:marvelapp_flutter/data/sources/marvell_api_client.dart';
+import 'package:marvelapp_flutter/data/marvell_api_client.dart';
 
 class DioMarvellRepository extends MarvellRepository {
   static final DioMarvellRepository _repository = DioMarvellRepository._internal();
