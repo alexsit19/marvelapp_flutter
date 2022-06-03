@@ -37,6 +37,17 @@ class SeriesElement extends StatelessWidget {
         width: 120.0,
         height: 170.0,
         fit: BoxFit.fitWidth,
+        imageErrorBuilder: (_, __, ___) {
+          return const SizedBox(
+            child: Icon(
+              Icons.broken_image,
+              size: 80,
+              color: Colors.grey,
+            ),
+            height: 100.0,
+            width: 100.0,
+          );
+        },
       );
     }
     return seriesImage;

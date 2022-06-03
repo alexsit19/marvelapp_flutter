@@ -5,4 +5,6 @@ class HomeEvent extends Equatable {
   List<Object?> get props => [];
 }
 
-class GetHeroes extends HomeEvent {}
+class ReadyForData extends HomeEvent {}
+
+class ScrolledToEnd extends HomeEvent {}

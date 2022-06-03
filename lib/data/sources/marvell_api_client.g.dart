@@ -19,12 +19,13 @@ class _MarvellClient implements MarvellClient {
 
   @override
   Future<HttpResponse<ApiResponse>> getCharacters(
-      fakeTimeStamp, publicKey, hash) async {
+      fakeTimeStamp, publicKey, hash, offset) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'ts': fakeTimeStamp,
       r'apikey': publicKey,
-      r'hash': hash
+      r'hash': hash,
+      r'offset': offset
     };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};

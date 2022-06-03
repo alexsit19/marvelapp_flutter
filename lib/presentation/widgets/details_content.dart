@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_block.dart';
@@ -56,6 +55,17 @@ class DetailsContent extends StatelessWidget {
       height: 300,
       width: 300,
       fit: BoxFit.fitHeight,
+      imageErrorBuilder: (_, __, ___) {
+        return const SizedBox(
+          child: Icon(
+            Icons.broken_image,
+            size: 250,
+            color: Colors.grey,
+          ),
+          height: 300.0,
+          width: 300.0,
+        );
+      },
     );
   }
 }

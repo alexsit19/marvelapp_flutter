@@ -6,5 +6,5 @@ class GetCharactersUseCase {
 
   GetCharactersUseCase({required this.repository});
 
-  Future<List<Character>> call() => repository.getCharacters();
+  Future<List<Character>> call(int offset) => repository.getCharacters(offset);
 }
