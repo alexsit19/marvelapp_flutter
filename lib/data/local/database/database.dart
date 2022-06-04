@@ -13,7 +13,7 @@ part 'database.g.dart';
   daos: [CharacterDao],
 )
 class Database extends _$Database {
-  Database(QueryExecutor executor) : super(executor);
+  Database() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;

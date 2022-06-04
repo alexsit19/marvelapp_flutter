@@ -9,37 +9,43 @@ part of 'database.dart';
 // ignore_for_file: type=lint
 class CharacterTableData extends DataClass
     implements Insertable<CharacterTableData> {
-  final int id;
-  final String name;
-  final String thumbnailUrl;
-  CharacterTableData(
-      {required this.id, required this.name, required this.thumbnailUrl});
+  final int? id;
+  final String? name;
+  final String? thumbnailUrl;
+  CharacterTableData({this.id, this.name, this.thumbnailUrl});
   factory CharacterTableData.fromData(Map<String, dynamic> data,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return CharacterTableData(
-      id: const IntType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}id'])!,
+      id: const IntType().mapFromDatabaseResponse(data['${effectivePrefix}id']),
       name: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}name'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}name']),
       thumbnailUrl: const StringType()
-          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail_url'])!,
+          .mapFromDatabaseResponse(data['${effectivePrefix}thumbnail_url']),
     );
   }
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
-    map['thumbnail_url'] = Variable<String>(thumbnailUrl);
+    if (!nullToAbsent || id != null) {
+      map['id'] = Variable<int?>(id);
+    }
+    if (!nullToAbsent || name != null) {
+      map['name'] = Variable<String?>(name);
+    }
+    if (!nullToAbsent || thumbnailUrl != null) {
+      map['thumbnail_url'] = Variable<String?>(thumbnailUrl);
+    }
     return map;
   }
 
   CharacterTableCompanion toCompanion(bool nullToAbsent) {
     return CharacterTableCompanion(
-      id: Value(id),
-      name: Value(name),
-      thumbnailUrl: Value(thumbnailUrl),
+      id: id == null && nullToAbsent ? const Value.absent() : Value(id),
+      name: name == null && nullToAbsent ? const Value.absent() : Value(name),
+      thumbnailUrl: thumbnailUrl == null && nullToAbsent
+          ? const Value.absent()
+          : Value(thumbnailUrl),
     );
   }
 
@@ -47,18 +53,18 @@ class CharacterTableData extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return CharacterTableData(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      thumbnailUrl: serializer.fromJson<String>(json['thumbnailUrl']),
+      id: serializer.fromJson<int?>(json['id']),
+      name: serializer.fromJson<String?>(json['name']),
+      thumbnailUrl: serializer.fromJson<String?>(json['thumbnailUrl']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'thumbnailUrl': serializer.toJson<String>(thumbnailUrl),
+      'id': serializer.toJson<int?>(id),
+      'name': serializer.toJson<String?>(name),
+      'thumbnailUrl': serializer.toJson<String?>(thumbnailUrl),
     };
   }
 
@@ -90,25 +96,23 @@ class CharacterTableData extends DataClass
 }
 
 class CharacterTableCompanion extends UpdateCompanion<CharacterTableData> {
-  final Value<int> id;
-  final Value<String> name;
-  final Value<String> thumbnailUrl;
+  final Value<int?> id;
+  final Value<String?> name;
+  final Value<String?> thumbnailUrl;
   const CharacterTableCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.thumbnailUrl = const Value.absent(),
   });
   CharacterTableCompanion.insert({
-    required int id,
-    required String name,
-    required String thumbnailUrl,
-  })  : id = Value(id),
-        name = Value(name),
-        thumbnailUrl = Value(thumbnailUrl);
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.thumbnailUrl = const Value.absent(),
+  });
   static Insertable<CharacterTableData> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-    Expression<String>? thumbnailUrl,
+    Expression<int?>? id,
+    Expression<String?>? name,
+    Expression<String?>? thumbnailUrl,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -118,7 +122,7 @@ class CharacterTableCompanion extends UpdateCompanion<CharacterTableData> {
   }
 
   CharacterTableCompanion copyWith(
-      {Value<int>? id, Value<String>? name, Value<String>? thumbnailUrl}) {
+      {Value<int?>? id, Value<String?>? name, Value<String?>? thumbnailUrl}) {
     return CharacterTableCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
@@ -130,13 +134,13 @@ class CharacterTableCompanion extends UpdateCompanion<CharacterTableData> {
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     if (id.present) {
-      map['id'] = Variable<int>(id.value);
+      map['id'] = Variable<int?>(id.value);
     }
     if (name.present) {
-      map['name'] = Variable<String>(name.value);
+      map['name'] = Variable<String?>(name.value);
     }
     if (thumbnailUrl.present) {
-      map['thumbnail_url'] = Variable<String>(thumbnailUrl.value);
+      map['thumbnail_url'] = Variable<String?>(thumbnailUrl.value);
     }
     return map;
   }
@@ -161,19 +165,19 @@ class $CharacterTableTable extends CharacterTable
   final VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int?> id = GeneratedColumn<int?>(
-      'id', aliasedName, false,
-      type: const IntType(), requiredDuringInsert: true);
+      'id', aliasedName, true,
+      type: const IntType(), requiredDuringInsert: false);
   final VerificationMeta _nameMeta = const VerificationMeta('name');
   @override
   late final GeneratedColumn<String?> name = GeneratedColumn<String?>(
-      'name', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'name', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   final VerificationMeta _thumbnailUrlMeta =
       const VerificationMeta('thumbnailUrl');
   @override
   late final GeneratedColumn<String?> thumbnailUrl = GeneratedColumn<String?>(
-      'thumbnail_url', aliasedName, false,
-      type: const StringType(), requiredDuringInsert: true);
+      'thumbnail_url', aliasedName, true,
+      type: const StringType(), requiredDuringInsert: false);
   @override
   List<GeneratedColumn> get $columns => [id, name, thumbnailUrl];
   @override
@@ -187,22 +191,16 @@ class $CharacterTableTable extends CharacterTable
     final data = instance.toColumns(true);
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    } else if (isInserting) {
-      context.missing(_idMeta);
     }
     if (data.containsKey('name')) {
       context.handle(
           _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('thumbnail_url')) {
       context.handle(
           _thumbnailUrlMeta,
           thumbnailUrl.isAcceptableOrUnknown(
               data['thumbnail_url']!, _thumbnailUrlMeta));
-    } else if (isInserting) {
-      context.missing(_thumbnailUrlMeta);
     }
     return context;
   }
