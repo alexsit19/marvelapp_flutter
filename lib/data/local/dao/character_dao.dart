@@ -12,7 +12,10 @@ class CharacterDao extends DatabaseAccessor<Database> with _$CharacterDaoMixin {
   CharacterDao(this.database) : super(database);
 
   Future<void> insertData(List<Character> characters) async {
-    if (characters.isNotEmpty) {
+    var count = database.characterTable.id.count();
+    var query = database.selectOnly(database.characterTable)..addColumns([count]);
+    int numberOfRows = await query.map((row) => row.read(count)).getSingle();
+    if (characters.isNotEmpty && numberOfRows == 0) {
       for (var element in characters) {
         await database.into(database.characterTable).insert(CharacterTableCompanion(
               id: Value(element.id),
@@ -24,7 +27,15 @@ class CharacterDao extends DatabaseAccessor<Database> with _$CharacterDaoMixin {
   }
 
   Future<List<Character>> getAllCharacters() async {
-    List<Character> characters = (await database.select(database.characterTable).get()).cast<Character>();
-    return characters;
+    var characters = await database.select(database.characterTable).get();
+    List<Character> list = characters
+        .map(
+          (e) => Character(id: e.id, name: e.name, thumbnailUrl: e.thumbnailUrl, description: ""),
+        )
+        .toList();
+    if (characters.isEmpty) {
+      return Future.error("error");
+    }
+    return list;
   }
 }

@@ -28,12 +28,15 @@ class RemoteDataSource {
           List<Character> characters = tempCharacters ?? List.empty();
           return characters;
         } else {
+          print("no data error");
           return Future.error("No data error");
         }
       } else {
+        print("network error");
         return Future.error("network error");
       }
     } catch (error) {
+      print("exception");
       return Future.error("$error");
     }
   }

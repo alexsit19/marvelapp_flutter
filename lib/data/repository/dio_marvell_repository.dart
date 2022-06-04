@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/entities/series.dart';
@@ -18,11 +17,23 @@ class DioMarvellRepository extends MarvellRepository {
 
   @override
   Future<List<Character>> getCharacters([int offset = 0]) async {
-    return remoteDataSource.getCharacters(offset);
+    print("test");
+    var characters = await remoteDataSource.getCharacters(offset).onError((error, stackTrace) => errorHandle());
+    if (characters.isNotEmpty) {
+      print("is not empty");
+      localDataSource.characterDao.insertData(characters);
+    }
+    print("end");
+    return characters;
+  }
+
+  Future<List<Character>> errorHandle() async {
+    print("get characters");
+    return await localDataSource.characterDao.getAllCharacters();
   }
 
   @override
-  Future<List<Series>> getSeries(String characterId) {
-    return remoteDataSource.getSeries(characterId);
+  Future<List<Series>> getSeries(String characterId) async {
+    return await remoteDataSource.getSeries(characterId);
   }
 }
