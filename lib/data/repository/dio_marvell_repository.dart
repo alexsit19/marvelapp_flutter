@@ -17,18 +17,14 @@ class DioMarvellRepository extends MarvellRepository {
 
   @override
   Future<List<Character>> getCharacters([int offset = 0]) async {
-    print("test");
     var characters = await remoteDataSource.getCharacters(offset).onError((error, stackTrace) => errorHandle());
     if (characters.isNotEmpty) {
-      print("is not empty");
       localDataSource.characterDao.insertData(characters);
     }
-    print("end");
     return characters;
   }
 
   Future<List<Character>> errorHandle() async {
-    print("get characters");
     return await localDataSource.characterDao.getAllCharacters();
   }
 
