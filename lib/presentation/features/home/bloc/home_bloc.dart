@@ -31,11 +31,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     emit(state.copyWith(loading: true, error: null));
     try {
       final characters = await getCharactersUseCase(state.characters.length);
+
       if (characters.isEmpty) {
         emit(state.copyWith(loading: false, hasReachedMax: true));
         return;
       }
       final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
+      if (charactersViewData.first.id == state.characters.first.id) {
+        emit(state.copyWith(loading: false, error: "error"));
+        return;
+      }
       List<CharacterViewData> list = List.of(state.characters)..addAll(charactersViewData);
       emit(
         state.copyWith(loading: false, characters: list, error: null),
