@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/data/local/dao/character_dao.dart';
-import 'package:marvelapp_flutter/data/local/database/database.dart';
-import 'package:marvelapp_flutter/data/local/source/local_data_source.dart';
-import 'package:marvelapp_flutter/data/remote/source/remote_data_source.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/dao/character_dao.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/database/database.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
+import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
 import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
@@ -24,7 +24,7 @@ class HomeScreen extends StatelessWidget {
           getCharactersUseCase: GetCharactersUseCase(
             repository: DioMarvellRepository(
               remoteDataSource: RemoteDataSource(),
-              localDataSource: LocalDataSource(
+              localDataSource: CharacterDataSource(
                 characterDao: CharacterDao(Database()),
               ),
             ),

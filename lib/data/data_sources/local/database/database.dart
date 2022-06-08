@@ -1,6 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:marvelapp_flutter/data/local/database_tables/character_table.dart';
-import 'package:marvelapp_flutter/data/local/dao/character_dao.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/database_tables/character_table.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/dao/character_dao.dart';
 import 'package:path/path.dart' as path;
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';

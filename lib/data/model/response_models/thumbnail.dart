@@ -12,9 +12,9 @@ class Thumbnail {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['path'] = this.path;
-    data['extension'] = this.extension;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['path'] = path;
+    data['extension'] = extension;
     return data;
   }
 }

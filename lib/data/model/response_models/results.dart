@@ -21,7 +21,7 @@ class Results {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
     data['description'] = description;
@@ -40,7 +40,7 @@ class Results {
     );
   }
 
-  Character toCharacter(String size) {
+  Character fromApiToCharacter(String size) {
     return Character(
       id: id,
       name: name,

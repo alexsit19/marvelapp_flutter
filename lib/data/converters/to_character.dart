@@ -1,8 +1,8 @@
-import 'package:marvelapp_flutter/data/local/database/database.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/database/database.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
 
-extension ToCharacter on CharacterTableData {
-  Character toCharacter() {
+extension FromTableTOCHaracter on CharacterTableData {
+  Character fromTableToCharacter() {
     return Character(
       id: id,
       name: name,

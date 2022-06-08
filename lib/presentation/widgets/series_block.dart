@@ -39,6 +39,5 @@ class SeriesBlock extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }

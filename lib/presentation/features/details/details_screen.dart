@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/data/local/dao/character_dao.dart';
-import 'package:marvelapp_flutter/data/local/source/local_data_source.dart';
-import 'package:marvelapp_flutter/data/remote/source/remote_data_source.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/dao/character_dao.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
+import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
 import 'package:marvelapp_flutter/data/repository/dio_marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
@@ -13,14 +13,14 @@ import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
-import 'package:marvelapp_flutter/data/local/database/database.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/database/database.dart';
 import 'bloc/details_state.dart';
 
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({Key? key}) : super(key: key);
   final MarvellRepository repository = DioMarvellRepository(
     remoteDataSource: RemoteDataSource(),
-    localDataSource: LocalDataSource(
+    localDataSource: CharacterDataSource(
       characterDao: CharacterDao(
         Database(),
       ),
