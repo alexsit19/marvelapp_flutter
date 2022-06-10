@@ -8,21 +8,29 @@ part of 'result_series.dart';
 
 /// [ResultSeries] {
 ///
-/// ([ResultSeriesSuccess] success){[List<Series>] series} with data equality
+/// {[List<Series>]? series, [String]? errorString}
 ///
-/// ([ResultSeriesError] error){[String] error} with data equality
+/// ([ResultSeriesSuccess] success){[String]? errorString, [List<Series>] series} with data equality
+///
+/// ([ResultSeriesError] error){[List<Series>]? series, [String]? errorString} with data equality
 ///
 /// }
 @SealedManifest(_ResultSeries)
 abstract class ResultSeries {
   const ResultSeries._internal();
 
+  List<Series>? get series;
+
+  String? get errorString;
+
   const factory ResultSeries.success({
+    String? errorString,
     required List<Series> series,
   }) = ResultSeriesSuccess;
 
   const factory ResultSeries.error({
-    required String error,
+    List<Series>? series,
+    String? errorString,
   }) = ResultSeriesError;
 
   bool get isSuccess => this is ResultSeriesSuccess;
@@ -44,31 +52,33 @@ abstract class ResultSeries {
   }
 
   R when<R extends Object?>({
-    required R Function(List<Series> series) success,
-    required R Function(String error) error,
+    required R Function(String? errorString, List<Series> series) success,
+    required R Function(List<Series>? series, String? errorString) error,
   }) {
     final resultSeries = this;
     if (resultSeries is ResultSeriesSuccess) {
-      return success(resultSeries.series);
+      return success(resultSeries.errorString, resultSeries.series);
     } else if (resultSeries is ResultSeriesError) {
-      return error(resultSeries.error);
+      return error(resultSeries.series, resultSeries.errorString);
     } else {
       throw AssertionError();
     }
   }
 
   R maybeWhen<R extends Object?>({
-    R Function(List<Series> series)? success,
-    R Function(String error)? error,
+    R Function(String? errorString, List<Series> series)? success,
+    R Function(List<Series>? series, String? errorString)? error,
     required R Function(ResultSeries resultSeries) orElse,
   }) {
     final resultSeries = this;
     if (resultSeries is ResultSeriesSuccess) {
       return success != null
-          ? success(resultSeries.series)
+          ? success(resultSeries.errorString, resultSeries.series)
           : orElse(resultSeries);
     } else if (resultSeries is ResultSeriesError) {
-      return error != null ? error(resultSeries.error) : orElse(resultSeries);
+      return error != null
+          ? error(resultSeries.series, resultSeries.errorString)
+          : orElse(resultSeries);
     } else {
       throw AssertionError();
     }
@@ -76,20 +86,20 @@ abstract class ResultSeries {
 
   @Deprecated('Use `whenOrNull` instead. Will be removed by next release.')
   void partialWhen({
-    void Function(List<Series> series)? success,
-    void Function(String error)? error,
+    void Function(String? errorString, List<Series> series)? success,
+    void Function(List<Series>? series, String? errorString)? error,
     void Function(ResultSeries resultSeries)? orElse,
   }) {
     final resultSeries = this;
     if (resultSeries is ResultSeriesSuccess) {
       if (success != null) {
-        success(resultSeries.series);
+        success(resultSeries.errorString, resultSeries.series);
       } else if (orElse != null) {
         orElse(resultSeries);
       }
     } else if (resultSeries is ResultSeriesError) {
       if (error != null) {
-        error(resultSeries.error);
+        error(resultSeries.series, resultSeries.errorString);
       } else if (orElse != null) {
         orElse(resultSeries);
       }
@@ -99,18 +109,18 @@ abstract class ResultSeries {
   }
 
   R? whenOrNull<R extends Object?>({
-    R Function(List<Series> series)? success,
-    R Function(String error)? error,
+    R Function(String? errorString, List<Series> series)? success,
+    R Function(List<Series>? series, String? errorString)? error,
     R Function(ResultSeries resultSeries)? orElse,
   }) {
     final resultSeries = this;
     if (resultSeries is ResultSeriesSuccess) {
       return success != null
-          ? success(resultSeries.series)
+          ? success(resultSeries.errorString, resultSeries.series)
           : orElse?.call(resultSeries);
     } else if (resultSeries is ResultSeriesError) {
       return error != null
-          ? error(resultSeries.error)
+          ? error(resultSeries.series, resultSeries.errorString)
           : orElse?.call(resultSeries);
     } else {
       throw AssertionError();
@@ -188,40 +198,52 @@ abstract class ResultSeries {
   }
 }
 
-/// (([ResultSeriesSuccess] : [ResultSeries]) success){[List<Series>] series}
+/// (([ResultSeriesSuccess] : [ResultSeries]) success){[String]? errorString, [List<Series>] series}
 ///
 /// with data equality
 class ResultSeriesSuccess extends ResultSeries with EquatableMixin {
   const ResultSeriesSuccess({
+    this.errorString,
     required this.series,
   }) : super._internal();
 
+  @override
+  final String? errorString;
+  @override
   final List<Series> series;
 
   @override
-  String toString() => 'ResultSeries.success(series: $series)';
+  String toString() =>
+      'ResultSeries.success(errorString: $errorString, series: $series)';
 
   @override
   List<Object?> get props => [
+        errorString,
         series,
       ];
 }
 
-/// (([ResultSeriesError] : [ResultSeries]) error){[String] error}
+/// (([ResultSeriesError] : [ResultSeries]) error){[List<Series>]? series, [String]? errorString}
 ///
 /// with data equality
 class ResultSeriesError extends ResultSeries with EquatableMixin {
   const ResultSeriesError({
-    required this.error,
+    this.series,
+    this.errorString,
   }) : super._internal();
 
-  final String error;
+  @override
+  final List<Series>? series;
+  @override
+  final String? errorString;
 
   @override
-  String toString() => 'ResultSeries.error(error: $error)';
+  String toString() =>
+      'ResultSeries.error(series: $series, errorString: $errorString)';
 
   @override
   List<Object?> get props => [
-        error,
+        series,
+        errorString,
       ];
 }

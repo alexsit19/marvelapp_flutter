@@ -3,6 +3,9 @@ import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
 import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
+import 'package:marvelapp_flutter/domain/result_details.dart';
+import 'package:marvelapp_flutter/domain/result_home.dart';
+import 'package:marvelapp_flutter/domain/result_series.dart';
 
 class DioMarvellRepository extends MarvellRepository {
   final CharacterDataSource localDataSource;
@@ -11,7 +14,7 @@ class DioMarvellRepository extends MarvellRepository {
   DioMarvellRepository({required this.localDataSource, required this.remoteDataSource});
 
   @override
-  Future<Character> getCharacterDetail(String characterId) async {
+  Future<ResultDetails> getCharacterDetail(String characterId) async {
     try {
       var httpResponse = await remoteDataSource.getCharacterDetail(characterId);
       if (httpResponse.response.statusCode == 200) {
@@ -19,60 +22,62 @@ class DioMarvellRepository extends MarvellRepository {
         if (data != null) {
           Character? tempCharacter = data.results?.map((item) => item.fromApiToCharacter("standard_xlarge")).single;
           Character character = tempCharacter as Character;
-          return character;
+          ResultDetails resultDetails = ResultDetails.success(character: character);
+          return resultDetails;
         } else {
-          return Future.error("No data error");
+          return const ResultDetailsError(errorString: "no data error");
         }
       } else {
-        return Future.error("network error");
+        return const ResultDetailsError(errorString: "network error");
       }
     } catch (error) {
-      return Future.error("$error");
+      return ResultDetailsError(errorString: "$error");
     }
   }
 
   @override
-  Future<List<Character>> getCharacters([int offset = 0, bool getFromLocal = true]) async {
+  Future<ResultHome> getCharacters([int offset = 0, bool getFromLocal = true]) async {
     if (offset == 0 && getFromLocal) {
       List<Character> list = await localDataSource.characterDao.getAllCharacters();
-      print("get from db offset = $offset");
-      if (list.isEmpty) {
-        print("isEmpty");
-      }
-      return list;
+      ResultHome resultHome = ResultHome.success(characters: list);
+      return resultHome;
     }
     try {
       var httpResponse = await remoteDataSource.getCharacters(offset);
       if (httpResponse.response.statusCode == 200) {
-        print("get from remote offset = $offset");
         var data = httpResponse.data.data;
         if (data != null) {
           List<Character>? tempCharacters =
               data.results?.map((item) => item.fromApiToCharacter("standard_medium")).toList();
           List<Character> characters = tempCharacters ?? List.empty();
           localDataSource.characterDao.insertData(characters);
-          return characters;
+          ResultHome resultHome = ResultHome.success(characters: characters);
+          return resultHome;
         } else {
-          print("no data error");
-          return Future.error("No data error");
+          return const ResultHomeError(errorString: "No data error");
         }
       } else {
-        print("network error");
-        return Future.error("network error");
+        return const ResultHomeError(errorString: "network error");
       }
     } catch (error) {
-      print("catch error $error");
-
-      return await localDataSource.characterDao.getAllCharacters();
+      final ResultHome resultHome;
+      if (getFromLocal) {
+        resultHome = ResultHome.success(characters: await localDataSource.characterDao.getAllCharacters());
+      } else {
+       resultHome = ResultHomeError(errorString: error.toString());
+      }
+      return resultHome;
     }
   }
 
-  Future<List<Character>> errorHandle() async {
-    return await localDataSource.characterDao.getAllCharacters();
+  Future<ResultHome> errorHandle() async {
+    ResultHome resultHome =
+        ResultHomeSuccess(characters: await localDataSource.characterDao.getAllCharacters());
+    return resultHome;
   }
 
   @override
-  Future<List<Series>> getSeries(String characterId) async {
+  Future<ResultSeries> getSeries(String characterId) async {
     try {
       var httpResponse = await remoteDataSource.getSeries(characterId);
       if (httpResponse.response.statusCode == 200) {
@@ -80,18 +85,16 @@ class DioMarvellRepository extends MarvellRepository {
         if (data != null) {
           List<Series>? tempSeries = data.results?.map((item) => item.toSeries("portrait_medium")).toList();
           List<Series> series = tempSeries ?? List.empty();
-          return series;
+          ResultSeries resultSeries = ResultSeries.success(series: series);
+          return resultSeries;
         } else {
-          print("no data");
-          return Future.error("No data error");
+          return const ResultSeriesError(errorString: "No data error");
         }
       } else {
-        print("network error");
-        return Future.error("network error");
+        return const ResultSeriesError(errorString: "network error");
       }
     } catch (error) {
-      print("$error");
-      return Future.error("$error");
+      return ResultSeriesError(errorString: "$error");
     }
   }
 }

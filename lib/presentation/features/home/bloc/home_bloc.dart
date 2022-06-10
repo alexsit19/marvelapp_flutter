@@ -16,16 +16,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _mapReadyForDataEventToState(ReadyForData event, Emitter<HomeState> emit) async {
     emit(state.copyWith(loading: true));
     try {
-      final charactersBase = await getCharactersUseCase(0, true);
-      final charactersViewDataB = charactersBase.map((item) => item.toCharacterViewData()).toList();
+      var resultHome = await getCharactersUseCase(0, true);
+
+      final charactersViewDataFromDataBase = resultHome.characters?.map((item) => item.toCharacterViewData()).toList();
       emit(
-        state.copyWith(loading: false, characters: charactersViewDataB, error: null),
+        state.copyWith(loading: false, characters: charactersViewDataFromDataBase, error: resultHome.errorString),
       );
 
-      final charactersNetwork = await getCharactersUseCase(0, false);
-      final charactersViewDataN = charactersNetwork.map((item) => item.toCharacterViewData()).toList();
+      resultHome = await getCharactersUseCase(0, false);
+      final charactersViewDataFromNetwork = resultHome.characters?.map((item) => item.toCharacterViewData()).toList();
       emit(
-        state.copyWith(loading: false, characters: charactersViewDataN, error: null),
+        state.copyWith(loading: false, characters: charactersViewDataFromNetwork, error: resultHome.errorString),
       );
 
     } catch (error) {
@@ -37,20 +38,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state.hasReachedMax || state.loading) return;
     emit(state.copyWith(loading: true, error: null));
     try {
-      final characters = await getCharactersUseCase(state.characters.length, false);
+      final resultHome = await getCharactersUseCase(state.characters.length, false);
 
-      if (characters.isEmpty) {
+      if (resultHome.characters!.isEmpty) {
         emit(state.copyWith(loading: false, hasReachedMax: true));
         return;
       }
-      final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
-      if (charactersViewData.first.id == state.characters.first.id) {
-        emit(state.copyWith(loading: false, error: "error"));
+      final charactersViewData = resultHome.characters?.map((item) => item.toCharacterViewData()).toList();
+      if (charactersViewData?.first.id == state.characters.first.id) {
+        emit(state.copyWith(loading: false, error: null));
         return;
       }
-      List<CharacterViewData> list = List.of(state.characters)..addAll(charactersViewData);
+      List<CharacterViewData> list = List.of(state.characters)..addAll(charactersViewData!);
+      print("errorString = ${resultHome.errorString}");
       emit(
-        state.copyWith(loading: false, characters: list, error: null),
+        state.copyWith(loading: false, characters: list, error: resultHome.errorString),
       );
     } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));

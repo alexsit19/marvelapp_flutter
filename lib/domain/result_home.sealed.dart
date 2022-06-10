@@ -8,21 +8,29 @@ part of 'result_home.dart';
 
 /// [ResultHome] {
 ///
-/// ([ResultHomeSuccess] success){[List<Character>] characters} with data equality
+/// {[List<Character>]? characters, [String]? errorString}
 ///
-/// ([ResultHomeError] error){[String] error} with data equality
+/// ([ResultHomeSuccess] success){[String]? errorString, [List<Character>] characters} with data equality
+///
+/// ([ResultHomeError] error){[List<Character>]? characters, [String]? errorString} with data equality
 ///
 /// }
 @SealedManifest(_ResultHome)
 abstract class ResultHome {
   const ResultHome._internal();
 
+  List<Character>? get characters;
+
+  String? get errorString;
+
   const factory ResultHome.success({
+    String? errorString,
     required List<Character> characters,
   }) = ResultHomeSuccess;
 
   const factory ResultHome.error({
-    required String error,
+    List<Character>? characters,
+    String? errorString,
   }) = ResultHomeError;
 
   bool get isSuccess => this is ResultHomeSuccess;
@@ -44,31 +52,34 @@ abstract class ResultHome {
   }
 
   R when<R extends Object?>({
-    required R Function(List<Character> characters) success,
-    required R Function(String error) error,
+    required R Function(String? errorString, List<Character> characters)
+        success,
+    required R Function(List<Character>? characters, String? errorString) error,
   }) {
     final resultHome = this;
     if (resultHome is ResultHomeSuccess) {
-      return success(resultHome.characters);
+      return success(resultHome.errorString, resultHome.characters);
     } else if (resultHome is ResultHomeError) {
-      return error(resultHome.error);
+      return error(resultHome.characters, resultHome.errorString);
     } else {
       throw AssertionError();
     }
   }
 
   R maybeWhen<R extends Object?>({
-    R Function(List<Character> characters)? success,
-    R Function(String error)? error,
+    R Function(String? errorString, List<Character> characters)? success,
+    R Function(List<Character>? characters, String? errorString)? error,
     required R Function(ResultHome resultHome) orElse,
   }) {
     final resultHome = this;
     if (resultHome is ResultHomeSuccess) {
       return success != null
-          ? success(resultHome.characters)
+          ? success(resultHome.errorString, resultHome.characters)
           : orElse(resultHome);
     } else if (resultHome is ResultHomeError) {
-      return error != null ? error(resultHome.error) : orElse(resultHome);
+      return error != null
+          ? error(resultHome.characters, resultHome.errorString)
+          : orElse(resultHome);
     } else {
       throw AssertionError();
     }
@@ -76,20 +87,20 @@ abstract class ResultHome {
 
   @Deprecated('Use `whenOrNull` instead. Will be removed by next release.')
   void partialWhen({
-    void Function(List<Character> characters)? success,
-    void Function(String error)? error,
+    void Function(String? errorString, List<Character> characters)? success,
+    void Function(List<Character>? characters, String? errorString)? error,
     void Function(ResultHome resultHome)? orElse,
   }) {
     final resultHome = this;
     if (resultHome is ResultHomeSuccess) {
       if (success != null) {
-        success(resultHome.characters);
+        success(resultHome.errorString, resultHome.characters);
       } else if (orElse != null) {
         orElse(resultHome);
       }
     } else if (resultHome is ResultHomeError) {
       if (error != null) {
-        error(resultHome.error);
+        error(resultHome.characters, resultHome.errorString);
       } else if (orElse != null) {
         orElse(resultHome);
       }
@@ -99,17 +110,19 @@ abstract class ResultHome {
   }
 
   R? whenOrNull<R extends Object?>({
-    R Function(List<Character> characters)? success,
-    R Function(String error)? error,
+    R Function(String? errorString, List<Character> characters)? success,
+    R Function(List<Character>? characters, String? errorString)? error,
     R Function(ResultHome resultHome)? orElse,
   }) {
     final resultHome = this;
     if (resultHome is ResultHomeSuccess) {
       return success != null
-          ? success(resultHome.characters)
+          ? success(resultHome.errorString, resultHome.characters)
           : orElse?.call(resultHome);
     } else if (resultHome is ResultHomeError) {
-      return error != null ? error(resultHome.error) : orElse?.call(resultHome);
+      return error != null
+          ? error(resultHome.characters, resultHome.errorString)
+          : orElse?.call(resultHome);
     } else {
       throw AssertionError();
     }
@@ -184,40 +197,52 @@ abstract class ResultHome {
   }
 }
 
-/// (([ResultHomeSuccess] : [ResultHome]) success){[List<Character>] characters}
+/// (([ResultHomeSuccess] : [ResultHome]) success){[String]? errorString, [List<Character>] characters}
 ///
 /// with data equality
 class ResultHomeSuccess extends ResultHome with EquatableMixin {
   const ResultHomeSuccess({
+    this.errorString,
     required this.characters,
   }) : super._internal();
 
+  @override
+  final String? errorString;
+  @override
   final List<Character> characters;
 
   @override
-  String toString() => 'ResultHome.success(characters: $characters)';
+  String toString() =>
+      'ResultHome.success(errorString: $errorString, characters: $characters)';
 
   @override
   List<Object?> get props => [
+        errorString,
         characters,
       ];
 }
 
-/// (([ResultHomeError] : [ResultHome]) error){[String] error}
+/// (([ResultHomeError] : [ResultHome]) error){[List<Character>]? characters, [String]? errorString}
 ///
 /// with data equality
 class ResultHomeError extends ResultHome with EquatableMixin {
   const ResultHomeError({
-    required this.error,
+    this.characters,
+    this.errorString,
   }) : super._internal();
 
-  final String error;
+  @override
+  final List<Character>? characters;
+  @override
+  final String? errorString;
 
   @override
-  String toString() => 'ResultHome.error(error: $error)';
+  String toString() =>
+      'ResultHome.error(characters: $characters, errorString: $errorString)';
 
   @override
   List<Object?> get props => [
-        error,
+        characters,
+        errorString,
       ];
 }

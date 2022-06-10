@@ -74,6 +74,7 @@ class _ListCharactersState extends State<ListCharacters> {
             errorOrLoader = const EmptyWidget();
           }
           if (error != null) {
+            print("bottom error");
             errorOrLoader = const BottomError();
           }
           final isLastItem = index == characters.length;

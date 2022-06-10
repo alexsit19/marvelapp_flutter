@@ -5,7 +5,9 @@ part 'result_home.sealed.dart';
 
 @Sealed()
 abstract class _ResultHome {
+  List<Character>? get characters;
+  String? get errorString;
   void success(List<Character> characters);
 
-  void error(String error);
+  void error(String? errorString);
 }

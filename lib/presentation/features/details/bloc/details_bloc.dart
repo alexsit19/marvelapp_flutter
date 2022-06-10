@@ -18,15 +18,15 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   Future<void> _mapGetCharacterEventToState(GetCharacterDetail event, Emitter<DetailsState> emit) async {
     emit(state.copyWith(loading: true, error: null));
     try {
-      final character = await getCharacterUseCase(event.characterId);
-      final characterViewData = character.toCharacterViewData();
-      final series = await getSeriesUseCase(event.characterId);
-      final seriesViewData = series.map((item) => item.toSeriesViewData()).toList();
+      final resultDetails = await getCharacterUseCase(event.characterId);
+      final characterViewData = resultDetails.character?.toCharacterViewData();
+      final resultSeries = await getSeriesUseCase(event.characterId);
+      final seriesViewData = resultSeries.series?.map((item) => item.toSeriesViewData()).toList();
       emit(state.copyWith(
         loading: false,
         character: characterViewData,
         series: seriesViewData,
-        error: null,
+        error: resultDetails.errorString,
       ));
     } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));

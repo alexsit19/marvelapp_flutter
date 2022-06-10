@@ -5,7 +5,10 @@ part 'result_details.sealed.dart';
 
 @Sealed()
 abstract class _ResultDetails {
+  Character? get character;
+  String? get errorString;
+
   void success(Character character);
 
-  void error(String error);
+  void error(String? errorString);
 }
