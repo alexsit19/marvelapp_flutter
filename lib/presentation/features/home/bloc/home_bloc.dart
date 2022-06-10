@@ -16,11 +16,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   Future<void> _mapReadyForDataEventToState(ReadyForData event, Emitter<HomeState> emit) async {
     emit(state.copyWith(loading: true));
     try {
-      final characters = await getCharactersUseCase(0);
-      final charactersViewData = characters.map((item) => item.toCharacterViewData()).toList();
+      final charactersBase = await getCharactersUseCase(0, true);
+      final charactersViewDataB = charactersBase.map((item) => item.toCharacterViewData()).toList();
       emit(
-        state.copyWith(loading: false, characters: charactersViewData, error: null),
+        state.copyWith(loading: false, characters: charactersViewDataB, error: null),
       );
+
+      final charactersNetwork = await getCharactersUseCase(0, false);
+      final charactersViewDataN = charactersNetwork.map((item) => item.toCharacterViewData()).toList();
+      emit(
+        state.copyWith(loading: false, characters: charactersViewDataN, error: null),
+      );
+
     } catch (error) {
       emit(state.copyWith(loading: false, error: error.toString()));
     }
@@ -30,7 +37,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (state.hasReachedMax || state.loading) return;
     emit(state.copyWith(loading: true, error: null));
     try {
-      final characters = await getCharactersUseCase(state.characters.length);
+      final characters = await getCharactersUseCase(state.characters.length, false);
 
       if (characters.isEmpty) {
         emit(state.copyWith(loading: false, hasReachedMax: true));

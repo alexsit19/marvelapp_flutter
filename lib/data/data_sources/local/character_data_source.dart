@@ -1,8 +1,8 @@
 import 'package:marvelapp_flutter/data/data_sources/local/dao/character_dao.dart';
-import 'package:marvelapp_flutter/data/data_sources/local/local_data_sourse.dart';
+import 'package:marvelapp_flutter/data/data_sources/local/local_character_data_sourse.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
 
-class CharacterDataSource implements LocalDataSource {
+class CharacterDataSource implements LocalCharacterDataSource {
   final CharacterDao characterDao;
 
   CharacterDataSource({required this.characterDao});

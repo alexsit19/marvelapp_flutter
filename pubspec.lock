@@ -515,6 +515,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.1"
+  sealed_annotations:
+    dependency: "direct main"
+    description:
+      name: sealed_annotations
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.13.0"
+  sealed_generators:
+    dependency: "direct dev"
+    description:
+      name: sealed_generators
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.13.0"
+  sealed_writer:
+    dependency: transitive
+    description:
+      name: sealed_writer
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.13.0"
   shelf:
     dependency: transitive
     description:

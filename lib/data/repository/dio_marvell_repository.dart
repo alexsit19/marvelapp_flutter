@@ -32,10 +32,19 @@ class DioMarvellRepository extends MarvellRepository {
   }
 
   @override
-  Future<List<Character>> getCharacters([int offset = 0]) async {
+  Future<List<Character>> getCharacters([int offset = 0, bool getFromLocal = true]) async {
+    if (offset == 0 && getFromLocal) {
+      List<Character> list = await localDataSource.characterDao.getAllCharacters();
+      print("get from db offset = $offset");
+      if (list.isEmpty) {
+        print("isEmpty");
+      }
+      return list;
+    }
     try {
       var httpResponse = await remoteDataSource.getCharacters(offset);
       if (httpResponse.response.statusCode == 200) {
+        print("get from remote offset = $offset");
         var data = httpResponse.data.data;
         if (data != null) {
           List<Character>? tempCharacters =
@@ -52,7 +61,7 @@ class DioMarvellRepository extends MarvellRepository {
         return Future.error("network error");
       }
     } catch (error) {
-      print("catch error");
+      print("catch error $error");
 
       return await localDataSource.characterDao.getAllCharacters();
     }
@@ -73,12 +82,15 @@ class DioMarvellRepository extends MarvellRepository {
           List<Series> series = tempSeries ?? List.empty();
           return series;
         } else {
+          print("no data");
           return Future.error("No data error");
         }
       } else {
+        print("network error");
         return Future.error("network error");
       }
     } catch (error) {
+      print("$error");
       return Future.error("$error");
     }
   }

@@ -31,6 +31,7 @@ dependencies:
   retrofit: 3.0.1+1
   logger: any
   json_annotation: 4.4.0
+  sealed_annotations: 1.13.0
   flutter:
     sdk: flutter
 
@@ -47,6 +48,7 @@ dependencies:
   get_it: 7.2.0
 
 dev_dependencies:
+  sealed_generators: 1.13.0
   retrofit_generator: 4.0.1
   build_runner: 2.1.8
   json_serializable: 6.1.6

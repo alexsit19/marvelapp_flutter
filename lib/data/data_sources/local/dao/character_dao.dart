@@ -1,5 +1,5 @@
 import 'package:drift/drift.dart';
-import 'package:marvelapp_flutter/data/converters/to_character.dart';
+import 'package:marvelapp_flutter/data/converters/from_table_to_character.dart';
 import 'package:marvelapp_flutter/data/data_sources/local/database/database.dart';
 import 'package:marvelapp_flutter/data/data_sources/local/database_tables/character_table.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
@@ -35,7 +35,8 @@ class CharacterDao extends DatabaseAccessor<Database> with _$CharacterDaoMixin {
         )
         .toList();
     if (characters.isEmpty) {
-      return Future.error("error");
+      print("future error");
+      return List.empty();
     }
     return list;
   }
