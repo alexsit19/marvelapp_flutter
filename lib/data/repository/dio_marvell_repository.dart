@@ -3,6 +3,7 @@ import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
 import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
+import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 
 class DioMarvellRepository extends MarvellRepository {
   final CharacterDataSource localDataSource;
@@ -16,18 +17,22 @@ class DioMarvellRepository extends MarvellRepository {
       var httpResponse = await remoteDataSource.getCharacterDetail(characterId);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
-        if (data != null) {
-          Character? tempCharacter = data.results?.map((item) => item.fromApiToCharacter("standard_xlarge")).single;
+        try {
+          Character? tempCharacter = data?.results?.map((item) => item.fromApiToCharacter("standard_xlarge")).single;
           Character character = tempCharacter as Character;
           return character;
-        } else {
-          return Future.error("no data error");
+        } on Exception {
+          throw DataParsingException();
         }
       } else {
-        return Future.error("network error");
+        throw ServerException();
       }
     } catch (error) {
-      return Future.error("$error");
+      if ((error is ServerException) || (error is DataParsingException)) {
+        rethrow;
+      } else {
+        throw NoConnectionException();
+      }
     }
   }
 
@@ -41,24 +46,29 @@ class DioMarvellRepository extends MarvellRepository {
       var httpResponse = await remoteDataSource.getCharacters(offset);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
-        if (data != null) {
+        try {
           List<Character>? tempCharacters =
-              data.results?.map((item) => item.fromApiToCharacter("standard_medium")).toList();
+              data?.results?.map((item) => item.fromApiToCharacter("standard_medium")).toList();
           List<Character> characters = tempCharacters ?? List.empty();
           localDataSource.characterDao.deleteOldData();
           localDataSource.characterDao.insertData(characters);
           return characters;
-        } else {
-          return Future.error("No data error");
+        } on Exception {
+          throw DataParsingException();
         }
       } else {
-        return Future.error("network error");
+        throw ServerException();
       }
     } catch (error) {
       if (getFromLocal) {
         return await localDataSource.characterDao.getAllCharacters();
+      } else {
+        if ((error is ServerException) || (error is DataParsingException)) {
+          rethrow;
+        } else {
+          throw NoConnectionException();
+        }
       }
-      return Future.error("$error");
     }
   }
 
@@ -68,18 +78,22 @@ class DioMarvellRepository extends MarvellRepository {
       var httpResponse = await remoteDataSource.getSeries(characterId);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
-        if (data != null) {
-          List<Series>? tempSeries = data.results?.map((item) => item.toSeries("portrait_medium")).toList();
+        try {
+          List<Series>? tempSeries = data?.results?.map((item) => item.toSeries("portrait_medium")).toList();
           List<Series> series = tempSeries ?? List.empty();
           return series;
-        } else {
-          return Future.error("No data error");
+        } on Exception {
+          throw DataParsingException();
         }
       } else {
-        return Future.error("network error");
+        throw ServerException();
       }
     } catch (error) {
-      return Future.error("$error");
+      if ((error is ServerException) || (error is DataParsingException)) {
+        rethrow;
+      } else {
+        throw NoConnectionException();
+      }
     }
   }
 }
