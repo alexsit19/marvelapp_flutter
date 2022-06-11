@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:marvelapp_flutter/data/data_sources/remote/marvell_api_client.dart';
 import 'package:retrofit/dio.dart';
-
 import 'package:marvelapp_flutter/data/model/response_models/api_response.dart';
 
 class RemoteDataSource {

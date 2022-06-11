@@ -16,4 +16,9 @@ class CharacterDataSource implements LocalCharacterDataSource {
   Future<List<Character>> getCharacters() async {
     return await characterDao.getAllCharacters();
   }
+
+  @override
+  Future<void> deleteOldCharacters() async {
+    return await characterDao.deleteOldData();
+  }
 }

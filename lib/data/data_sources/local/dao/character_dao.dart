@@ -27,6 +27,10 @@ class CharacterDao extends DatabaseAccessor<Database> with _$CharacterDaoMixin {
     }
   }
 
+  Future<void> deleteOldData() async {
+    database.delete(database.characterTable);
+  }
+
   Future<List<Character>> getAllCharacters() async {
     var characters = await database.select(database.characterTable).get();
     List<Character> list = characters
