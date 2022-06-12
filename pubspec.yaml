@@ -32,6 +32,7 @@ dependencies:
   logger: any
   json_annotation: 4.4.0
   sealed_annotations: 1.13.0
+  dartz: 0.10.1
   flutter:
     sdk: flutter
 

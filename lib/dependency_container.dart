@@ -20,7 +20,4 @@ void setup() {
   getIt.registerSingleton<Dio>(Dio(getIt<BaseOptions>()));
   getIt.registerSingleton<CharacterDataSource>(CharacterDataSource(characterDao: getIt<CharacterDao>()));
   getIt.registerSingleton<RemoteDataSource>(RemoteDataSource());
-  getIt.registerSingleton<DioMarvellRepository>(
-      DioMarvellRepository(localDataSource: getIt<CharacterDataSource>(), remoteDataSource: getIt<RemoteDataSource>()));
-
 }

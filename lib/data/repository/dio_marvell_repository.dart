@@ -1,18 +1,27 @@
+import 'package:dartz/dartz.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
+import 'package:marvelapp_flutter/domain/error_handling/failure.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
 import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
-import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 
 class DioMarvellRepository extends MarvellRepository {
-  final CharacterDataSource localDataSource;
-  final RemoteDataSource remoteDataSource;
+  late CharacterDataSource localDataSource;
+  late RemoteDataSource remoteDataSource;
 
-  DioMarvellRepository({required this.localDataSource, required this.remoteDataSource});
+  static final DioMarvellRepository _repository = DioMarvellRepository._internal();
+
+  DioMarvellRepository._internal();
+
+  factory DioMarvellRepository(CharacterDataSource localDataSource, RemoteDataSource remoteDataSource) {
+    _repository.localDataSource = localDataSource;
+    _repository.remoteDataSource = remoteDataSource;
+    return _repository;
+  }
 
   @override
-  Future<Character> getCharacterDetail(String characterId) async {
+  Future<Either<Failure, Character>> getCharacterDetail(String characterId) async {
     try {
       var httpResponse = await remoteDataSource.getCharacterDetail(characterId);
       if (httpResponse.response.statusCode == 200) {
@@ -20,27 +29,23 @@ class DioMarvellRepository extends MarvellRepository {
         try {
           Character? tempCharacter = data?.results?.map((item) => item.fromApiToCharacter("standard_xlarge")).single;
           Character character = tempCharacter as Character;
-          return character;
+          return Right(character);
         } on Exception {
-          throw DataParsingException();
+          return const Left(Failure.dataParsingFailure());
         }
       } else {
-        throw ServerException();
+        return const Left(Failure.serverFailure());
       }
     } catch (error) {
-      if ((error is ServerException) || (error is DataParsingException)) {
-        rethrow;
-      } else {
-        throw NoConnectionException();
-      }
+      return const Left(Failure.connectionFailure());
     }
   }
 
   @override
-  Future<List<Character>> getCharacters([int offset = 0, bool getFromLocal = true]) async {
+  Future<Either<Failure, List<Character>>> getCharacters([int offset = 0, bool getFromLocal = true]) async {
     if (offset == 0 && getFromLocal) {
       List<Character> list = await localDataSource.characterDao.getAllCharacters();
-      return list;
+      return Right(list);
     }
     try {
       var httpResponse = await remoteDataSource.getCharacters(offset);
@@ -52,28 +57,25 @@ class DioMarvellRepository extends MarvellRepository {
           List<Character> characters = tempCharacters ?? List.empty();
           localDataSource.characterDao.deleteOldData();
           localDataSource.characterDao.insertData(characters);
-          return characters;
+          return Right(characters);
         } on Exception {
-          throw DataParsingException();
+          return const Left(Failure.dataParsingFailure());
         }
       } else {
-        throw ServerException();
+        return const Left(Failure.serverFailure());
       }
     } catch (error) {
       if (getFromLocal) {
-        return await localDataSource.characterDao.getAllCharacters();
+        var characters = await localDataSource.characterDao.getAllCharacters();
+        return Right(characters);
       } else {
-        if ((error is ServerException) || (error is DataParsingException)) {
-          rethrow;
-        } else {
-          throw NoConnectionException();
-        }
+        return const Left(Failure.connectionFailure());
       }
     }
   }
 
   @override
-  Future<List<Series>> getSeries(String characterId) async {
+  Future<Either<Failure, List<Series>>> getSeries(String characterId) async {
     try {
       var httpResponse = await remoteDataSource.getSeries(characterId);
       if (httpResponse.response.statusCode == 200) {
@@ -81,19 +83,15 @@ class DioMarvellRepository extends MarvellRepository {
         try {
           List<Series>? tempSeries = data?.results?.map((item) => item.toSeries("portrait_medium")).toList();
           List<Series> series = tempSeries ?? List.empty();
-          return series;
+          return Right(series);
         } on Exception {
-          throw DataParsingException();
+          return const Left(Failure.dataParsingFailure());
         }
       } else {
-        throw ServerException();
+        return const Left(Failure.serverFailure());
       }
     } catch (error) {
-      if ((error is ServerException) || (error is DataParsingException)) {
-        rethrow;
-      } else {
-        throw NoConnectionException();
-      }
+      return const Left(Failure.connectionFailure());
     }
   }
 }

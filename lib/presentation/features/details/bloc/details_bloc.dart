@@ -5,6 +5,8 @@ import 'package:marvelapp_flutter/presentation/features/details/bloc/details_eve
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_state.dart';
 import 'package:marvelapp_flutter/presentation/converters/to_character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/converters/to_series_view_data.dart';
+import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetCharacterUseCase getCharacterUseCase;
@@ -17,19 +19,21 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
   Future<void> _mapGetCharacterEventToState(GetCharacterDetail event, Emitter<DetailsState> emit) async {
     emit(state.copyWith(loading: true, error: null));
-    try {
-      final character = await getCharacterUseCase(event.characterId);
-      final characterViewData = character.toCharacterViewData();
-      final series = await getSeriesUseCase(event.characterId);
-      final seriesViewData = series.map((item) => item.toSeriesViewData()).toList();
-      emit(state.copyWith(
-        loading: false,
-        character: characterViewData,
-        series: seriesViewData,
-        error: null,
-      ));
-    } catch (error) {
-      emit(state.copyWith(loading: false, error: "$error"));
-    }
+    CharacterViewData? characterViewData;
+    List<SeriesViewData>? seriesViewData;
+    final eitherCharacter = await getCharacterUseCase(event.characterId);
+    final eitherSeries = await getSeriesUseCase(event.characterId);
+
+    eitherCharacter.fold(
+      (failure) => emit(state.copyWith(loading: false, error: "error")),
+      (character) => characterViewData = character.toCharacterViewData(),
+    );
+    eitherSeries.fold(
+      (failure) => emit(state.copyWith(loading: false, error: "error")),
+      (series) {
+        seriesViewData = series.map((item) => item.toSeriesViewData()).toList();
+        emit(state.copyWith(loading: false, character: characterViewData, series: seriesViewData, error: null));
+      },
+    );
   }
 }

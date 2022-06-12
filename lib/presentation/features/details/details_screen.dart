@@ -19,12 +19,12 @@ import 'bloc/details_state.dart';
 class DetailsScreen extends StatelessWidget {
   DetailsScreen({Key? key}) : super(key: key);
   final MarvellRepository repository = DioMarvellRepository(
-    remoteDataSource: RemoteDataSource(),
-    localDataSource: CharacterDataSource(
+    CharacterDataSource(
       characterDao: CharacterDao(
         Database(),
       ),
     ),
+    RemoteDataSource(),
   );
 
   @override

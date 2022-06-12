@@ -23,10 +23,10 @@ class HomeScreen extends StatelessWidget {
         create: (_) => HomeBloc(
           getCharactersUseCase: GetCharactersUseCase(
             repository: DioMarvellRepository(
-              remoteDataSource: RemoteDataSource(),
-              localDataSource: CharacterDataSource(
+              CharacterDataSource(
                 characterDao: CharacterDao(Database()),
               ),
+              RemoteDataSource(),
             ),
           ),
         )..add(ReadyForData()),
