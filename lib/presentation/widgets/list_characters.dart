@@ -2,18 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
-import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
-import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
-
-import 'center_loader.dart';
 
 class ListCharacters extends StatefulWidget {
-  const ListCharacters({Key? key}) : super(key: key);
+  final List<CharacterViewData> characters;
+  final bool hasReachedMax;
+  final bool loading;
+  final String? error;
+  const ListCharacters(
+      {Key? key, required this.characters, required this.hasReachedMax, required this.loading, required this.error})
+      : super(key: key);
 
   @override
   State<ListCharacters> createState() => _ListCharactersState();
@@ -30,36 +32,10 @@ class _ListCharactersState extends State<ListCharacters> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeBloc, HomeState>(
-      builder: (context, state) {
-        Widget listViewBuilder = _getListViewBuilder(state.characters, state.hasReachedMax, state.loading, state.error);
-        if (state.loading) {
-          return state.characters.isEmpty ? const CenterLoader() : listViewBuilder;
-        }
-        if (state.error != null) {
-          Widget errorWidget = PageError(
-            onRetry: () {
-              context.read<HomeBloc>().add(ReadyForData());
-            },
-          );
-          return state.characters.isEmpty ? errorWidget : listViewBuilder;
-        }
-        return listViewBuilder;
-      },
-    );
-  }
-
-  @override
-  void dispose() {
-    _scrollController
-      ..removeListener(_onScroll)
-      ..dispose();
-    super.dispose();
-  }
-
-  //TODO Кандидат в отдельный виджет вместо того чтобы быть методом
-  //TODO в этом виджете методе не должно быть параметра loading
-  Widget _getListViewBuilder(List<CharacterViewData> characters, bool hasReachedMax, bool loading, String? error) {
+    var characters = widget.characters;
+    bool hasReachedMax = widget.hasReachedMax;
+    bool loading = widget.loading;
+    String? error = widget.error;
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
@@ -74,7 +50,6 @@ class _ListCharactersState extends State<ListCharacters> {
             errorOrLoader = const EmptyWidget();
           }
           if (error != null) {
-            print("bottom error");
             errorOrLoader = const BottomError();
           }
           final isLastItem = index == characters.length;
@@ -82,6 +57,14 @@ class _ListCharactersState extends State<ListCharacters> {
         },
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _scrollController
+      ..removeListener(_onScroll)
+      ..dispose();
+    super.dispose();
   }
 
   void _onScroll() {
