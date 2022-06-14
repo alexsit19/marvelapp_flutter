@@ -39,7 +39,7 @@ class CharacterDao extends DatabaseAccessor<Database> with _$CharacterDaoMixin {
         )
         .toList();
     if (characters.isEmpty) {
-      return List.empty();
+      return Future.error("error");
     }
     return list;
   }
