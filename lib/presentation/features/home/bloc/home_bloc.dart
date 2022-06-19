@@ -21,13 +21,10 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, error: null));
     } on DataRetrieveException {
-      print("data retrieving exception");
       emit(state.copyWith(loading: Loading.loaded, error: "data retrieve exception"));
     } on NoConnectionException {
-      print("no connection exception");
       emit(state.copyWith(loading: Loading.loaded, error: "no connection exception"));
     } catch (error) {
-      print("unknown exception");
       emit(state.copyWith(loading: Loading.loaded, error: "unknown exception"));
     }
   }

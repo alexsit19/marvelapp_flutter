@@ -6,15 +6,15 @@ import 'package:marvelapp_flutter/domain/entities/series.dart';
 import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
 import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
 
-class DioMarvellRepository extends MarvellRepository {
+class DefaultMarvellRepository extends MarvellRepository {
   late CharacterDataSource localDataSource;
   late RemoteDataSource remoteDataSource;
 
-  static final DioMarvellRepository _repository = DioMarvellRepository._internal();
+  static final DefaultMarvellRepository _repository = DefaultMarvellRepository._internal();
 
-  DioMarvellRepository._internal();
+  DefaultMarvellRepository._internal();
 
-  factory DioMarvellRepository(CharacterDataSource localDataSource, RemoteDataSource remoteDataSource) {
+  factory DefaultMarvellRepository(CharacterDataSource localDataSource, RemoteDataSource remoteDataSource) {
     _repository.localDataSource = localDataSource;
     _repository.remoteDataSource = remoteDataSource;
     return _repository;
