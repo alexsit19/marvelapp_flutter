@@ -33,8 +33,6 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           error: null));
     } on DataRetrieveException {
       emit(state.copyWith(loading: false, error: "data retrieve exception"));
-    } on DataParsingException {
-      emit(state.copyWith(loading: false, error: "data parsing exception"));
     } on NoConnectionException {
       emit(state.copyWith(loading: false, error: "connection exception"));
     } catch (error) {

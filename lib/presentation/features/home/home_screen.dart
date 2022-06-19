@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             Widget child = const CircularProgressIndicator();
-            if (state.loading == Loading.firstLoading) {
+            if (state.loading == Loading.fullScreen) {
               child = const CenterLoader();
             }
             if (state.error != null) {
@@ -47,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               );
             }
             if (state.characters.isNotEmpty) {
-              bool loading = state.loading == Loading.loading ? true : false;
+              bool loading = state.loading == Loading.inBottomRow ? true : false;
               child = ListCharacters(
                 characters: state.characters,
                 hasReachedMax: state.hasReachedMax,

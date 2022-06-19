@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
@@ -25,54 +26,57 @@ class DioMarvellRepository extends MarvellRepository {
       var httpResponse = await remoteDataSource.getCharacterDetail(characterId);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
-        try {
-          Character? tempCharacter = data?.results?.map((item) => item.fromApiToCharacter("standard_xlarge")).single;
-          Character character = tempCharacter as Character;
-          return character;
-        } on Exception {
-          throw DataParsingException();
-        }
+        Character? tempCharacter = data?.results?.map((item) => item.fromApiToCharacter("standard_xlarge")).single;
+        Character character = tempCharacter as Character;
+        return character;
       } else {
         throw DataRetrieveException();
       }
-    } catch (error) {
-      if ((error is DataRetrieveException) || (error is DataParsingException)) {
-        rethrow;
-      } else {
-        throw NoConnectionException();
-      }
+    } on DioError catch (error) {
+      throw _getException(error);
     }
   }
 
   @override
   Future<List<Character>> getCharacters([int offset = 0]) async {
+    if (offset == 0) {
+      List<Character> characters = List.empty();
+      try {
+        characters = await _getRemote(offset);
+      } on Exception {
+        characters = await _getLocal();
+      }
+      return characters;
+    }
+    try {
+      return _getRemote(offset);
+    } on DioError catch (error) {
+      throw _getException(error);
+    }
+  }
+
+  Future<List<Character>> _getRemote(int offset) async {
+    List<Character> characters = List.empty();
     try {
       var httpResponse = await remoteDataSource.getCharacters(offset);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
-        try {
-          List<Character>? tempCharacters =
-          data?.results?.map((item) => item.fromApiToCharacter("standard_medium")).toList();
-          List<Character> characters = tempCharacters ?? List.empty();
-          localDataSource.characterDao.deleteOldData();
-          localDataSource.characterDao.insertData(characters);
-          return characters;
-        } on Exception {
-          throw DataParsingException();
-        }
-      } else {
-        throw DataRetrieveException();
+        List<Character>? tempCharacters =
+            data?.results?.map((item) => item.fromApiToCharacter("standard_medium")).toList();
+        characters = tempCharacters ?? characters;
+        await _saveCharactersInDatabase(characters);
       }
+      return characters;
+    } on DioError catch (error) {
+      throw _getException(error);
+    }
+  }
+
+  Future<List<Character>> _getLocal() async {
+    try {
+      return await localDataSource.characterDao.getAllCharacters();
     } catch (error) {
-      if ((error is DataRetrieveException) || (error is DataParsingException)) {
-        rethrow;
-      } else {
-        if (offset == 0) {
-          return localDataSource.characterDao.getAllCharacters();
-        } else {
-          throw NoConnectionException();
-        }
-      }
+      throw DataRetrieveException();
     }
   }
 
@@ -82,22 +86,28 @@ class DioMarvellRepository extends MarvellRepository {
       var httpResponse = await remoteDataSource.getSeries(characterId);
       if (httpResponse.response.statusCode == 200) {
         var data = httpResponse.data.data;
-        try {
-          List<Series>? tempSeries = data?.results?.map((item) => item.toSeries("portrait_medium")).toList();
-          List<Series> series = tempSeries ?? List.empty();
-          return series;
-        } on Exception {
-          throw DataParsingException();
-        }
+
+        List<Series>? tempSeries = data?.results?.map((item) => item.toSeries("portrait_medium")).toList();
+        List<Series> series = tempSeries ?? List.empty();
+        return series;
       } else {
         throw DataRetrieveException();
       }
-    } catch (error) {
-      if ((error is DataRetrieveException) || (error is DataParsingException)) {
-        rethrow;
-      } else {
-        throw NoConnectionException();
-      }
+    } on DioError catch (error) {
+      throw _getException(error);
     }
+  }
+
+  Future<void> _saveCharactersInDatabase(List<Character> characters) async {
+    await localDataSource.characterDao.deleteOldData();
+    await localDataSource.characterDao.insertData(characters);
+  }
+
+  Exception _getException(DioError error) {
+    Exception exception = NoConnectionException();
+    if (error.type == DioErrorType.connectTimeout) {
+      exception = DataRetrieveException();
+    }
+    return exception;
   }
 }

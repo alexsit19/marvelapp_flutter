@@ -9,31 +9,32 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetCharactersUseCase getCharactersUseCase;
 
-  HomeBloc({required this.getCharactersUseCase}) : super(const HomeState(loading: Loading.firstLoading)) {
+  HomeBloc({required this.getCharactersUseCase}) : super(const HomeState(loading: Loading.fullScreen)) {
     on<ReadyForData>(_mapReadyForDataEventToState);
     on<ScrolledToEnd>(_mapScrolledToEndEventToState);
   }
 
   Future<void> _mapReadyForDataEventToState(ReadyForData event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(loading: Loading.firstLoading));
+    emit(state.copyWith(loading: Loading.fullScreen));
     try {
       var characters = await getCharactersUseCase(0);
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, error: null));
-    } on DataParsingException {
-      emit(state.copyWith(loading: Loading.loaded, error: "data parsing exception"));
     } on DataRetrieveException {
+      print("data retrieving exception");
       emit(state.copyWith(loading: Loading.loaded, error: "data retrieve exception"));
     } on NoConnectionException {
+      print("no connection exception");
       emit(state.copyWith(loading: Loading.loaded, error: "no connection exception"));
     } catch (error) {
+      print("unknown exception");
       emit(state.copyWith(loading: Loading.loaded, error: "unknown exception"));
     }
   }
 
   Future<void> _mapScrolledToEndEventToState(ScrolledToEnd event, Emitter<HomeState> emit) async {
-    if (state.hasReachedMax || state.loading == Loading.loading) return;
-    emit(state.copyWith(loading: Loading.loading, error: null));
+    if (state.hasReachedMax || state.loading == Loading.inBottomRow) return;
+    emit(state.copyWith(loading: Loading.inBottomRow, error: null));
     try {
       var characters = await getCharactersUseCase(state.characters.length);
       if (characters.isEmpty) {
@@ -43,8 +44,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       List<CharacterViewData> list = List.of(state.characters)..addAll(characterViewData);
       emit(state.copyWith(loading: Loading.loaded, characters: list, error: null));
-    } on DataParsingException {
-      emit(state.copyWith(loading: Loading.loaded, error: "data parsing exception"));
     } on DataRetrieveException {
       emit(state.copyWith(loading: Loading.loaded, error: "data retrieve exception"));
     } on NoConnectionException {

@@ -5,11 +5,6 @@ class DataRetrieveException extends Equatable implements Exception {
   List<Object?> get props => [];
 }
 
-class DataParsingException extends Equatable implements Exception {
-  @override
-  List<Object?> get props => [];
-}
-
 class NoConnectionException extends Equatable implements Exception {
   @override
   List<Object?> get props => [];
