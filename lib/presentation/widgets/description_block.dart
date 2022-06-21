@@ -33,6 +33,5 @@ class DescriptionBlock extends StatelessWidget {
         ),
       ],
     );
-    ;
   }
 }

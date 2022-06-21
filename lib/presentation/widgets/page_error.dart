@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class PageError extends StatelessWidget {
   final Function() onRetry;
+  final String errorText;
 
-  const PageError({Key? key, required this.onRetry}) : super(key: key);
+  const PageError({Key? key, required this.onRetry, required this.errorText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +12,12 @@ class PageError extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          const Text(
-            "No connection.",
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          Text(
+            errorText,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const Text(
-            "Please check internet connection and ",
+            "Please check internet connection",
             style: TextStyle(
               fontSize: 16,
             ),

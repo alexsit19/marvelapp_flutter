@@ -1,5 +1,5 @@
-import 'package:marvelapp_flutter/domain/entities/character.dart';
 import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
+import 'package:marvelapp_flutter/domain/entities/character.dart';
 
 class GetCharacterUseCase {
   final MarvellRepository repository;
