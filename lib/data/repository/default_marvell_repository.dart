@@ -40,7 +40,7 @@ class DefaultMarvellRepository extends MarvellRepository {
   @override
   Future<List<Character>> getCharacters([int offset = 0]) async {
     if (offset == 0) {
-      List<Character> characters = List.empty();
+      List<Character> characters;
       try {
         characters = await _getRemote(offset);
       } on Exception {
@@ -64,7 +64,9 @@ class DefaultMarvellRepository extends MarvellRepository {
         List<Character>? tempCharacters =
             data?.results?.map((item) => item.fromApiToCharacter("standard_medium")).toList();
         characters = tempCharacters ?? characters;
-        await _saveCharactersInDatabase(characters);
+        if (offset == 0) {
+          await _saveCharactersInDatabase(characters);
+        }
       }
       return characters;
     } on DioError catch (error) {

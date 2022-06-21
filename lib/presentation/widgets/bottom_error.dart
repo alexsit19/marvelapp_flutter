@@ -4,7 +4,9 @@ import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 
 class BottomError extends StatelessWidget {
-  const BottomError({Key? key}) : super(key: key);
+  final String errorText;
+
+  const BottomError({Key? key, required this.errorText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class BottomError extends StatelessWidget {
           onPressed: () {
             context.read<HomeBloc>().add(ScrolledToEnd());
           },
-          child: const Text('Something went wrong. Tap to try again'),
+          child: Text('$errorText. Tap to try again'),
         ),
       ),
     );

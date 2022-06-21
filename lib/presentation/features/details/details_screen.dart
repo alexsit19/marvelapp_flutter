@@ -45,6 +45,7 @@ class DetailsScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<DetailsBloc>().add(GetCharacterDetail(characterId: characterId));
                 },
+                errorText: "${state.error}",
               );
             }
             return child;

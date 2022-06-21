@@ -9,10 +9,11 @@ import 'package:marvelapp_flutter/data/repository/default_marvell_repository.dar
 import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
+import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 
 final getIt = GetIt.instance;
 
-void setupDependences() {
+void setupDependencies() {
   getIt.registerLazySingleton<Database>(() => Database());
   getIt.registerSingleton<CharacterDao>(CharacterDao(getIt<Database>()));
   getIt.registerSingleton<BaseOptions>(BaseOptions(
@@ -25,7 +26,7 @@ void setupDependences() {
   getIt.registerSingleton<Dio>(Dio(getIt<BaseOptions>()));
   getIt.registerSingleton<MarvellClient>(MarvellClient(getIt<Dio>()));
   getIt.registerSingleton<RemoteDataSource>(RemoteDataSource());
-  getIt.registerSingleton<DefaultMarvellRepository>(
+  getIt.registerSingleton<MarvellRepository>(
       DefaultMarvellRepository(getIt<CharacterDataSource>(), getIt<RemoteDataSource>()));
   getIt.registerFactory(() => GetCharactersUseCase(repository: getIt<DefaultMarvellRepository>()));
   getIt.registerFactory(() => GetCharacterUseCase(repository: getIt<DefaultMarvellRepository>()));

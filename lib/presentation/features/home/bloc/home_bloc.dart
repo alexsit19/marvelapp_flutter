@@ -21,11 +21,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, error: null));
     } on DataRetrieveException {
-      emit(state.copyWith(loading: Loading.loaded, error: "data retrieve exception"));
+      emit(state.copyWith(loading: Loading.loaded, error: "slow internet connection"));
     } on NoConnectionException {
-      emit(state.copyWith(loading: Loading.loaded, error: "no connection exception"));
+      emit(state.copyWith(loading: Loading.loaded, error: "no internet connection"));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, error: "unknown exception"));
+      emit(state.copyWith(loading: Loading.loaded, error: "unknown error"));
     }
   }
 

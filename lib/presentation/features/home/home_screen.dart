@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<HomeBloc>().add(ReadyForData());
                 },
+                errorText: "${state.error}",
               );
             }
             if (state.characters.isNotEmpty) {

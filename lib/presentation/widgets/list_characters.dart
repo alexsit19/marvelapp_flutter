@@ -50,7 +50,7 @@ class _ListCharactersState extends State<ListCharacters> {
             errorOrLoader = const EmptyWidget();
           }
           if (error != null) {
-            errorOrLoader = const BottomError();
+            errorOrLoader = BottomError(errorText: error,);
           }
           final isLastItem = index == characters.length;
           return isLastItem ? errorOrLoader : getHeroCard(characters[index]);

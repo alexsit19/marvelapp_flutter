@@ -3,6 +3,6 @@ import 'package:marvelapp_flutter/dependency_container.dart';
 import 'package:marvelapp_flutter/marvel_app.dart';
 
 void main() {
-  setupDependences();
+  setupDependencies();
   runApp(const MarvelApp());
 }
