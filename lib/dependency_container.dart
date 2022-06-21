@@ -28,7 +28,7 @@ void setupDependencies() {
   getIt.registerSingleton<RemoteDataSource>(RemoteDataSource());
   getIt.registerSingleton<MarvellRepository>(
       DefaultMarvellRepository(getIt<CharacterDataSource>(), getIt<RemoteDataSource>()));
-  getIt.registerFactory(() => GetCharactersUseCase(repository: getIt<DefaultMarvellRepository>()));
-  getIt.registerFactory(() => GetCharacterUseCase(repository: getIt<DefaultMarvellRepository>()));
-  getIt.registerFactory(() => GetSeriesWithCharacterUseCase(repository: getIt<DefaultMarvellRepository>()));
+  getIt.registerFactory(() => GetCharactersUseCase(repository: getIt<MarvellRepository>()));
+  getIt.registerFactory(() => GetCharacterUseCase(repository: getIt<MarvellRepository>()));
+  getIt.registerFactory(() => GetSeriesWithCharacterUseCase(repository: getIt<MarvellRepository>()));
 }

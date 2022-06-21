@@ -78,7 +78,7 @@ class DefaultMarvellRepository extends MarvellRepository {
     try {
       return await localDataSource.characterDao.getAllCharacters();
     } catch (error) {
-      throw DataRetrieveException();
+      throw NoConnectionException();
     }
   }
 

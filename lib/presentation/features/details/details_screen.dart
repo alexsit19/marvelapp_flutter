@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/data/repository/default_marvell_repository.dart';
-import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/details//bloc/details_bloc.dart';
@@ -14,8 +12,7 @@ import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/details_state.dart';
 
 class DetailsScreen extends StatelessWidget {
-  DetailsScreen({Key? key}) : super(key: key);
-  final MarvellRepository repository = getIt.get<DefaultMarvellRepository>();
+  const DetailsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

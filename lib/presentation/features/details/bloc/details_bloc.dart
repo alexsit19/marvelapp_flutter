@@ -32,11 +32,11 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           series: seriesViewData,
           error: null));
     } on DataRetrieveException {
-      emit(state.copyWith(loading: false, error: "data retrieve exception"));
+      emit(state.copyWith(loading: false, error: "slow internet connection"));
     } on NoConnectionException {
-      emit(state.copyWith(loading: false, error: "connection exception"));
+      emit(state.copyWith(loading: false, error: "no internet connection"));
     } catch (error) {
-      emit(state.copyWith(loading: false, error: "unknown exception"));
+      emit(state.copyWith(loading: false, error: "unknown error"));
     }
   }
 }
