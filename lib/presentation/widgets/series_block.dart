@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_element.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SeriesBlock extends StatelessWidget {
   final List<SeriesViewData> series;
@@ -14,10 +15,10 @@ class SeriesBlock extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
           child: Row(
-            children: const [
+            children: [
               Text(
-                "Series",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                AppLocalizations.of(context)!.series,
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
             ],
           ),

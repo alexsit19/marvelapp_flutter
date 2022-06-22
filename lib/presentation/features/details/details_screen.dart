@@ -10,6 +10,7 @@ import 'package:marvelapp_flutter/presentation/features/details/bloc/details_eve
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/details_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -19,7 +20,7 @@ class DetailsScreen extends StatelessWidget {
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MarvellApp - Detail"),
+        title: Text(AppLocalizations.of(context)!.marvellAppDetail),
       ),
       body: BlocProvider(
         create: (_) => DetailsBloc(
@@ -42,7 +43,7 @@ class DetailsScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<DetailsBloc>().add(GetCharacterDetail(characterId: characterId));
                 },
-                errorText: "${state.error}",
+                errorText: _errorStringToLocalizationString(state.error, context),
               );
             }
             return child;
@@ -50,5 +51,16 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _errorStringToLocalizationString(String? error, BuildContext context) {
+    switch(error) {
+      case "slow internet connection" :
+        return AppLocalizations.of(context)!.slowInternetConnection;
+      case "no internet connection" :
+        return AppLocalizations.of(context)!.noInternetConnection;
+      default:
+        return AppLocalizations.of(context)!.unknownError;
+    }
   }
 }

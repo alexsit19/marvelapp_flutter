@@ -1,3 +1,11 @@
 {
-  "slowInternetConnection" : "slow internet connection"
+  "slowInternetConnection" : "slow internet connection",
+  "noInternetConnection" : "no internet connection",
+  "unknownError" : "unknown error",
+  "marvellApp" : "MarvellApp",
+  "tapToTryAgain" : "Tap to try again",
+  "description" : "Description",
+  "pleaseCheckInternetConnection" : "Please check internet connection",
+  "series" : "Series",
+  "marvellAppDetail" : "MarvellApp - Detail"
 }

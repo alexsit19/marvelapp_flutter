@@ -8,6 +8,7 @@ import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/home_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MarvellApp"),
+        title: Text(AppLocalizations.of(context)!.marvellApp),
       ),
       body: BlocProvider(
         create: (_) => HomeBloc(
@@ -32,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<HomeBloc>().add(ReadyForData());
                 },
-                errorText: "${state.error}",
+                errorText: _errorStringToLocalizationString(state.error, context),
               );
             }
             if (state.characters.isNotEmpty) {
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                 characters: state.characters,
                 hasReachedMax: state.hasReachedMax,
                 loading: loading,
-                error: state.error,
+                error: _errorStringToLocalizationString(state.error, context),
               );
             }
             return child;
@@ -49,5 +50,16 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _errorStringToLocalizationString(String? error, BuildContext context) {
+    switch(error) {
+      case "slow internet connection" :
+        return AppLocalizations.of(context)!.slowInternetConnection;
+      case "no internet connection" :
+        return AppLocalizations.of(context)!.noInternetConnection;
+      default:
+        return AppLocalizations.of(context)!.unknownError;
+    }
   }
 }

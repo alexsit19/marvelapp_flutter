@@ -1,3 +1,11 @@
 {
-  "slowInternetConnection" : "медленное интернет соединение"
+  "slowInternetConnection" : "медленное интернет соединение",
+  "noInternetConnection" : "нет интернет соединения",
+  "unknownError" : "неизвестная ошибка",
+  "marvellApp" : "Герои Марвел",
+  "tapToTryAgain" : "нажмите, чтобы загрузить снова",
+  "description" : "Описание",
+  "pleaseCheckInternetConnection" : "Пожалуйста проверьте интернет соединение",
+  "series" : "Серии",
+  "marvellAppDetail" : "Герои Марвел - Детали"
 }
