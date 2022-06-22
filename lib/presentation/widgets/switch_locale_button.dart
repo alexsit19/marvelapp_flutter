@@ -9,33 +9,31 @@ class SwitchLocaleButton extends StatefulWidget {
 }
 
 class _SwitchLocaleButtonState extends State<SwitchLocaleButton> {
-  late String currentLocale;
+  String currentLocale = "Ru";
 
   @override
   void didChangeDependencies() {
     Locale myLocale = Localizations.localeOf(context);
-    currentLocale = myLocale as String;
+    //currentLocale = myLocale as String;
     super.didChangeDependencies();
   }
 
   void _toggleLocale() {
     setState(() {
       if (currentLocale == "Ru") {
-
+        currentLocale = "En";
       } else {
-        print(currentLocale);
-
+        currentLocale = "Ru";
       }
-  });
-}
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
         _toggleLocale();
-        }
-      ,
+      },
       child: _getText(),
     );
   }
