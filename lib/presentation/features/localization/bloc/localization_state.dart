@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-enum Locale { ru, en }
+enum CurrentLocale { ru, en }
 
 class LocalizationState extends Equatable{
-  final Locale locale;
+  final CurrentLocale locale;
 
   const LocalizationState({required this.locale});
 
-  LocalizationState copyWith({required Locale locale}) {
+  LocalizationState copyWith({required CurrentLocale locale}) {
     return LocalizationState(locale: locale);
   }
 
