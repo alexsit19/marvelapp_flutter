@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:marvelapp_flutter/Localization/app_localization_delegate.dart';
@@ -24,7 +23,7 @@ class AppLocalizations {
       return MapEntry(key, value.toString());
     });
 }
-  String? translate(String key) => _localizedStrings[key];
+  String translate(String key) => _localizedStrings[key]!;
 
   bool get isEnLocale => locale.languageCode == 'en';
 }

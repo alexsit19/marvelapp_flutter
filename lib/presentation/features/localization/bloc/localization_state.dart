@@ -1,13 +1,12 @@
+import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
-enum CurrentLocale { ru, en }
-
 class LocalizationState extends Equatable{
-  final CurrentLocale locale;
+  final Locale locale;
 
   const LocalizationState({required this.locale});
 
-  LocalizationState copyWith({required CurrentLocale locale}) {
+  LocalizationState copyWith({required locale}) {
     return LocalizationState(locale: locale);
   }
 
