@@ -1,35 +1,36 @@
 import 'package:equatable/equatable.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/error_object.dart';
 
 enum Loading { fullScreen, inBottomRow, loaded }
 
 class HomeState extends Equatable {
   final Loading loading;
   final bool hasReachedMax;
-  final String? error;
+  final ErrorObject? errorObject;
   final List<CharacterViewData> characters;
 
   const HomeState({
     required this.loading,
     this.hasReachedMax = false,
-    this.error,
+    this.errorObject,
     this.characters = const <CharacterViewData>[],
   });
 
   HomeState copyWith({
     required Loading loading,
     bool? hasReachedMax,
-    String? error,
+    ErrorObject? errorObject,
     List<CharacterViewData>? characters,
   }) {
     return HomeState(
       loading: loading,
       hasReachedMax: hasReachedMax ?? this.hasReachedMax,
       characters: characters ?? this.characters,
-      error: error,
+      errorObject: errorObject,
     );
   }
 
   @override
-  List<Object?> get props => [loading, hasReachedMax, characters, error];
+  List<Object?> get props => [loading, hasReachedMax, characters, errorObject];
 }
