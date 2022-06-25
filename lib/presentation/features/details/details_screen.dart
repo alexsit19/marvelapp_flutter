@@ -10,6 +10,8 @@ import 'package:marvelapp_flutter/presentation/features/details/bloc/details_eve
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/details_state.dart';
+import 'package:marvelapp_flutter/presentation/widgets/switch_locale_button.dart';
+
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -20,6 +22,9 @@ class DetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("MarvellApp - Detail"),
+        actions: const [
+          SwitchLocaleButton(),
+        ],
       ),
       body: BlocProvider(
         create: (_) => DetailsBloc(

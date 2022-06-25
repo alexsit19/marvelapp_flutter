@@ -8,6 +8,7 @@ import 'package:marvelapp_flutter/presentation/widgets/center_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/list_characters.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
+import 'package:marvelapp_flutter/presentation/widgets/switch_locale_button.dart';
 import 'bloc/home_bloc.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,6 +19,9 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).translate("marvellApp")),
+        actions: const [
+          SwitchLocaleButton(),
+        ],
       ),
       body: BlocProvider(
         create: (_) => HomeBloc(
