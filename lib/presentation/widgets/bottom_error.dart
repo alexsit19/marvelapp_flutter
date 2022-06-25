@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 
@@ -21,7 +22,7 @@ class BottomError extends StatelessWidget {
           onPressed: () {
             context.read<HomeBloc>().add(ScrolledToEnd());
           },
-          child: Text('$errorText. Tap to try again'),
+          child: Text('$errorText. ${AppLocalizations.of(context).translate("tapToTryAgain")}'),
         ),
       ),
     );

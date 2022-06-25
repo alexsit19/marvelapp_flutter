@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/details//bloc/details_bloc.dart';
@@ -21,7 +22,7 @@ class DetailsScreen extends StatelessWidget {
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MarvellApp - Detail"),
+        title: Text(AppLocalizations.of(context).translate("marvellAppDetail")),
         actions: const [
           SwitchLocaleButton(),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
 class DescriptionBlock extends StatelessWidget {
@@ -13,10 +14,10 @@ class DescriptionBlock extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8.0, left: 8.0, bottom: 4.0),
           child: Row(
-            children: const [
+            children: [
               Text(
-                "Description",
-                style: TextStyle(
+                AppLocalizations.of(context).translate("description"),
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),

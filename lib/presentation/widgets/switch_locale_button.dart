@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:marvelapp_flutter/Localization/app_localizations.dart';
+import 'package:marvelapp_flutter/presentation/features/localization/bloc/localization_bloc.dart';
+import 'package:marvelapp_flutter/presentation/features/localization/bloc/localization_event.dart';
 
 class SwitchLocaleButton extends StatefulWidget {
   const SwitchLocaleButton({Key? key}) : super(key: key);
@@ -8,20 +12,23 @@ class SwitchLocaleButton extends StatefulWidget {
 }
 
 class _SwitchLocaleButtonState extends State<SwitchLocaleButton> {
-  String currentLocale = "Ru";
+  String currentLocale = "ru";
 
   @override
   void didChangeDependencies() {
     Locale myLocale = Localizations.localeOf(context);
+    currentLocale = myLocale.toString();
     super.didChangeDependencies();
   }
 
   void _toggleLocale() {
     setState(() {
-      if (currentLocale == "Ru") {
-        currentLocale = "En";
+      if (AppLocalizations.of(context).isEnLocale) {
+        BlocProvider.of<LocalizationBloc>(context).add(SetLocalRu());
+        currentLocale = "ru";
       } else {
-        currentLocale = "Ru";
+        BlocProvider.of<LocalizationBloc>(context).add(SetLocalEn());
+        currentLocale = "en";
       }
     });
   }
@@ -37,7 +44,7 @@ class _SwitchLocaleButtonState extends State<SwitchLocaleButton> {
   }
 
   Widget _getText() {
-    if (currentLocale == "Ru") {
+    if (currentLocale == "ru") {
       return RichText(
         text: const TextSpan(
           children: <TextSpan>[
