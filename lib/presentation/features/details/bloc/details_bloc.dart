@@ -6,6 +6,7 @@ import 'package:marvelapp_flutter/presentation/converters/to_character_view_data
 import 'package:marvelapp_flutter/presentation/converters/to_series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_state.dart';
+import 'package:marvelapp_flutter/presentation/error_object.dart';
 
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   final GetCharacterUseCase getCharacterUseCase;
@@ -19,7 +20,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
 
   Future<void> _mapGetCharacterEventToState(
       GetCharacterDetail event, Emitter<DetailsState> emit) async {
-    emit(state.copyWith(loading: true, error: null));
+    emit(state.copyWith(loading: true, errorObject: null));
     try {
       final character = await getCharacterUseCase(event.characterId);
       final series = await getSeriesUseCase(event.characterId);
@@ -30,13 +31,13 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
           loading: false,
           character: characterViewData,
           series: seriesViewData,
-          error: null));
+          errorObject: null));
     } on DataRetrieveException {
-      emit(state.copyWith(loading: false, error: "slow internet connection"));
+      emit(state.copyWith(loading: false, errorObject: ErrorObject.slowInternetConnection()));
     } on NoConnectionException {
-      emit(state.copyWith(loading: false, error: "no internet connection"));
+      emit(state.copyWith(loading: false, errorObject: ErrorObject.noInternetConnection()));
     } catch (error) {
-      emit(state.copyWith(loading: false, error: "unknown error"));
+      emit(state.copyWith(loading: false, errorObject: ErrorObject.unknownError()));
     }
   }
 }

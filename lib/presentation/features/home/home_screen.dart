@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
+import 'package:marvelapp_flutter/presentation/error_object.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/widgets/center_loader.dart';
@@ -24,20 +25,19 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: BlocProvider(
-        create: (_) => HomeBloc(
-          getCharactersUseCase: getIt.get<GetCharactersUseCase>())..add(ReadyForData()),
+        create: (_) => HomeBloc(getCharactersUseCase: getIt.get<GetCharactersUseCase>())..add(ReadyForData()),
         child: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             Widget child = const CircularProgressIndicator();
             if (state.loading == Loading.fullScreen) {
               child = const CenterLoader();
             }
-            if (state.error != null) {
+            if (state.errorObject != null) {
               child = PageError(
                 onRetry: () {
                   context.read<HomeBloc>().add(ReadyForData());
                 },
-                errorText: "${state.error}",
+                errorText: _getErrorString(state.errorObject, context),
               );
             }
             if (state.characters.isNotEmpty) {
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
                 characters: state.characters,
                 hasReachedMax: state.hasReachedMax,
                 loading: loading,
-                error: state.error,
+                errorObject: state.errorObject,
               );
             }
             return child;
@@ -54,5 +54,15 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getErrorString(ErrorObject? errorObject, BuildContext context) {
+    if (errorObject is NoInternetConnection) {
+      return AppLocalizations.of(context).translate("noInternetConnection");
+    } else if (errorObject is SlowInternetConnection) {
+      return AppLocalizations.of(context).translate("slowInternetConnection");
+    } else {
+      return AppLocalizations.of(context).translate("unknownError");
+    }
   }
 }

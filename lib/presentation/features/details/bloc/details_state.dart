@@ -2,25 +2,26 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
+import 'package:marvelapp_flutter/presentation/error_object.dart';
 
 @immutable
 class DetailsState extends Equatable {
   final bool loading;
   final CharacterViewData? character;
-  final String? error;
+  final ErrorObject? errorObject;
   final List<SeriesViewData>? series;
 
   const DetailsState({
     required this.loading,
     this.character,
-    this.error,
+    this.errorObject,
     this.series,
   });
 
   DetailsState copyWith({
     required bool loading,
     CharacterViewData? character,
-    String? error,
+    ErrorObject? errorObject,
     List<SeriesViewData>? series,
   }) {
 
@@ -28,10 +29,10 @@ class DetailsState extends Equatable {
       loading: loading,
       character: character ?? this.character,
       series: series ?? this.series,
-      error: error,
+      errorObject: errorObject,
     );
   }
 
   @override
-  List<Object?> get props => [loading, character, series, error];
+  List<Object?> get props => [loading, character, series, errorObject];
 }

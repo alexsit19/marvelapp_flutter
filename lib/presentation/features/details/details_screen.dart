@@ -10,6 +10,7 @@ import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
+import 'package:marvelapp_flutter/presentation/error_object.dart';
 import 'bloc/details_state.dart';
 import 'package:marvelapp_flutter/presentation/widgets/switch_locale_button.dart';
 
@@ -38,7 +39,7 @@ class DetailsScreen extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
             if (state.loading) return child;
-            if (state.error == null && !state.loading) {
+            if (state.errorObject == null && !state.loading) {
               child = SingleChildScrollView(
                 child: DetailsContent(
                     character: state.character as CharacterViewData, series: state.series as List<SeriesViewData>),
@@ -48,7 +49,7 @@ class DetailsScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<DetailsBloc>().add(GetCharacterDetail(characterId: characterId));
                 },
-                errorText: "${state.error}",
+                errorText: _getErrorString(state.errorObject, context),
               );
             }
             return child;
@@ -56,5 +57,19 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getErrorString(ErrorObject? errorObject, BuildContext context) {
+    String errorString = "";
+    if (errorObject is UnknownError) {
+      errorString = AppLocalizations.of(context).translate("unknownError");
+    }
+    if (errorObject is NoInternetConnection) {
+      errorString = AppLocalizations.of(context).translate("noInternetConnection");
+    }
+    if (errorObject is SlowInternetConnection) {
+      errorString = AppLocalizations.of(context).translate("slowInternetConnection");
+    }
+    return errorString;
   }
 }

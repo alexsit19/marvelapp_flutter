@@ -1,27 +1,23 @@
+import 'package:equatable/equatable.dart';
+
 class ErrorObject {
   ErrorObject._();
 
-  factory ErrorObject.noInternetConnection(String message) = NoInternetConnection;
+  factory ErrorObject.noInternetConnection() = NoInternetConnection;
 
-  factory ErrorObject.slowInternetConnection(String message) = SlowInternetConnection;
+  factory ErrorObject.slowInternetConnection() = SlowInternetConnection;
 
-  factory ErrorObject.unknownError(String message) = UnknownError;
+  factory ErrorObject.unknownError() = UnknownError;
 }
 
 class NoInternetConnection extends ErrorObject {
-  final String message;
-
-  NoInternetConnection(this.message) : super._();
+  NoInternetConnection() : super._();
 }
 
 class SlowInternetConnection extends ErrorObject {
-  final String message;
-
-  SlowInternetConnection(this.message) : super._();
+  SlowInternetConnection() : super._();
 }
 
 class UnknownError extends ErrorObject {
-  final String message;
-
-  UnknownError(this.message) : super._();
+  UnknownError() : super._();
 }

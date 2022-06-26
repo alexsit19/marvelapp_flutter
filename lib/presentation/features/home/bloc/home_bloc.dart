@@ -23,12 +23,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, errorObject: null));
     } on DataRetrieveException {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.slowInternetConnection("slow internet connection")));
+          loading: Loading.loaded, errorObject: ErrorObject.slowInternetConnection()));
     } on NoConnectionException {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.noInternetConnection("no internet connection")));
+          loading: Loading.loaded, errorObject: ErrorObject.noInternetConnection()));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, errorObject: ErrorObject.unknownError("unknown error")));
+      emit(state.copyWith(loading: Loading.loaded, errorObject: ErrorObject.unknownError()));
     }
   }
 
@@ -46,12 +46,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(loading: Loading.loaded, characters: list, errorObject: null));
     } on DataRetrieveException {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.slowInternetConnection("slow internet connection")));
+          loading: Loading.loaded, errorObject: ErrorObject.slowInternetConnection()));
     } on NoConnectionException {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.noInternetConnection("no internet connection")));
+          loading: Loading.loaded, errorObject: ErrorObject.noInternetConnection()));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, errorObject: ErrorObject.unknownError("unknown error")));
+      emit(state.copyWith(loading: Loading.loaded, errorObject: ErrorObject.unknownError()));
     }
   }
 }

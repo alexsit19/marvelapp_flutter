@@ -7,14 +7,16 @@ import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
+import 'package:marvelapp_flutter/presentation/error_object.dart';
+import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData> characters;
   final bool hasReachedMax;
   final bool loading;
-  final String? error;
+  final ErrorObject? errorObject;
   const ListCharacters(
-      {Key? key, required this.characters, required this.hasReachedMax, required this.loading, required this.error})
+      {Key? key, required this.characters, required this.hasReachedMax, required this.loading, required this.errorObject})
       : super(key: key);
 
   @override
@@ -35,7 +37,7 @@ class _ListCharactersState extends State<ListCharacters> {
     var characters = widget.characters;
     bool hasReachedMax = widget.hasReachedMax;
     bool loading = widget.loading;
-    String? error = widget.error;
+    ErrorObject? errorObject = widget.errorObject;
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
@@ -49,8 +51,8 @@ class _ListCharactersState extends State<ListCharacters> {
           if (hasReachedMax) {
             errorOrLoader = const EmptyWidget();
           }
-          if (error != null) {
-            errorOrLoader = BottomError(errorText: error,);
+          if (errorObject != null) {
+            errorOrLoader = BottomError(errorText: _getErrorString(errorObject, context),);
           }
           final isLastItem = index == characters.length;
           return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
@@ -139,5 +141,15 @@ class _ListCharactersState extends State<ListCharacters> {
       width: 100.0,
       fit: BoxFit.fill,
     );
+  }
+
+  String _getErrorString(ErrorObject? errorObject, BuildContext context) {
+    if (errorObject is NoInternetConnection) {
+      return AppLocalizations.of(context).translate("noInternetConnection");
+    } else if (errorObject is SlowInternetConnection) {
+      return AppLocalizations.of(context).translate("slowInternetConnection");
+    } else {
+      return AppLocalizations.of(context).translate("unknownError");
+    }
   }
 }
