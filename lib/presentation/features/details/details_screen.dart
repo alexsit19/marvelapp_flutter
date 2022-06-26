@@ -60,10 +60,7 @@ class DetailsScreen extends StatelessWidget {
   }
 
   String _getErrorString(ErrorObject? errorObject, BuildContext context) {
-    String errorString = "";
-    if (errorObject is UnknownError) {
-      errorString = AppLocalizations.of(context).translate("unknownError");
-    }
+    String errorString = AppLocalizations.of(context).translate("unknownError");
     if (errorObject is NoInternetConnection) {
       errorString = AppLocalizations.of(context).translate("noInternetConnection");
     }

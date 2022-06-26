@@ -57,12 +57,13 @@ class HomeScreen extends StatelessWidget {
   }
 
   String _getErrorString(ErrorObject? errorObject, BuildContext context) {
+    String errorString = AppLocalizations.of(context).translate("unknownError");
     if (errorObject is NoInternetConnection) {
-      return AppLocalizations.of(context).translate("noInternetConnection");
-    } else if (errorObject is SlowInternetConnection) {
-      return AppLocalizations.of(context).translate("slowInternetConnection");
-    } else {
-      return AppLocalizations.of(context).translate("unknownError");
+      errorString = AppLocalizations.of(context).translate("noInternetConnection");
     }
+    if (errorObject is SlowInternetConnection) {
+      errorString = AppLocalizations.of(context).translate("slowInternetConnection");
+    }
+    return errorString;
   }
 }
