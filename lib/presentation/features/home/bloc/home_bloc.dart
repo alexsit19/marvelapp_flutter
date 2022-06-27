@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
-import 'package:marvelapp_flutter/presentation/error_object.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/converters/to_character_view_data.dart';
@@ -20,21 +19,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       var characters = await getCharactersUseCase(0);
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
-      emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, errorObject: null));
-    } on DataRetrieveException {
+      emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, error: null));
+    } on DataRetrieveException catch(error) {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.slowInternetConnection()));
-    } on NoConnectionException {
+          loading: Loading.loaded, error: error));
+    } on NoConnectionException catch(error) {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.noInternetConnection()));
+          loading: Loading.loaded, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, errorObject: ErrorObject.unknownError()));
+      emit(state.copyWith(loading: Loading.loaded, error: error));
     }
   }
 
   Future<void> _mapScrolledToEndEventToState(ScrolledToEnd event, Emitter<HomeState> emit) async {
     if (state.hasReachedMax || state.loading == Loading.inBottomRow) return;
-    emit(state.copyWith(loading: Loading.inBottomRow, errorObject: null));
+    emit(state.copyWith(loading: Loading.inBottomRow, error: null));
     try {
       var characters = await getCharactersUseCase(state.characters.length);
       if (characters.isEmpty) {
@@ -43,15 +42,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       }
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       List<CharacterViewData> list = List.of(state.characters)..addAll(characterViewData);
-      emit(state.copyWith(loading: Loading.loaded, characters: list, errorObject: null));
-    } on DataRetrieveException {
+      emit(state.copyWith(loading: Loading.loaded, characters: list, error: null));
+    } on DataRetrieveException catch(error) {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.slowInternetConnection()));
-    } on NoConnectionException {
+          loading: Loading.loaded, error: error));
+    } on NoConnectionException catch(error) {
       emit(state.copyWith(
-          loading: Loading.loaded, errorObject: ErrorObject.noInternetConnection()));
+          loading: Loading.loaded, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, errorObject: ErrorObject.unknownError()));
+      emit(state.copyWith(loading: Loading.loaded, error: error));
     }
   }
 }

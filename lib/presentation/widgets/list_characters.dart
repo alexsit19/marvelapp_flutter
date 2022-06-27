@@ -7,16 +7,20 @@ import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
-import 'package:marvelapp_flutter/presentation/error_object.dart';
 import 'package:marvelapp_flutter/Localization/app_localizations.dart';
+import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData> characters;
   final bool hasReachedMax;
   final bool loading;
-  final ErrorObject? errorObject;
+  final Object? error;
   const ListCharacters(
-      {Key? key, required this.characters, required this.hasReachedMax, required this.loading, required this.errorObject})
+      {Key? key,
+      required this.characters,
+      required this.hasReachedMax,
+      required this.loading,
+      required this.error})
       : super(key: key);
 
   @override
@@ -37,7 +41,7 @@ class _ListCharactersState extends State<ListCharacters> {
     var characters = widget.characters;
     bool hasReachedMax = widget.hasReachedMax;
     bool loading = widget.loading;
-    ErrorObject? errorObject = widget.errorObject;
+    Object? error = widget.error;
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
@@ -49,10 +53,12 @@ class _ListCharactersState extends State<ListCharacters> {
             errorOrLoader = const BottomLoader();
           }
           if (hasReachedMax) {
-            errorOrLoader = const EmptyWidget();
+            error = const EmptyWidget();
           }
-          if (errorObject != null) {
-            errorOrLoader = BottomError(errorText: _getErrorString(errorObject, context),);
+          if (error != null) {
+            errorOrLoader = BottomError(
+              errorText: _getErrorString(error, context),
+            );
           }
           final isLastItem = index == characters.length;
           return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
@@ -143,12 +149,12 @@ class _ListCharactersState extends State<ListCharacters> {
     );
   }
 
-  String _getErrorString(ErrorObject? errorObject, BuildContext context) {
+  String _getErrorString(Object? error, BuildContext context) {
     String errorString = AppLocalizations.of(context).translate("unknownError");
-    if (errorObject is NoInternetConnection) {
+    if (error is NoConnectionException) {
       errorString = AppLocalizations.of(context).translate("noInternetConnection");
     }
-    if (errorObject is SlowInternetConnection) {
+    if (error is DataRetrieveException) {
       errorString = AppLocalizations.of(context).translate("slowInternetConnection");
     }
     return errorString;
