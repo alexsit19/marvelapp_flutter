@@ -4,23 +4,18 @@ import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
+import 'package:marvelapp_flutter/presentation/utils/from_exception_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
-import 'package:marvelapp_flutter/Localization/app_localizations.dart';
-import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 
 class ListCharacters extends StatefulWidget {
   final List<CharacterViewData> characters;
   final bool hasReachedMax;
   final bool loading;
-  final Object? error;
+  final Exception? error;
   const ListCharacters(
-      {Key? key,
-      required this.characters,
-      required this.hasReachedMax,
-      required this.loading,
-      required this.error})
+      {Key? key, required this.characters, required this.hasReachedMax, required this.loading, required this.error})
       : super(key: key);
 
   @override
@@ -41,7 +36,7 @@ class _ListCharactersState extends State<ListCharacters> {
     var characters = widget.characters;
     bool hasReachedMax = widget.hasReachedMax;
     bool loading = widget.loading;
-    Object? error = widget.error;
+    Exception? error = widget.error;
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
@@ -53,11 +48,11 @@ class _ListCharactersState extends State<ListCharacters> {
             errorOrLoader = const BottomLoader();
           }
           if (hasReachedMax) {
-            error = const EmptyWidget();
+            errorOrLoader = const EmptyWidget();
           }
           if (error != null) {
             errorOrLoader = BottomError(
-              errorText: _getErrorString(error, context),
+              errorText: context.translateException(error),
             );
           }
           final isLastItem = index == characters.length;
@@ -147,16 +142,5 @@ class _ListCharactersState extends State<ListCharacters> {
       width: 100.0,
       fit: BoxFit.fill,
     );
-  }
-
-  String _getErrorString(Object? error, BuildContext context) {
-    String errorString = AppLocalizations.of(context).translate("unknownError");
-    if (error is NoConnectionException) {
-      errorString = AppLocalizations.of(context).translate("noInternetConnection");
-    }
-    if (error is DataRetrieveException) {
-      errorString = AppLocalizations.of(context).translate("slowInternetConnection");
-    }
-    return errorString;
   }
 }

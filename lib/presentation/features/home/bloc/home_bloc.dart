@@ -27,7 +27,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(
           loading: Loading.loaded, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, error: error));
+      emit(state.copyWith(loading: Loading.loaded, error: UnknownException()));
     }
   }
 
@@ -50,7 +50,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(
           loading: Loading.loaded, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, error: error));
+      emit(state.copyWith(loading: Loading.loaded, error: UnknownException()));
     }
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
+import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_element.dart';
 
 class SeriesBlock extends StatelessWidget {
@@ -17,7 +17,7 @@ class SeriesBlock extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                AppLocalizations.of(context).translate("series"),
+                context.translate("series"),
                 style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
               ),
             ],

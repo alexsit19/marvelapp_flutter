@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/Localization/app_localizations.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
 
 class DescriptionBlock extends StatelessWidget {
   final CharacterViewData character;
@@ -16,7 +16,7 @@ class DescriptionBlock extends StatelessWidget {
           child: Row(
             children: [
               Text(
-                AppLocalizations.of(context).translate("description"),
+                context.translate("description"),
                 style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 16,

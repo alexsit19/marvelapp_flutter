@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/Localization/app_localizations.dart';
-import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
 import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/details//bloc/details_bloc.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
+import 'package:marvelapp_flutter/presentation/utils/from_exception_to_string.dart';
+import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/details_state.dart';
 import 'package:marvelapp_flutter/presentation/widgets/switch_locale_button.dart';
-
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -23,7 +22,7 @@ class DetailsScreen extends StatelessWidget {
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).translate("marvellAppDetail")),
+        title: Text(context.translate("marvellAppDetail")),
         actions: const [
           SwitchLocaleButton(),
         ],
@@ -49,7 +48,7 @@ class DetailsScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<DetailsBloc>().add(GetCharacterDetail(characterId: characterId));
                 },
-                errorText: _getErrorString(state.error, context),
+                errorText: context.translateException(state.error),
               );
             }
             return child;
@@ -57,16 +56,5 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _getErrorString(Object? error, BuildContext context) {
-    String errorString = AppLocalizations.of(context).translate("unknownError");
-    if (error is NoConnectionException) {
-      errorString = AppLocalizations.of(context).translate("noInternetConnection");
-    }
-    if (error is DataRetrieveException) {
-      errorString = AppLocalizations.of(context).translate("slowInternetConnection");
-    }
-    return errorString;
   }
 }

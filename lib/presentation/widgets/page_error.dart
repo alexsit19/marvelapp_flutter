@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/Localization/app_localizations.dart';
+import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
 
 class PageError extends StatelessWidget {
   final Function() onRetry;
@@ -18,7 +18,7 @@ class PageError extends StatelessWidget {
             style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           Text(
-            AppLocalizations.of(context).translate("pleaseCheckInternetConnection"),
+            context.translate("pleaseCheckInternetConnection"),
             style: const TextStyle(
               fontSize: 16,
             ),
@@ -27,7 +27,7 @@ class PageError extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text(AppLocalizations.of(context).translate("tapToTryAgain")),
+                Text(context.translate("tapToTryAgain")),
                 const Icon(
                   Icons.refresh,
                   size: 24.0,
