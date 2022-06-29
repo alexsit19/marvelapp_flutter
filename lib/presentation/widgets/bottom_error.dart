@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 
 class BottomError extends StatelessWidget {
   final String errorText;

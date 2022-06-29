@@ -4,7 +4,7 @@ import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_exception_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_exception_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';

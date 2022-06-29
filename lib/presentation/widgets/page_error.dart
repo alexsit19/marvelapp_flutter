@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 
 class PageError extends StatelessWidget {
   final Function() onRetry;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
-import 'package:marvelapp_flutter/Localization/app_localizations.dart';
+import 'package:marvelapp_flutter/presentation/localization/app_localizations.dart';
 
 extension FromExceptionToString on BuildContext {
   String translateException(Exception? exception) {

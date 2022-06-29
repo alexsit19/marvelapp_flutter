@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/series_element.dart';
 
 class SeriesBlock extends StatelessWidget {

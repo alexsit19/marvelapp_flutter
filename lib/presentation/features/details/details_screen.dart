@@ -5,8 +5,8 @@ import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use
 import 'package:marvelapp_flutter/presentation/features/details//bloc/details_bloc.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_exception_to_string.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_exception_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';

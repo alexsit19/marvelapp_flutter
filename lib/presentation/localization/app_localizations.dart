@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:marvelapp_flutter/Localization/app_localization_delegate.dart';
+import 'package:marvelapp_flutter/presentation/localization/app_localization_delegate.dart';
 
 class AppLocalizations {
   final Locale locale;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
-import 'package:marvelapp_flutter/presentation/utils/from_key_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 
 class DescriptionBlock extends StatelessWidget {
   final CharacterViewData character;

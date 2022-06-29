@@ -36,7 +36,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
     } on NoConnectionException catch(error) {
       emit(state.copyWith(loading: false, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: false, error: UnknownException()));
+       rethrow;
     }
   }
 }
