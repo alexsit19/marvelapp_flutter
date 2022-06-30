@@ -7,7 +7,7 @@ import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 class DetailsState extends Equatable {
   final bool loading;
   final CharacterViewData? character;
-  final String? error;
+  final Exception? error;
   final List<SeriesViewData>? series;
 
   const DetailsState({
@@ -20,7 +20,7 @@ class DetailsState extends Equatable {
   DetailsState copyWith({
     required bool loading,
     CharacterViewData? character,
-    String? error,
+    Exception? error,
     List<SeriesViewData>? series,
   }) {
 

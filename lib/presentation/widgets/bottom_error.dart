@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 
 class BottomError extends StatelessWidget {
   final String errorText;
@@ -21,7 +22,7 @@ class BottomError extends StatelessWidget {
           onPressed: () {
             context.read<HomeBloc>().add(ScrolledToEnd());
           },
-          child: Text('$errorText. Tap to try again'),
+          child: Text('$errorText. ${context.translate("tapToTryAgain")}'),
         ),
       ),
     );

@@ -20,12 +20,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var characters = await getCharactersUseCase(0);
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       emit(state.copyWith(loading: Loading.loaded, characters: characterViewData, error: null));
-    } on DataRetrieveException {
-      emit(state.copyWith(loading: Loading.loaded, error: "slow internet connection"));
-    } on NoConnectionException {
-      emit(state.copyWith(loading: Loading.loaded, error: "no internet connection"));
+    } on DataRetrieveException catch(error) {
+      emit(state.copyWith(
+          loading: Loading.loaded, error: error));
+    } on NoConnectionException catch(error) {
+      emit(state.copyWith(
+          loading: Loading.loaded, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, error: "unknown error"));
+      rethrow;
     }
   }
 
@@ -41,12 +43,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var characterViewData = characters.map((item) => item.toCharacterViewData()).toList();
       List<CharacterViewData> list = List.of(state.characters)..addAll(characterViewData);
       emit(state.copyWith(loading: Loading.loaded, characters: list, error: null));
-    } on DataRetrieveException {
-      emit(state.copyWith(loading: Loading.loaded, error: "slow internet connection"));
-    } on NoConnectionException {
-      emit(state.copyWith(loading: Loading.loaded, error: "no internet connection"));
+    } on DataRetrieveException catch(error) {
+      emit(state.copyWith(
+          loading: Loading.loaded, error: error));
+    } on NoConnectionException catch(error) {
+      emit(state.copyWith(
+          loading: Loading.loaded, error: error));
     } catch (error) {
-      emit(state.copyWith(loading: Loading.loaded, error: "unknown error"));
+      rethrow;
     }
   }
 }

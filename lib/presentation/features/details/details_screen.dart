@@ -5,11 +5,14 @@ import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use
 import 'package:marvelapp_flutter/presentation/features/details//bloc/details_bloc.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_exception_to_string.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/details_state.dart';
+import 'package:marvelapp_flutter/presentation/widgets/switch_locale_button.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -19,7 +22,10 @@ class DetailsScreen extends StatelessWidget {
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(
-        title: const Text("MarvellApp - Detail"),
+        title: Text(context.translate("marvellAppDetail")),
+        actions: const [
+          SwitchLocaleButton(),
+        ],
       ),
       body: BlocProvider(
         create: (_) => DetailsBloc(
@@ -42,7 +48,7 @@ class DetailsScreen extends StatelessWidget {
                 onRetry: () {
                   context.read<DetailsBloc>().add(GetCharacterDetail(characterId: characterId));
                 },
-                errorText: "${state.error}",
+                errorText: context.translateException(state.error),
               );
             }
             return child;

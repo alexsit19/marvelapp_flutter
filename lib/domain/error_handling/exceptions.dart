@@ -9,3 +9,4 @@ class NoConnectionException extends Equatable implements Exception {
   @override
   List<Object?> get props => [];
 }
+

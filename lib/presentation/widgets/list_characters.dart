@@ -4,6 +4,7 @@ import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/navigation/app_routes.dart';
+import 'package:marvelapp_flutter/presentation/localization/utils/from_exception_to_string.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_error.dart';
 import 'package:marvelapp_flutter/presentation/widgets/bottom_loader.dart';
 import 'package:marvelapp_flutter/presentation/widgets/empty_widget.dart';
@@ -12,7 +13,7 @@ class ListCharacters extends StatefulWidget {
   final List<CharacterViewData> characters;
   final bool hasReachedMax;
   final bool loading;
-  final String? error;
+  final Exception? error;
   const ListCharacters(
       {Key? key, required this.characters, required this.hasReachedMax, required this.loading, required this.error})
       : super(key: key);
@@ -35,7 +36,7 @@ class _ListCharactersState extends State<ListCharacters> {
     var characters = widget.characters;
     bool hasReachedMax = widget.hasReachedMax;
     bool loading = widget.loading;
-    String? error = widget.error;
+    Exception? error = widget.error;
     return Padding(
       padding: const EdgeInsets.all(6.0),
       child: ListView.builder(
@@ -50,7 +51,9 @@ class _ListCharactersState extends State<ListCharacters> {
             errorOrLoader = const EmptyWidget();
           }
           if (error != null) {
-            errorOrLoader = BottomError(errorText: error,);
+            errorOrLoader = BottomError(
+              errorText: context.translateException(error),
+            );
           }
           final isLastItem = index == characters.length;
           return isLastItem ? errorOrLoader : getHeroCard(characters[index]);

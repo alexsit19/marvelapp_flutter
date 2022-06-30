@@ -6,7 +6,7 @@ enum Loading { fullScreen, inBottomRow, loaded }
 class HomeState extends Equatable {
   final Loading loading;
   final bool hasReachedMax;
-  final String? error;
+  final Exception? error;
   final List<CharacterViewData> characters;
 
   const HomeState({
@@ -19,7 +19,7 @@ class HomeState extends Equatable {
   HomeState copyWith({
     required Loading loading,
     bool? hasReachedMax,
-    String? error,
+    Exception? error,
     List<CharacterViewData>? characters,
   }) {
     return HomeState(
