@@ -365,7 +365,7 @@ packages:
     source: hosted
     version: "0.6.4"
   json_annotation:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: json_annotation
       url: "https://pub.dartlang.org"
@@ -568,7 +568,7 @@ packages:
     source: hosted
     version: "4.0.1"
   sealed_annotations:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: sealed_annotations
       url: "https://pub.dartlang.org"
