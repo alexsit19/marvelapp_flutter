@@ -10,15 +10,10 @@ class DefaultMarvellRepository extends MarvellRepository {
   late CharacterDataSource localDataSource;
   late RemoteDataSource remoteDataSource;
 
-  static final DefaultMarvellRepository _repository = DefaultMarvellRepository._internal();
-
-  DefaultMarvellRepository._internal();
-
-  factory DefaultMarvellRepository(CharacterDataSource localDataSource, RemoteDataSource remoteDataSource) {
-    _repository.localDataSource = localDataSource;
-    _repository.remoteDataSource = remoteDataSource;
-    return _repository;
-  }
+  DefaultMarvellRepository({
+    required this.localDataSource,
+    required this.remoteDataSource,
+  });
 
   @override
   Future<Character> getCharacterDetail(String characterId) async {
