@@ -56,7 +56,7 @@ class _ListCharactersState extends State<ListCharacters> {
             );
           }
           final isLastItem = index == characters.length;
-          return isLastItem ? errorOrLoader : getHeroCard(characters[index]);
+          return isLastItem ? errorOrLoader : _getHeroCard(characters[index]);
         },
       ),
     );
@@ -74,7 +74,7 @@ class _ListCharactersState extends State<ListCharacters> {
     if (_isBottom) context.read<HomeBloc>().add(ScrolledToEnd());
   }
 
-  Widget getHeroCard(CharacterViewData character) {
+  Widget _getHeroCard(CharacterViewData character) {
     return Card(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
