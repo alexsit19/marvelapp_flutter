@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
-enum Loading { fullScreen, inBottomRow, loaded }
+enum Loading { fullScreen, nextPage, loaded }
 
 class HomeState extends Equatable {
   final Loading loading;

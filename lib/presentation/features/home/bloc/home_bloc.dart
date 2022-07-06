@@ -32,8 +32,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   }
 
   Future<void> _mapScrolledToEndEventToState(ScrolledToEnd event, Emitter<HomeState> emit) async {
-    if (state.hasReachedMax || state.loading == Loading.inBottomRow) return;
-    emit(state.copyWith(loading: Loading.inBottomRow, error: null));
+    if (state.hasReachedMax || state.loading == Loading.nextPage) return;
+    emit(state.copyWith(loading: Loading.nextPage, error: null));
     try {
       var characters = await getCharactersUseCase(state.characters.length);
       if (characters.isEmpty) {

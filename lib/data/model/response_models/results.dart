@@ -20,18 +20,6 @@ class Results {
     thumbnail = Thumbnail.fromJson(thumbnailMap);
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['description'] = description;
-    data['thumbnail'] = thumbnail;
-    if (thumbnail != null) {
-      data['thumbnail'] = thumbnail!.toJson();
-    }
-    return data;
-  }
-
   Series toSeries(String size) {
     return Series(
       id: id,

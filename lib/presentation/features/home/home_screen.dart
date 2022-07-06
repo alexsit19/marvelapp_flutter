@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
               );
             }
             if (state.characters.isNotEmpty) {
-              bool loading = state.loading == Loading.inBottomRow ? true : false;
+              bool loading = state.loading == Loading.nextPage ? true : false;
               child = ListCharacters(
                 characters: state.characters,
                 hasReachedMax: state.hasReachedMax,

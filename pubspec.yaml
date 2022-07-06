@@ -59,7 +59,7 @@ flutter_native_splash:
 flutter:
   assets:
     - assets/graphics/
-    - languages/
+    - assets/languages/
 
   # To add assets to your application, add an assets section, like this:
   # assets:

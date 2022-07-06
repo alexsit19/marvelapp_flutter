@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/localization/bloc/localization_event.dart';
 import 'package:marvelapp_flutter/presentation/features/localization/bloc/localization_state.dart';

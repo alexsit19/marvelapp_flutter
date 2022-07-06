@@ -10,11 +10,4 @@ class Thumbnail {
       extension: json['extension'],
     );
   }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['path'] = path;
-    data['extension'] = extension;
-    return data;
-  }
 }
