@@ -1,22 +1,18 @@
 # Marvel heroes flutter app
 
+This app use the Marvel Comics API [https://developer.marvel.com/](https://developer.marvel.com/)
+
 On the first screen of the app we can see list of marvel heroes.
-<img src="screenshots/list_of_heroes.jpg">
+<p><img src="screenshots/list_of_heroes.jpg" width=350></p>
 
+On the second screen we can see details about selected hero
+<p><img src="screenshots/heroes_details.jpg" width=350></p>
 
+##Features of the app
 
+- Use pagination on the first screen
+- Handled errors of the internet connection
+- Splash screen for android and ios
+- Own launch icon for android and ios
+- Support two languages
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
