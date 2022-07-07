@@ -8,15 +8,15 @@ In this app applied next technologies: drift, flutter bloc, get it, retrofit, cl
 <p align="center">
 <img src="screenshots/list_of_heroes.jpg" width=150>
 
-<img src="screenshots/heroes_details.jpg" width=150 style="margin-left: 50px;">
+<img src="screenshots/heroes_details.jpg" width=150 style="margin-left: 150px;">
 </p>
 
 ## Features of the app
 <p align="center">
-<img src="screenshots/features_1.png" height=300>
+<img src="screenshots/features_1.png" width=100%>
 </p>
 <p style="align: center">
-<img src="screenshots/features_2.png" height=300>
+<img src="screenshots/features_2.png" width=100%>
 </p>
 
 ## Getting started
