@@ -10,13 +10,15 @@ In this app applied next technologies: drift, flutter bloc, get it, retrofit, cl
 
 <img src="screenshots/heroes_details.jpg" width=150>
 </p>
+
 ## Features of the app
 <p>
-<img src="screenshots/features_1.jpg" height=200>
+<img src="screenshots/features_1.png" height=200>
 </p>
 <p>
-<img src="screenshots/features_2.jpg" height=200>
+<img src="screenshots/features_2.png" height=200>
 </p>
+
 ## Getting started
 
 For download this project. use next command
