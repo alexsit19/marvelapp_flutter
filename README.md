@@ -8,7 +8,7 @@ On the first screen of the app we can see list of marvel heroes.
 On the second screen we can see details about selected hero
 <p><img src="screenshots/heroes_details.jpg" width=350></p>
 
-##Features of the app
+## Features of the app
 
 - Use pagination on the first screen
 - Handled errors of the internet connection
