@@ -1,4 +1,10 @@
-# marvelapp_flutter
+# Marvel heroes flutter app
+
+On the first screen of the app we can see list of marvel heroes.
+<img src="screenshots/list_of_heroes.jpg">
+
+
+
 
 A new Flutter project.
 
