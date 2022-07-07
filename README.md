@@ -16,3 +16,15 @@ On the second screen we can see details about selected hero
 - Own launch icon for android and ios
 - Support two languages
 
+## Getting started
+
+For download this project. use next command
+git clone <git@github.com:alexsit19/marvelapp_flutter.git>
+
+next step: open marvelapp_flutter in Android Studio
+
+in android studio go in file/settings choose Languages & Frameworks
+choose Dart point and enter path to dart on your hard disc
+
+in terminal of Android Studio run command flutter run.
+ 
