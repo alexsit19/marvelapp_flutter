@@ -5,18 +5,18 @@ This application shows list of Marvell heroes on the first screen and shows list
 on hte detail screen.
 
 In this app applied next technologies: drift, flutter bloc, get it, retrofit, clean architecture.
-<p>
+<p style="align: justify">
 <img src="screenshots/list_of_heroes.jpg" width=150>
 
 <img src="screenshots/heroes_details.jpg" width=150>
 </p>
 
 ## Features of the app
-<p>
-<img src="screenshots/features_1.png" height=200>
+<p style="align: center">
+<img src="screenshots/features_1.png" height=300>
 </p>
-<p>
-<img src="screenshots/features_2.png" height=200>
+<p style="align: center">
+<img src="screenshots/features_2.png" height=300>
 </p>
 
 ## Getting started
