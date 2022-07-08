@@ -36,7 +36,7 @@ Also in this app applied next technologies:
 ```sh
 git clone https://github.com/alexsit19/marvelapp_flutter
 ```
-- next step: open marvelapp_flutter in Android Studio
+- open marvelapp_flutter in Android Studio
 - in android studio go in file/settings, choose Languages & Frameworks,
 choose Dart point and enter path to dart on your hard disc.
 - in terminal of Android Studio run command: 
