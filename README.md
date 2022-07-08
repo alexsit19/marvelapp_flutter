@@ -1,6 +1,6 @@
 # Marvel heroes flutter app
 
-This app is a client-server application, which use the Marvel Comics API [https://developer.marvel.com/](https://developer.marvel.com/)
+This app is a client-server application, which use the Marvel Comics API [https://developer.marvel.com/](https://developer.marvel.com/) .
 This application shows list of Marvel heroes on the first screen and shows list of series, description, name and picture of selected hero
 on the details screen.
 
@@ -10,7 +10,9 @@ on the details screen.
 <img src="screenshots/heroes_details.jpg" width=150>
 </p>
 
-In this app applied next technologies: 
+Clean architecture was used to create the application.
+
+Also in this app applied next technologies: 
 - Dio
 - Drift
 - Equatable
@@ -18,7 +20,6 @@ In this app applied next technologies:
 - Get it
 - Retrofit
 
-Clean architecture was used to create the application.
 
 ## Features of the app
 <p align="center">
