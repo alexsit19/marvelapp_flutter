@@ -4,6 +4,12 @@ This app is a client-server application, which use the Marvel Comics API [https:
 This application shows list of Marvel heroes on the first screen and shows list of series, description, name and picture of selected hero
 on the details screen.
 
+<p align="justify">
+<img src="screenshots/list_of_heroes.jpg" width=150>
+
+<img src="screenshots/heroes_details.jpg" width=150>
+</p>
+
 In this app applied next technologies: 
 - Dio
 - Drift
@@ -12,13 +18,7 @@ In this app applied next technologies:
 - Get it
 - Retrofit
 
-Clean architecture was used to create the application
-
-<p align="justify">
-<img src="screenshots/list_of_heroes.jpg" width=150>
-
-<img src="screenshots/heroes_details.jpg" width=150>
-</p>
+Clean architecture was used to create the application.
 
 ## Features of the app
 <p align="center">
