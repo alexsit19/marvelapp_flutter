@@ -1,8 +1,8 @@
 # Marvel heroes flutter app
 
-This app is a client server application, which use the Marvel Comics API [https://developer.marvel.com/](https://developer.marvel.com/)
-This application shows list of Marvell heroes on the first screen and shows list of series, description, name and picture of selected hero
-on hte detail screen.
+This app is a client-server application, which use the Marvel Comics API [https://developer.marvel.com/](https://developer.marvel.com/)
+This application shows list of Marvel heroes on the first screen and shows list of series, description, name and picture of selected hero
+on the details screen.
 
 In this app applied next technologies: 
 - Dio
@@ -30,13 +30,16 @@ Clean architecture was used to create the application
 
 ## Getting started
 
-- For download this project use next command
+- For download this project use next command:
 
 ```sh
 git clone https://github.com/alexsit19/marvelapp_flutter
 ```
 - next step: open marvelapp_flutter in Android Studio
-- in android studio go in file/settings choose Languages & Frameworks
+- in android studio go in file/settings, choose Languages & Frameworks,
 choose Dart point and enter path to dart on your hard disc.
-- in terminal of Android Studio run command flutter run.
+- in terminal of Android Studio run command: 
+```sh
+  flutter run
+```
  
