@@ -21,7 +21,7 @@ class DetailsScreen extends StatelessWidget {
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.translate("marvellAppDetail")),
+        title: Text(context.translate("marvelAppDetail")),
         actions: const [
           SwitchLocaleButton(),
         ],

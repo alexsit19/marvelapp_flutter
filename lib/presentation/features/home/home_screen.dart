@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.translate("marvellApp")),
+        title: Text(context.translate("marvelApp")),
         actions: const [
           SwitchLocaleButton(),
         ],
