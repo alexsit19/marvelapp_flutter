@@ -7,8 +7,8 @@ import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.
 import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
 
 class DefaultMarvellRepository extends MarvellRepository {
-  late CharacterDataSource localDataSource;
-  late RemoteDataSource remoteDataSource;
+  final CharacterDataSource localDataSource;
+  final RemoteDataSource remoteDataSource;
 
   DefaultMarvellRepository({
     required this.localDataSource,
