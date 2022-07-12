@@ -1,15 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:marvelapp_flutter/data/data_sources/local/dao/character_dao.dart';
-import 'package:marvelapp_flutter/data/data_sources/local/database/database.dart';
-import 'package:marvelapp_flutter/data/data_sources/local/character_data_source.dart';
-import 'package:marvelapp_flutter/data/data_sources/remote/marvell_api_client.dart';
-import 'package:marvelapp_flutter/data/data_sources/remote/remote_data_source.dart';
-import 'package:marvelapp_flutter/data/repository/default_marvell_repository.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
-import 'package:marvelapp_flutter/domain/repositories/marvell_repository.dart';
+import 'package:data/data_module.dart';
+import 'package:domain/domain_module.dart';
 
 final getIt = GetIt.instance;
 

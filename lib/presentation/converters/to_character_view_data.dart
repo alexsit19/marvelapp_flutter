@@ -1,4 +1,4 @@
-import 'package:marvelapp_flutter/domain/entities/character.dart';
+import 'package:domain/domain_module.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 
 extension ToCharacterViewData on Character {

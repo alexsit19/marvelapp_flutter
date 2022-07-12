@@ -1,10 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/domain/error_handling/exceptions.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/converters/to_character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:domain/domain_module.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetCharactersUseCase getCharactersUseCase;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_character_use_case.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_series_with_character_use_case.dart';
+import 'package:domain/domain_module.dart';
 import 'package:marvelapp_flutter/presentation/features/details//bloc/details_bloc.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
