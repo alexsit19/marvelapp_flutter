@@ -1,6 +1,9 @@
-import 'package:drift/drift.dart';
-import 'package:data/data_module.dart';
 import 'package:domain/domain_module.dart';
+import 'package:drift/drift.dart';
+import 'package:data/src/data_sources/local/database/database.dart';
+import 'package:data/src/data_sources/local/database_tables/character_table.dart';
+import 'package:data/src/converters/from_character_to_table.dart';
+import 'package:data/src/converters/from_table_to_character.dart';
 
 part 'character_dao.g.dart';
 

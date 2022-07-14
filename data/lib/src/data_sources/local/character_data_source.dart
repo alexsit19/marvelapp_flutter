@@ -1,4 +1,5 @@
-import 'package:data/data_module.dart';
+import 'package:data/src/data_sources/local/dao/character_dao.dart';
+import 'package:data/src/data_sources/local/local_character_data_source.dart';
 import 'package:domain/domain_module.dart';
 
 class CharacterDataSource implements LocalCharacterDataSource {

@@ -1,5 +1,7 @@
-import 'package:data/data_module.dart';
 import 'package:domain/domain_module.dart';
+import 'package:data/src/data_sources/local/database/database.dart';
+
+
 
 extension FromCharacterToTableData on Character {
   CharacterTableData fromCharacterToTableData() {

@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:data/data_module.dart';
+import 'package:data/src/data_sources/local/database_tables/character_table.dart';
+import 'package:data/src/data_sources/local/dao/character_dao.dart';
 import 'package:path/path.dart' as path;
 import 'package:drift/native.dart';
 import 'package:path_provider/path_provider.dart';
