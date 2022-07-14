@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:marvelapp_flutter/domain/use_cases/get_characters_use_case.dart';
+import 'package:domain/domain_module.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
 import 'package:marvelapp_flutter/presentation/localization/utils/from_exception_to_string.dart';
@@ -19,7 +19,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.translate("marvellApp")),
+        title: Text(context.translate("marvelApp")),
         actions: const [
           SwitchLocaleButton(),
         ],
