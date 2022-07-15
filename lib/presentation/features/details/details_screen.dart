@@ -6,12 +6,12 @@ import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
 import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 import 'package:marvelapp_flutter/presentation/localization/utils/from_exception_to_string.dart';
 import 'package:marvelapp_flutter/presentation/localization/utils/from_key_to_string.dart';
+import 'package:marvelapp_flutter/presentation/widgets/app_bar_custom.dart';
 import 'package:marvelapp_flutter/presentation/widgets/details_content.dart';
 import 'package:marvelapp_flutter/presentation/features/details/bloc/details_event.dart';
 import 'package:marvelapp_flutter/presentation/widgets/page_error.dart';
 import 'package:marvelapp_flutter/dependency_container.dart';
 import 'bloc/details_state.dart';
-import 'package:marvelapp_flutter/presentation/widgets/switch_locale_button.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({Key? key}) : super(key: key);
@@ -20,11 +20,8 @@ class DetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final characterId = ModalRoute.of(context)!.settings.arguments.toString();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(context.translate("marvelAppDetail")),
-        actions: const [
-          SwitchLocaleButton(),
-        ],
+      appBar: AppBarCustom(
+        title: context.translate("marvelAppDetail"),
       ),
       body: BlocProvider(
         create: (_) => DetailsBloc(
