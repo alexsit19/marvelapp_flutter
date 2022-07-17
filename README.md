@@ -4,6 +4,8 @@ This app is a client-server application, which use the Marvel Comics API [https:
 This application shows list of Marvel heroes on the first screen and shows list of series, description, name and picture of selected hero
 on the details screen.
 
+This app use modularization. Layers data and domain perform as dart packages without flutter dependencies.
+
 <p align="justify">
 <img src="screenshots/list_of_heroes.jpg" width=150>
 
