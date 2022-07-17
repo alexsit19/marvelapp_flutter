@@ -4,9 +4,10 @@ class Character {
   final String? thumbnailUrl;
   final String? description;
 
-  const Character(
-      {required this.id,
-      required this.name,
-      required this.thumbnailUrl,
-      required this.description});
+  const Character({
+    required this.id,
+    required this.name,
+    required this.thumbnailUrl,
+    required this.description,
+  });
 }
