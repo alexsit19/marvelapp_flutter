@@ -81,6 +81,9 @@ const mockSeries = <Series>[
 ];
 
 class MockRepository extends MarvellRepository {
+  bool dataRetrieveException = false;
+  bool noConnectionException = false;
+
   @override
   Future<Character> getCharacterDetail(String characterId) async {
     Character character = await Future.delayed(const Duration(seconds: 1), () => mockCharacters[0]);
@@ -89,6 +92,14 @@ class MockRepository extends MarvellRepository {
 
   @override
   Future<List<Character>> getCharacters([int offset = 0]) async {
+    if (dataRetrieveException) {
+      throw DataRetrieveException();
+    }
+
+    if (noConnectionException) {
+      throw NoConnectionException();
+    }
+
     int limit = 11;
     List<Character> characters = [];
     if (offset >= mockCharacters.length) {

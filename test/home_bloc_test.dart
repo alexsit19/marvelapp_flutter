@@ -13,7 +13,6 @@ void main() {
     late HomeBloc homeBloc;
     MockRepository mockRepository = MockRepository();
     GetCharactersUseCase getCharactersUseCase;
-    GetSeriesWithCharacterUseCase getSeriesWithCharacterUseCase;
 
     setUp(() {
       EquatableConfig.stringify = true;
@@ -118,6 +117,30 @@ void main() {
         ),
       ],
     );
+
+    blocTest<HomeBloc, HomeState>(
+        'test DataRetrieveException',
+        build: () => homeBloc,
+        act: (homeBloc) {
+          mockRepository.noConnectionException = false;
+          mockRepository.dataRetrieveException = true;
+          homeBloc.add(ScrolledToEnd());
+        },
+        verify: (_) {
+          assert(homeBloc.state.error is DataRetrieveException);
+        });
+
+    blocTest<HomeBloc, HomeState>(
+        'test NoConnectionException',
+        build: () => homeBloc,
+        act: (homeBloc) {
+          mockRepository.dataRetrieveException = false;
+          mockRepository.noConnectionException = true;
+          homeBloc.add(ScrolledToEnd());
+        },
+        verify: (_) {
+          assert(homeBloc.state.error is NoConnectionException);
+        });
 
     tearDown(() => homeBloc.close());
   });
