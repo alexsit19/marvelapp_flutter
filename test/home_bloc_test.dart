@@ -21,7 +21,7 @@ void main() {
     });
 
     blocTest<HomeBloc, HomeState>(
-      'ReadyForData test',
+      'First Screen launch when list of heroes is empty',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ReadyForData()),
       expect: () => [
@@ -41,7 +41,7 @@ void main() {
     );
 
     blocTest<HomeBloc, HomeState>(
-      'ScrollToEnd after ReadyForData',
+      'When list scrolled to bottom loading is shown and new page is requested',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ScrolledToEnd()),
       seed: () => HomeState(
@@ -67,7 +67,7 @@ void main() {
     );
 
     blocTest<HomeBloc, HomeState>(
-      'End of List',
+      'When all heroes is downloaded and requested lust page ',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ScrolledToEnd()),
       seed: () => HomeState(
@@ -93,7 +93,7 @@ void main() {
     );
 
     blocTest<HomeBloc, HomeState>(
-      'out of list',
+      'When lust page is downloaded and user scrolled to end again',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ScrolledToEnd()),
       seed: () => HomeState(
@@ -119,7 +119,7 @@ void main() {
     );
 
     blocTest<HomeBloc, HomeState>(
-        'test DataRetrieveException',
+        'When repository throw DataRetrieveException',
         build: () => homeBloc,
         act: (homeBloc) {
           mockRepository.noConnectionException = false;
@@ -131,7 +131,7 @@ void main() {
         });
 
     blocTest<HomeBloc, HomeState>(
-        'test NoConnectionException',
+        'When repository throw NoConnectionException',
         build: () => homeBloc,
         act: (homeBloc) {
           mockRepository.dataRetrieveException = false;
