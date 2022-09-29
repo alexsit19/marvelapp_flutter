@@ -5,7 +5,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_bloc.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_event.dart';
 import 'package:marvelapp_flutter/presentation/features/home/bloc/home_state.dart';
-
 import 'mock_repository.dart';
 
 void main() {
@@ -24,6 +23,7 @@ void main() {
       'First Screen launch when list of heroes is empty',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ReadyForData()),
+      wait: const Duration(milliseconds: 300),
       expect: () => [
         HomeState(
           loading: Loading.fullScreen,
@@ -44,6 +44,7 @@ void main() {
       'When list scrolled to bottom loading is shown and new page is requested',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ScrolledToEnd()),
+      wait: const Duration(milliseconds: 300),
       seed: () => HomeState(
         loading: Loading.loaded,
         hasReachedMax: false,
@@ -70,6 +71,7 @@ void main() {
       'When all heroes is downloaded and requested lust page ',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ScrolledToEnd()),
+      wait: const Duration(milliseconds: 300),
       seed: () => HomeState(
         loading: Loading.loaded,
         hasReachedMax: false,
@@ -96,6 +98,7 @@ void main() {
       'When lust page is downloaded and user scrolled to end again',
       build: () => homeBloc,
       act: (homeBloc) => homeBloc.add(ScrolledToEnd()),
+      wait: const Duration(milliseconds: 300),
       seed: () => HomeState(
         loading: Loading.loaded,
         hasReachedMax: false,
@@ -126,6 +129,7 @@ void main() {
           mockRepository.dataRetrieveException = true;
           homeBloc.add(ScrolledToEnd());
         },
+        wait: const Duration(milliseconds: 300),
         verify: (_) {
           assert(homeBloc.state.error is DataRetrieveException);
         });
@@ -138,6 +142,7 @@ void main() {
           mockRepository.noConnectionException = true;
           homeBloc.add(ScrolledToEnd());
         },
+        wait: const Duration(milliseconds: 300),
         verify: (_) {
           assert(homeBloc.state.error is NoConnectionException);
         });

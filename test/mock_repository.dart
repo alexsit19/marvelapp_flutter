@@ -1,5 +1,6 @@
 import 'package:domain/domain_module.dart';
 import 'package:marvelapp_flutter/presentation/models/character_view_data.dart';
+import 'package:marvelapp_flutter/presentation/models/series_view_data.dart';
 
 const mockCharacters = <Character>[
   Character(id: 0, name: "0", thumbnailUrl: "url 0", description: "description 0"),
@@ -73,11 +74,14 @@ const mockSeries = <Series>[
   Series(id: 2, title: "title 2", thumbnailUrl: "url 2"),
   Series(id: 3, title: "title 3", thumbnailUrl: "url 3"),
   Series(id: 4, title: "title 4", thumbnailUrl: "url 4"),
-  Series(id: 5, title: "title 5", thumbnailUrl: "url 5"),
-  Series(id: 6, title: "title 6", thumbnailUrl: "url 6"),
-  Series(id: 7, title: "title 7", thumbnailUrl: "url 7"),
-  Series(id: 8, title: "title 8", thumbnailUrl: "url 8"),
-  Series(id: 9, title: "title 9", thumbnailUrl: "url 9")
+];
+
+const mockSeriesViewData = <SeriesViewData>[
+  SeriesViewData(title: "title 0", thumbnailUrl: "url 0"),
+  SeriesViewData(title: "title 1", thumbnailUrl: "url 1"),
+  SeriesViewData(title: "title 2", thumbnailUrl: "url 2"),
+  SeriesViewData(title: "title 3", thumbnailUrl: "url 3"),
+  SeriesViewData(title: "title 4", thumbnailUrl: "url 4"),
 ];
 
 class MockRepository extends MarvellRepository {
@@ -86,18 +90,17 @@ class MockRepository extends MarvellRepository {
 
   @override
   Future<Character> getCharacterDetail(String characterId) async {
-    Character character = await Future.delayed(const Duration(seconds: 1), () => mockCharacters[0]);
-    return character;
+    if (dataRetrieveException || noConnectionException) {
+      throw getException();
+    }
+
+    return await Future.delayed(const Duration(seconds: 0), () => mockCharacters[int.parse(characterId)]);
   }
 
   @override
   Future<List<Character>> getCharacters([int offset = 0]) async {
-    if (dataRetrieveException) {
-      throw DataRetrieveException();
-    }
-
-    if (noConnectionException) {
-      throw NoConnectionException();
+    if (dataRetrieveException || noConnectionException) {
+      throw getException();
     }
 
     int limit = 11;
@@ -117,7 +120,14 @@ class MockRepository extends MarvellRepository {
 
   @override
   Future<List<Series>> getSeries(String characterId) async {
-    List<Series> series = await Future.delayed(const Duration(seconds: 1), () => [...mockSeries]);
-    return series;
+    return await Future.delayed(const Duration(seconds: 0), () => mockSeries);
+  }
+
+  Exception getException() {
+    Exception exception = DataRetrieveException();
+    if (noConnectionException) {
+      exception = NoConnectionException();
+    }
+    return exception;
   }
 }
